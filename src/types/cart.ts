@@ -1,8 +1,11 @@
+import type { Accommodation } from "./accomodation";
+import type { Activity } from "./activity";
+
 export interface CartItem {
   id: string;
   type: "accommodation" | "activity";
   item_id: string;
-  item: unknown; // Will be Accommodation or Activity
+  item: Accommodation | Activity; // Will be Accommodation or Activity
   check_in_date?: string;
   check_out_date?: string;
   date?: string;

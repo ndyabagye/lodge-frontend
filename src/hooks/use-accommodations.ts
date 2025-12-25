@@ -49,3 +49,11 @@ export function useAccommodationAvailability(
     enabled: !!id && !!startDate && !!endDate,
   });
 }
+
+export function useAccommodationReviews(id: string) {
+  return useQuery({
+    queryKey: [QUERY_KEYS.ACCOMMODATION, id, "reviews"],
+    queryFn: () => accommodationService.getReviews(id),
+    enabled: !!id,
+  });
+}

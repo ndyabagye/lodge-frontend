@@ -1,9 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { CartPageTemplate } from "@/components/cart/templates/CartPage";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/cart')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/cart")({
+  component: CartPage,
+});
 
-function RouteComponent() {
-  return <div>Hello "/cart"!</div>
+function CartPage() {
+  return <CartPageTemplate />;
 }

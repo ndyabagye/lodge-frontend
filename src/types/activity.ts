@@ -9,7 +9,7 @@ export interface Activity {
   price: number;
   adult_price: number;
   child_price: number;
-  max_participants: number;
+  max_guests: number;
   min_age: number;
   status: "available" | "unavailable" | "coming_soon";
   featured: boolean;
