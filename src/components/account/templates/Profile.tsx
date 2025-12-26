@@ -1,5 +1,16 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { AccountLayout } from "../components/AccountLayout";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   Card,
   CardContent,
@@ -16,8 +27,15 @@ import { useAuthStore } from "@/stores/auth-store";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { toast } from "sonner";
 import { Loader2, User, Mail, Phone, Lock } from "lucide-react";
+import {
+  useDeleteAccount,
+  useUpdatePassword,
+  useUpdatePreferences,
+  useUpdateProfile,
+  useUserPreferences,
+} from "@/hooks/use-user";
+import { Loading } from "@/components/common/Loading";
 
 const profileSchema = z.object({
   first_name: z.string().min(2, "First name must be at least 2 characters"),
@@ -32,30 +50,35 @@ const passwordSchema = z
       .string()
       .min(8, "Password must be at least 8 characters"),
     new_password: z.string().min(8, "Password must be at least 8 characters"),
-    confirm_password: z
+    new_password_confirmation: z
       .string()
       .min(8, "Password must be at least 8 characters"),
   })
-  .refine((data) => data.new_password === data.confirm_password, {
+  .refine((data) => data.new_password === data.new_password_confirmation, {
     message: "Passwords don't match",
-    path: ["confirm_password"],
+    path: ["new_password_confirmation"],
   });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
 type PasswordFormData = z.infer<typeof passwordSchema>;
 
 export function ProfileTemplate() {
-  const { user, updateUser } = useAuthStore();
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [isChangingPassword, setIsChangingPassword] = useState(false);
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [smsNotifications, setSmsNotifications] = useState(false);
+  const { user } = useAuthStore();
+  const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfile();
+  const { mutate: updatePassword, isPending: isChangingPassword } =
+    useUpdatePassword();
+  const { data: preferences, isLoading: loadingPreferences } =
+    useUserPreferences();
+  const { mutate: updatePreferences, isPending: isUpdatingPreferences } =
+    useUpdatePreferences();
+  const { mutate: deleteAccount } = useDeleteAccount();
 
   // Profile form
   const {
     register: registerProfile,
     handleSubmit: handleSubmitProfile,
     formState: { errors: profileErrors },
+    reset: resetProfile,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -65,6 +88,18 @@ export function ProfileTemplate() {
       phone: user?.phone || "",
     },
   });
+
+  // Reset form when user data loads
+  useEffect(() => {
+    if (user) {
+      resetProfile({
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        phone: user.phone,
+      });
+    }
+  }, [user, resetProfile]);
 
   // Password form
   const {
@@ -76,43 +111,37 @@ export function ProfileTemplate() {
     resolver: zodResolver(passwordSchema),
   });
 
-  const onProfileSubmit = async (data: ProfileFormData) => {
-    setIsUpdating(true);
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+  const onProfileSubmit = (data: ProfileFormData) => {
+    updateProfile(data);
+  };
 
-      // Update user in store (in production, call API first)
-      updateUser({
-        ...user!,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        email: data.email,
-        phone: data.phone,
+  const onPasswordSubmit = (data: PasswordFormData) => {
+    updatePassword(data, {
+      onSuccess: () => {
+        resetPassword();
+      },
+    });
+  };
+
+  const handlePreferenceChange = (key: string, value: boolean) => {
+    if (preferences) {
+      updatePreferences({
+        ...preferences,
+        [key]: value,
       });
-
-      toast.success("Profile updated successfully");
-    } catch (error) {
-      toast.error("Failed to update profile");
-    } finally {
-      setIsUpdating(false);
     }
   };
 
-  const onPasswordSubmit = async (data: PasswordFormData) => {
-    setIsChangingPassword(true);
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      toast.success("Password changed successfully");
-      resetPassword();
-    } catch (error) {
-      toast.error("Failed to change password");
-    } finally {
-      setIsChangingPassword(false);
-    }
+  const handleDeleteAccount = () => {
+    deleteAccount();
   };
+
+  if (loadingPreferences)
+    return (
+      <AccountLayout>
+        <Loading />
+      </AccountLayout>
+    );
 
   return (
     <AccountLayout>
@@ -278,19 +307,21 @@ export function ProfileTemplate() {
 
               {/* Confirm Password */}
               <div className="space-y-2">
-                <Label htmlFor="confirm_password">Confirm New Password</Label>
+                <Label htmlFor="new_password_confirmation">
+                  Confirm New Password
+                </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    id="confirm_password"
+                    id="new_password_confirmation"
                     type="password"
                     className="pl-10"
-                    {...registerPassword("confirm_password")}
+                    {...registerPassword("new_password_confirmation")}
                   />
                 </div>
-                {passwordErrors.confirm_password && (
+                {passwordErrors.new_password_confirmation && (
                   <p className="text-sm text-destructive">
-                    {passwordErrors.confirm_password.message}
+                    {passwordErrors.new_password_confirmation.message}
                   </p>
                 )}
               </div>
@@ -322,8 +353,11 @@ export function ProfileTemplate() {
                 </p>
               </div>
               <Switch
-                checked={emailNotifications}
-                onCheckedChange={setEmailNotifications}
+                checked={preferences?.email_notifications ?? true}
+                onCheckedChange={(checked) =>
+                  handlePreferenceChange("email_notifications", checked)
+                }
+                disabled={isUpdatingPreferences}
               />
             </div>
 
@@ -337,8 +371,11 @@ export function ProfileTemplate() {
                 </p>
               </div>
               <Switch
-                checked={smsNotifications}
-                onCheckedChange={setSmsNotifications}
+                checked={preferences?.sms_notifications ?? false}
+                onCheckedChange={(checked) =>
+                  handlePreferenceChange("sms_notifications", checked)
+                }
+                disabled={isUpdatingPreferences}
               />
             </div>
 
@@ -351,10 +388,14 @@ export function ProfileTemplate() {
                   Receive special offers and promotions
                 </p>
               </div>
-              <Switch defaultChecked />
+              <Switch
+                checked={preferences?.marketing_communications ?? true}
+                onCheckedChange={(checked) =>
+                  handlePreferenceChange("marketing_communications", checked)
+                }
+                disabled={isUpdatingPreferences}
+              />
             </div>
-
-            <Button className="mt-4">Save Preferences</Button>
           </CardContent>
         </Card>
 
@@ -374,9 +415,36 @@ export function ProfileTemplate() {
                   Permanently delete your account and all associated data
                 </p>
               </div>
-              <Button variant="destructive" size="sm">
-                Delete Account
-              </Button>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm">
+                    Delete Account
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove all your data from our servers
+                      including all bookings, favorites, and personal
+                      information.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDeleteAccount}
+                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    >
+                      Yes, delete my account
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </CardContent>
         </Card>

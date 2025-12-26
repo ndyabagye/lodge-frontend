@@ -17,6 +17,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as ActivitiesIndexRouteImport } from './routes/activities/index'
 import { Route as AccountIndexRouteImport } from './routes/account/index'
 import { Route as AccommodationsIndexRouteImport } from './routes/accommodations/index'
@@ -25,6 +26,10 @@ import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-passw
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminBookingsRouteImport } from './routes/admin/bookings'
+import { Route as AdminActivitiesRouteImport } from './routes/admin/activities'
+import { Route as AdminAccommodationsRouteImport } from './routes/admin/accommodations'
 import { Route as ActivitiesSlugRouteImport } from './routes/activities/$slug'
 import { Route as AccountProfileRouteImport } from './routes/account/profile'
 import { Route as AccountFavoritesRouteImport } from './routes/account/favorites'
@@ -72,6 +77,11 @@ const EventsIndexRoute = EventsIndexRouteImport.update({
   path: '/events/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActivitiesIndexRoute = ActivitiesIndexRouteImport.update({
   id: '/activities/',
   path: '/activities/',
@@ -110,6 +120,26 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
 const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   id: '/auth/forgot-password',
   path: '/auth/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBookingsRoute = AdminBookingsRouteImport.update({
+  id: '/admin/bookings',
+  path: '/admin/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminActivitiesRoute = AdminActivitiesRouteImport.update({
+  id: '/admin/activities',
+  path: '/admin/activities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAccommodationsRoute = AdminAccommodationsRouteImport.update({
+  id: '/admin/accommodations',
+  path: '/admin/accommodations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActivitiesSlugRoute = ActivitiesSlugRouteImport.update({
@@ -156,6 +186,10 @@ export interface FileRoutesByFullPath {
   '/account/favorites': typeof AccountFavoritesRoute
   '/account/profile': typeof AccountProfileRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
+  '/admin/accommodations': typeof AdminAccommodationsRoute
+  '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -164,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/accommodations': typeof AccommodationsIndexRoute
   '/account': typeof AccountIndexRoute
   '/activities': typeof ActivitiesIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/events': typeof EventsIndexRoute
   '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
 }
@@ -180,6 +215,10 @@ export interface FileRoutesByTo {
   '/account/favorites': typeof AccountFavoritesRoute
   '/account/profile': typeof AccountProfileRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
+  '/admin/accommodations': typeof AdminAccommodationsRoute
+  '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -188,6 +227,7 @@ export interface FileRoutesByTo {
   '/accommodations': typeof AccommodationsIndexRoute
   '/account': typeof AccountIndexRoute
   '/activities': typeof ActivitiesIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/events': typeof EventsIndexRoute
   '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
 }
@@ -205,6 +245,10 @@ export interface FileRoutesById {
   '/account/favorites': typeof AccountFavoritesRoute
   '/account/profile': typeof AccountProfileRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
+  '/admin/accommodations': typeof AdminAccommodationsRoute
+  '/admin/activities': typeof AdminActivitiesRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -213,6 +257,7 @@ export interface FileRoutesById {
   '/accommodations/': typeof AccommodationsIndexRoute
   '/account/': typeof AccountIndexRoute
   '/activities/': typeof ActivitiesIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/events/': typeof EventsIndexRoute
   '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
 }
@@ -231,6 +276,10 @@ export interface FileRouteTypes {
     | '/account/favorites'
     | '/account/profile'
     | '/activities/$slug'
+    | '/admin/accommodations'
+    | '/admin/activities'
+    | '/admin/bookings'
+    | '/admin/users'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
@@ -239,6 +288,7 @@ export interface FileRouteTypes {
     | '/accommodations'
     | '/account'
     | '/activities'
+    | '/admin'
     | '/events'
     | '/booking/confirmation/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -255,6 +305,10 @@ export interface FileRouteTypes {
     | '/account/favorites'
     | '/account/profile'
     | '/activities/$slug'
+    | '/admin/accommodations'
+    | '/admin/activities'
+    | '/admin/bookings'
+    | '/admin/users'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
@@ -263,6 +317,7 @@ export interface FileRouteTypes {
     | '/accommodations'
     | '/account'
     | '/activities'
+    | '/admin'
     | '/events'
     | '/booking/confirmation/$id'
   id:
@@ -279,6 +334,10 @@ export interface FileRouteTypes {
     | '/account/favorites'
     | '/account/profile'
     | '/activities/$slug'
+    | '/admin/accommodations'
+    | '/admin/activities'
+    | '/admin/bookings'
+    | '/admin/users'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
@@ -287,6 +346,7 @@ export interface FileRouteTypes {
     | '/accommodations/'
     | '/account/'
     | '/activities/'
+    | '/admin/'
     | '/events/'
     | '/booking/confirmation/$id'
   fileRoutesById: FileRoutesById
@@ -304,6 +364,10 @@ export interface RootRouteChildren {
   AccountFavoritesRoute: typeof AccountFavoritesRoute
   AccountProfileRoute: typeof AccountProfileRoute
   ActivitiesSlugRoute: typeof ActivitiesSlugRoute
+  AdminAccommodationsRoute: typeof AdminAccommodationsRoute
+  AdminActivitiesRoute: typeof AdminActivitiesRoute
+  AdminBookingsRoute: typeof AdminBookingsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
@@ -312,6 +376,7 @@ export interface RootRouteChildren {
   AccommodationsIndexRoute: typeof AccommodationsIndexRoute
   AccountIndexRoute: typeof AccountIndexRoute
   ActivitiesIndexRoute: typeof ActivitiesIndexRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   EventsIndexRoute: typeof EventsIndexRoute
   BookingConfirmationIdRoute: typeof BookingConfirmationIdRoute
 }
@@ -374,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/activities/': {
       id: '/activities/'
       path: '/activities'
@@ -428,6 +500,34 @@ declare module '@tanstack/react-router' {
       path: '/auth/forgot-password'
       fullPath: '/auth/forgot-password'
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/bookings': {
+      id: '/admin/bookings'
+      path: '/admin/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AdminBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/activities': {
+      id: '/admin/activities'
+      path: '/admin/activities'
+      fullPath: '/admin/activities'
+      preLoaderRoute: typeof AdminActivitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/accommodations': {
+      id: '/admin/accommodations'
+      path: '/admin/accommodations'
+      fullPath: '/admin/accommodations'
+      preLoaderRoute: typeof AdminAccommodationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/activities/$slug': {
@@ -488,6 +588,10 @@ const rootRouteChildren: RootRouteChildren = {
   AccountFavoritesRoute: AccountFavoritesRoute,
   AccountProfileRoute: AccountProfileRoute,
   ActivitiesSlugRoute: ActivitiesSlugRoute,
+  AdminAccommodationsRoute: AdminAccommodationsRoute,
+  AdminActivitiesRoute: AdminActivitiesRoute,
+  AdminBookingsRoute: AdminBookingsRoute,
+  AdminUsersRoute: AdminUsersRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
@@ -496,6 +600,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccommodationsIndexRoute: AccommodationsIndexRoute,
   AccountIndexRoute: AccountIndexRoute,
   ActivitiesIndexRoute: ActivitiesIndexRoute,
+  AdminIndexRoute: AdminIndexRoute,
   EventsIndexRoute: EventsIndexRoute,
   BookingConfirmationIdRoute: BookingConfirmationIdRoute,
 }
