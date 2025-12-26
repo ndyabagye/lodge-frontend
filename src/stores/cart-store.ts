@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { CartItem } from "@/types/cart";
+import { UGANDA_VAT } from "@/lib/constants";
 
 interface CartState {
   items: CartItem[];
@@ -11,6 +12,7 @@ interface CartState {
   getSubtotal: () => number;
   getTax: () => number;
   getTotal: () => number;
+  getItemCount: () => number;
 }
 
 export const useCartStore = create<CartState>()(
@@ -20,18 +22,26 @@ export const useCartStore = create<CartState>()(
 
       addItem: (item) => {
         set((state) => {
-          // Check if item already exists
-          const existingItem = state.items.find((i) => i.id === item.id);
+          // Check if item already exists (for accommodations, same dates = same item)
+          const existingItemIndex = state.items.findIndex((i) => {
+            if (item.type === "accommodation") {
+              return (
+                i.item_id === item.item_id &&
+                i.check_in_date === item.check_in_date &&
+                i.check_out_date === item.check_out_date
+              );
+            }
+            return i.id === item.id;
+          });
 
-          if (existingItem) {
-            // Update quantity if item exists
-            return {
-              items: state.items.map((i) =>
-                i.id === item.id
-                  ? { ...i, quantity: i.quantity + item.quantity }
-                  : i,
-              ),
+          if (existingItemIndex !== -1) {
+            // Update existing item quantity
+            const newItems = [...state.items];
+            newItems[existingItemIndex] = {
+              ...newItems[existingItemIndex],
+              quantity: newItems[existingItemIndex].quantity + item.quantity,
             };
+            return { items: newItems };
           }
 
           // Add new item
@@ -62,13 +72,18 @@ export const useCartStore = create<CartState>()(
 
       getTax: () => {
         const subtotal = get().getSubtotal();
-        return subtotal * 0.18; // 18% tax - adjust as needed
+        return subtotal * UGANDA_VAT; // 18% tax - adjust as needed
       },
 
       getTotal: () => {
         const subtotal = get().getSubtotal();
         const tax = get().getTax();
         return subtotal + tax;
+      },
+
+      getItemCount: () => {
+        const { items } = get();
+        return items.reduce((total, item) => total + item.quantity, 0);
       },
     }),
     {

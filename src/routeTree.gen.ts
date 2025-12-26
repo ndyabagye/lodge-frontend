@@ -26,8 +26,11 @@ import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as ActivitiesSlugRouteImport } from './routes/activities/$slug'
+import { Route as AccountProfileRouteImport } from './routes/account/profile'
+import { Route as AccountFavoritesRouteImport } from './routes/account/favorites'
 import { Route as AccountBookingsRouteImport } from './routes/account/bookings'
 import { Route as AccommodationsSlugRouteImport } from './routes/accommodations/$slug'
+import { Route as BookingConfirmationIdRouteImport } from './routes/booking/confirmation/$id'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -114,6 +117,16 @@ const ActivitiesSlugRoute = ActivitiesSlugRouteImport.update({
   path: '/activities/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountProfileRoute = AccountProfileRouteImport.update({
+  id: '/account/profile',
+  path: '/account/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountFavoritesRoute = AccountFavoritesRouteImport.update({
+  id: '/account/favorites',
+  path: '/account/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountBookingsRoute = AccountBookingsRouteImport.update({
   id: '/account/bookings',
   path: '/account/bookings',
@@ -122,6 +135,11 @@ const AccountBookingsRoute = AccountBookingsRouteImport.update({
 const AccommodationsSlugRoute = AccommodationsSlugRouteImport.update({
   id: '/accommodations/$slug',
   path: '/accommodations/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingConfirmationIdRoute = BookingConfirmationIdRouteImport.update({
+  id: '/booking/confirmation/$id',
+  path: '/booking/confirmation/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -135,6 +153,8 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/accommodations/$slug': typeof AccommodationsSlugRoute
   '/account/bookings': typeof AccountBookingsRoute
+  '/account/favorites': typeof AccountFavoritesRoute
+  '/account/profile': typeof AccountProfileRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -145,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/account': typeof AccountIndexRoute
   '/activities': typeof ActivitiesIndexRoute
   '/events': typeof EventsIndexRoute
+  '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -156,6 +177,8 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/accommodations/$slug': typeof AccommodationsSlugRoute
   '/account/bookings': typeof AccountBookingsRoute
+  '/account/favorites': typeof AccountFavoritesRoute
+  '/account/profile': typeof AccountProfileRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -166,6 +189,7 @@ export interface FileRoutesByTo {
   '/account': typeof AccountIndexRoute
   '/activities': typeof ActivitiesIndexRoute
   '/events': typeof EventsIndexRoute
+  '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -178,6 +202,8 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/accommodations/$slug': typeof AccommodationsSlugRoute
   '/account/bookings': typeof AccountBookingsRoute
+  '/account/favorites': typeof AccountFavoritesRoute
+  '/account/profile': typeof AccountProfileRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -188,6 +214,7 @@ export interface FileRoutesById {
   '/account/': typeof AccountIndexRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/events/': typeof EventsIndexRoute
+  '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -201,6 +228,8 @@ export interface FileRouteTypes {
     | '/terms'
     | '/accommodations/$slug'
     | '/account/bookings'
+    | '/account/favorites'
+    | '/account/profile'
     | '/activities/$slug'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -211,6 +240,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/activities'
     | '/events'
+    | '/booking/confirmation/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -222,6 +252,8 @@ export interface FileRouteTypes {
     | '/terms'
     | '/accommodations/$slug'
     | '/account/bookings'
+    | '/account/favorites'
+    | '/account/profile'
     | '/activities/$slug'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -232,6 +264,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/activities'
     | '/events'
+    | '/booking/confirmation/$id'
   id:
     | '__root__'
     | '/'
@@ -243,6 +276,8 @@ export interface FileRouteTypes {
     | '/terms'
     | '/accommodations/$slug'
     | '/account/bookings'
+    | '/account/favorites'
+    | '/account/profile'
     | '/activities/$slug'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -253,6 +288,7 @@ export interface FileRouteTypes {
     | '/account/'
     | '/activities/'
     | '/events/'
+    | '/booking/confirmation/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -265,6 +301,8 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   AccommodationsSlugRoute: typeof AccommodationsSlugRoute
   AccountBookingsRoute: typeof AccountBookingsRoute
+  AccountFavoritesRoute: typeof AccountFavoritesRoute
+  AccountProfileRoute: typeof AccountProfileRoute
   ActivitiesSlugRoute: typeof ActivitiesSlugRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
@@ -275,6 +313,7 @@ export interface RootRouteChildren {
   AccountIndexRoute: typeof AccountIndexRoute
   ActivitiesIndexRoute: typeof ActivitiesIndexRoute
   EventsIndexRoute: typeof EventsIndexRoute
+  BookingConfirmationIdRoute: typeof BookingConfirmationIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -398,6 +437,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActivitiesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account/profile': {
+      id: '/account/profile'
+      path: '/account/profile'
+      fullPath: '/account/profile'
+      preLoaderRoute: typeof AccountProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account/favorites': {
+      id: '/account/favorites'
+      path: '/account/favorites'
+      fullPath: '/account/favorites'
+      preLoaderRoute: typeof AccountFavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/account/bookings': {
       id: '/account/bookings'
       path: '/account/bookings'
@@ -410,6 +463,13 @@ declare module '@tanstack/react-router' {
       path: '/accommodations/$slug'
       fullPath: '/accommodations/$slug'
       preLoaderRoute: typeof AccommodationsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking/confirmation/$id': {
+      id: '/booking/confirmation/$id'
+      path: '/booking/confirmation/$id'
+      fullPath: '/booking/confirmation/$id'
+      preLoaderRoute: typeof BookingConfirmationIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -425,6 +485,8 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   AccommodationsSlugRoute: AccommodationsSlugRoute,
   AccountBookingsRoute: AccountBookingsRoute,
+  AccountFavoritesRoute: AccountFavoritesRoute,
+  AccountProfileRoute: AccountProfileRoute,
   ActivitiesSlugRoute: ActivitiesSlugRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
@@ -435,6 +497,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountIndexRoute: AccountIndexRoute,
   ActivitiesIndexRoute: ActivitiesIndexRoute,
   EventsIndexRoute: EventsIndexRoute,
+  BookingConfirmationIdRoute: BookingConfirmationIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

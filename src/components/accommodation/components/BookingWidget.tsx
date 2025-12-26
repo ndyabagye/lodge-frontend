@@ -15,14 +15,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Calendar as CalendarIcon, Users, Minus, Plus } from "lucide-react";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+import { Calendar as CalendarIcon, Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/stores/cart-store";
 import { toast } from "sonner";
 import { cn, formatPrice } from "@/lib/utils";
@@ -149,7 +149,7 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
-                initialFocus
+                autoFocus
                 mode="range"
                 defaultMonth={dateRange?.from}
                 selected={dateRange}

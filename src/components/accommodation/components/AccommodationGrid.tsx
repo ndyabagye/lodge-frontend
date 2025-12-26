@@ -41,7 +41,7 @@ export function AccommodationGrid({
     );
   }
 
-  const pageNumbers = generatePageNumbers(pagination);
+  const pageNumbers = generatePageNumbers(currentPage, pagination);
 
   return (
     <div className="space-y-6">

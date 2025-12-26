@@ -1,15 +1,18 @@
-import type { Accommodation } from "./accomodation";
-import type { Activity } from "./activity";
+// import type { Accommodation } from "./accomodation";
+// import type { Activity } from "./activity";
 
 export interface CartItem {
   id: string;
   type: "accommodation" | "activity";
   item_id: string;
-  item: Accommodation | Activity; // Will be Accommodation or Activity
+  item: any; // Will be Accommodation or Activity
+  // for accommodations
   check_in_date?: string;
   check_out_date?: string;
+  // for activities
   date?: string;
   time?: string;
+  // common
   quantity: number;
   price: number;
   total: number;

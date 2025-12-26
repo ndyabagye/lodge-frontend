@@ -46,4 +46,5 @@ export interface AccommodationFilters {
   min_guests?: number;
   amenities?: string[];
   search?: string;
+  featured?: boolean;
 }

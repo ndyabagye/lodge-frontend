@@ -1,13 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAccommodations } from "@/hooks/use-accommodations";
 import { AccommodationGrid } from "../components/AccommodationGrid";
 import { AccommodationFilters } from "../components/AccommodationFilters";
 import { Loading } from "@/components/common/Loading";
 import type { AccommodationFilters as Filters } from "@/types";
+import { formatDate } from "@/lib/utils";
 
-export function AccommodationListTemplate() {
+interface AccommodationListTemplateProps {
+  searchParams?: {
+    check_in?: string;
+    check_out?: string;
+    guests?: string;
+  };
+}
+
+export function AccommodationListTemplate({
+  searchParams,
+}: AccommodationListTemplateProps) {
   const [filters, setFilters] = useState<Filters>({});
   const [page, setPage] = useState(1);
+
+  // Apply search params from homepage
+  useEffect(() => {
+    if (searchParams) {
+      setFilters((prev) => ({
+        ...prev,
+        ...(searchParams.guests && { min_guests: Number(searchParams.guests) }),
+      }));
+    }
+  }, [searchParams]);
 
   const { data, isLoading, error } = useAccommodations({ ...filters, page });
 
@@ -28,6 +49,13 @@ export function AccommodationListTemplate() {
         <p className="text-muted-foreground">
           Find your perfect stay from our collection of unique accommodations
         </p>
+        {searchParams?.check_in && searchParams?.check_out && (
+          <p className="text-sm text-muted-foreground mt-2">
+            Showing results for {formatDate(searchParams.check_in)} -{" "}
+            {formatDate(searchParams.check_out)}
+            {searchParams.guests && ` · ${searchParams.guests} guests`}
+          </p>
+        )}
       </div>
 
       <div className="grid lg:grid-cols-4 gap-8">

@@ -27,4 +27,7 @@ export const QUERY_KEYS = {
   BOOKINGS: "bookings",
   CONTACT: "contact-us",
   USER: "user",
+  REVIEWS: "reviews",
 } as const;
+
+export const UGANDA_VAT = 0.18;

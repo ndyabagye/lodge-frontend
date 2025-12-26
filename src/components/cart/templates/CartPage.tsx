@@ -17,7 +17,7 @@ export function CartPageTemplate() {
           <p className="text-muted-foreground">
             Start adding accommodations and activities to your cart
           </p>
-          <Link to="/accommodations">
+          <Link to="/accommodations" search={{}}>
             <Button size="lg">Browse Accommodations</Button>
           </Link>
         </div>

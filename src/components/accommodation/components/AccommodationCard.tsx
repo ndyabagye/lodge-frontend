@@ -2,18 +2,33 @@ import { Link } from "@tanstack/react-router";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Users, BedDouble, Star } from "lucide-react";
+import { Users, BedDouble, Star, Heart } from "lucide-react";
 import type { Accommodation } from "@/types";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
+import { useFavoritesStore } from "@/stores/favorites-store";
 
 interface AccommodationCardProps {
   accommodation: Accommodation;
 }
 
 export function AccommodationCard({ accommodation }: AccommodationCardProps) {
+  const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
+  const isFavorite = favorites.includes(accommodation.id);
+
   const featuredImage =
     accommodation.images?.find((img) => img.is_featured) ||
     accommodation.images?.[0];
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isFavorite) {
+      removeFavorite(accommodation.id);
+    } else {
+      addFavorite(accommodation.id);
+    }
+  };
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
@@ -30,6 +45,25 @@ export function AccommodationCard({ accommodation }: AccommodationCardProps) {
               <span className="text-muted-foreground">No image</span>
             </div>
           )}
+          {/* Favorite Button */}
+          <button
+            onClick={handleToggleFavorite}
+            className={cn(
+              "absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center transition-all",
+              "bg-white/90 dark:bg-black/50 backdrop-blur-sm",
+              "hover:bg-white dark:hover:bg-black/70 hover:scale-110",
+              "border border-border",
+            )}
+          >
+            <Heart
+              className={cn(
+                "h-5 w-5 transition-colors",
+                isFavorite
+                  ? "fill-red-500 text-red-500"
+                  : "text-muted-foreground",
+              )}
+            />
+          </button>
         </div>
       </Link>
 

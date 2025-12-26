@@ -22,3 +22,10 @@ export function formatDate(
   const formattedDate = format(date, pattern);
   return formattedDate.toString();
 }
+
+export function formatDuration(minutes: number) {
+  if (minutes < 60) return `${minutes} mins`;
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
+}

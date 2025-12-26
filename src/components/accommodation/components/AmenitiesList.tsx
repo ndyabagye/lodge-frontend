@@ -35,7 +35,7 @@ export function AmenitiesList({ amenities }: AmenitiesListProps) {
           <div className="grid sm:grid-cols-2 gap-3">
             {items.map((amenity) => (
               <div key={amenity.id} className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-primary flex-shrink-0" />
+                <Check className="h-4 w-4 text-primary shrink-0" />
                 <span>{amenity.name}</span>
               </div>
             ))}

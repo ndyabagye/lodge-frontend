@@ -1,20 +1,54 @@
 import { Badge } from "@/components/ui/badge";
-import { Users, BedDouble, Bath, Maximize, Star } from "lucide-react";
+import { Users, BedDouble, Bath, Maximize, Star, Heart } from "lucide-react";
 import type { Accommodation } from "@/types";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
+import { useFavoritesStore } from "@/stores/favorites-store";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface AccommodationInfoProps {
   accommodation: Accommodation;
 }
 
 export function AccommodationInfo({ accommodation }: AccommodationInfoProps) {
+  const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
+  const isFavorite = favorites.includes(accommodation.id);
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      removeFavorite(accommodation.id);
+      toast.success("Removed from favorites");
+    } else {
+      addFavorite(accommodation.id);
+      toast.success("Added to favorites");
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Title and Type */}
       <div>
         <div className="flex items-center gap-2 mb-2">
-          <Badge variant="secondary">{accommodation.type}</Badge>
-          {accommodation.featured && <Badge>Featured</Badge>}
+          <div className="flex items-center gap-2">
+            <Badge variant="secondary">{accommodation.type}</Badge>
+            {accommodation.featured && <Badge>Featured</Badge>}
+          </div>
+
+          {/* Favorite Button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleToggleFavorite}
+            className="gap-2"
+          >
+            <Heart
+              className={cn(
+                "h-4 w-4",
+                isFavorite && "fill-red-500 text-red-500",
+              )}
+            />
+            {isFavorite ? "Saved" : "Save"}
+          </Button>
         </div>
         <h1 className="text-3xl font-bold">{accommodation.name}</h1>
       </div>

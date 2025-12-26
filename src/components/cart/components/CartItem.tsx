@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { X, Calendar, Users } from "lucide-react";
+import { X, Calendar, Users, Clock } from "lucide-react";
 import { useCartStore } from "@/stores/cart-store";
-import { formatPrice } from "@/lib/utils";
+import { formatDuration, formatPrice } from "@/lib/utils";
 import { format } from "date-fns";
 import type { CartItem as CartItemType } from "@/types/cart";
 
@@ -22,7 +22,7 @@ export function CartItem({ item }: CartItemProps) {
       <CardContent className="p-4">
         <div className="flex gap-4">
           {/* Image */}
-          <div className="w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-muted">
+          <div className="w-32 h-32 shrink-0 rounded-lg overflow-hidden bg-muted">
             {featuredImage ? (
               <img
                 src={featuredImage.thumbnail_url || featuredImage.url}
@@ -49,7 +49,7 @@ export function CartItem({ item }: CartItemProps) {
                 variant="ghost"
                 size="icon"
                 onClick={() => removeItem(item.id)}
-                className="flex-shrink-0"
+                className="shrink-0"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -59,7 +59,7 @@ export function CartItem({ item }: CartItemProps) {
             {item.type === "accommodation" &&
               item.check_in_date &&
               item.check_out_date && (
-                <div className="space-y-2 text-sm text-muted-foreground">
+                <div className="space-y-2 text-sm text-muted-foreground mb-3">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     <span>
@@ -78,7 +78,7 @@ export function CartItem({ item }: CartItemProps) {
 
             {/* Activity Details */}
             {item.type === "activity" && item.date && (
-              <div className="text-sm text-muted-foreground">
+              <div className="space-y-2 text-sm text-muted-foreground mb-3">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   <span>
@@ -86,11 +86,30 @@ export function CartItem({ item }: CartItemProps) {
                     {item.time && ` at ${item.time}`}
                   </span>
                 </div>
+                <div className="flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  <span>
+                    {item.quantity} participant{item.quantity !== 1 ? "s" : ""}
+                  </span>
+                </div>
+                {item.item?.duration && (
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    <span>{formatDuration(item.item.duration)}</span>
+                  </div>
+                )}
               </div>
             )}
 
             {/* Price */}
-            <div className="mt-4">
+            <div className="flex items-baseline justify-between">
+              <div>
+                {item.quantity > 1 && item.type === "activity" && (
+                  <p className="text-sm text-muted-foreground">
+                    {formatPrice(item.price)} × {item.quantity}
+                  </p>
+                )}
+              </div>
               <span className="text-2xl font-bold">
                 {formatPrice(item.total)}
               </span>

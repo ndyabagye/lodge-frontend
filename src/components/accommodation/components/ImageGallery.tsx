@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
-import type { AccommodationImage } from "@/types";
+import type { AccommodationImage, ActivityImage } from "@/types";
 
 interface ImageGalleryProps {
-  images: AccommodationImage[];
+  images: AccommodationImage[] | ActivityImage[];
   name: string;
 }
 
@@ -15,7 +15,7 @@ export function ImageGallery({ images, name }: ImageGalleryProps) {
 
   if (!images || images.length === 0) {
     return (
-      <div className="w-full h-[500px] bg-muted flex items-center justify-center">
+      <div className="w-full h-125 bg-muted flex items-center justify-center">
         <span className="text-muted-foreground">No images available</span>
       </div>
     );
@@ -41,7 +41,7 @@ export function ImageGallery({ images, name }: ImageGalleryProps) {
     <>
       <div className="w-full">
         {/* Main Image */}
-        <div className="relative h-[500px] bg-muted group">
+        <div className="relative h-125 bg-muted group">
           <img
             src={mainImage.url}
             alt={mainImage.alt_text || name}
@@ -94,7 +94,7 @@ export function ImageGallery({ images, name }: ImageGalleryProps) {
                 <button
                   key={image.id}
                   onClick={() => setSelectedIndex(index)}
-                  className={`flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden border-2 transition-all ${
+                  className={`shrink-0 w-24 h-24 rounded-lg overflow-hidden border-2 transition-all ${
                     selectedIndex === index
                       ? "border-primary scale-105"
                       : "border-transparent hover:border-primary/50"
@@ -110,7 +110,7 @@ export function ImageGallery({ images, name }: ImageGalleryProps) {
               {sortedImages.length > 5 && (
                 <button
                   onClick={() => setIsOpen(true)}
-                  className="flex-shrink-0 w-24 h-24 rounded-lg bg-muted flex items-center justify-center text-sm font-medium hover:bg-muted/80"
+                  className="shrink-0 w-24 h-24 rounded-lg bg-muted flex items-center justify-center text-sm font-medium hover:bg-muted/80"
                 >
                   +{sortedImages.length - 5}
                 </button>

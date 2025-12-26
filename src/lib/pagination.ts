@@ -5,6 +5,7 @@ interface PaginationProps {
 }
 // Helper function to generate page numbers with ellipsis
 export const generatePageNumbers = (
+  currentPage: number,
   pagination: PaginationProps | undefined,
 ) => {
   if (!pagination) return [];
