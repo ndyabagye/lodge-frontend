@@ -20,7 +20,12 @@ export function FavoritesTemplate() {
     favorites.includes(acc.id),
   );
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <AccountLayout>
+        <Loading />
+      </AccountLayout>
+    );
 
   return (
     <AccountLayout>

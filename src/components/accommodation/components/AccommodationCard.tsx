@@ -33,7 +33,7 @@ export function AccommodationCard({ accommodation }: AccommodationCardProps) {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <Link to="/accommodations/$slug" params={{ slug: accommodation.slug }}>
-        <div className="aspect-[4/3] overflow-hidden bg-muted">
+        <div className="aspect-4/3 overflow-hidden bg-muted">
           {featuredImage ? (
             <img
               src={featuredImage.url}

@@ -359,7 +359,7 @@ export function ProfileTemplate() {
         </Card>
 
         {/* Account Management */}
-        <Card className="border-border bg-card border-destructive/50">
+        <Card className="border-border bg-card">
           <CardHeader>
             <CardTitle className="text-destructive">Danger Zone</CardTitle>
             <CardDescription>

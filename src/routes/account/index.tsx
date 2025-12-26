@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { AccountDashboardTemplate } from "@/components/account/templates/AccountDashboard";
 
 export const Route = createFileRoute("/account/")({
   component: AccountPage,
@@ -11,10 +12,5 @@ export const Route = createFileRoute("/account/")({
 });
 
 function AccountPage() {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">My Account</h1>
-      <p className="text-muted-foreground">Welcome to your account dashboard</p>
-    </div>
-  );
+  return <AccountDashboardTemplate />;
 }

@@ -168,7 +168,12 @@ export function BookingsTemplate() {
     </Card>
   );
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <AccountLayout>
+        <Loading />
+      </AccountLayout>
+    );
 
   return (
     <AccountLayout>
