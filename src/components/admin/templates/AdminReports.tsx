@@ -8,8 +8,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useRevenueData } from "@/hooks/use-admin";
-import { Calendar as CalendarIcon, Download, TrendingUp } from "lucide-react";
+import { useRevenueData, useTopAccomodations } from "@/hooks/use-admin";
+import { Calendar as CalendarIcon, Download } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { cn, formatPrice } from "@/lib/utils";
 import { Loading } from "@/components/common/Loading";
@@ -41,6 +41,8 @@ export function AdminReportsTemplate() {
   const toDate = dateRange?.to ? format(dateRange.to, "yyyy-MM-dd") : "";
 
   const { data: revenueData, isLoading } = useRevenueData(fromDate, toDate);
+  const { data: topAccommodationsData, isLoading: isLoadingTopAccommodations } =
+    useTopAccomodations();
 
   const totalRevenue =
     revenueData?.reduce((sum, item) => sum + item.revenue, 0) || 0;
@@ -48,14 +50,6 @@ export function AdminReportsTemplate() {
     revenueData?.reduce((sum, item) => sum + item.bookings, 0) || 0;
   const averageBookingValue =
     totalBookings > 0 ? totalRevenue / totalBookings : 0;
-
-  // Mock data for other charts (in production, fetch from API)
-  const topAccommodations = [
-    { name: "Deluxe Suite", value: 45 },
-    { name: "Family Cottage", value: 30 },
-    { name: "Standard Room", value: 15 },
-    { name: "Luxury Villa", value: 10 },
-  ];
 
   return (
     <AdminLayout>
@@ -105,7 +99,7 @@ export function AdminReportsTemplate() {
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
-                    initialFocus
+                    autoFocus
                     mode="range"
                     defaultMonth={dateRange?.from}
                     selected={dateRange}
@@ -265,7 +259,7 @@ export function AdminReportsTemplate() {
                 </ResponsiveContainer>
               ) : (
                 <div className="h-80 flex items-center justify-center text-muted-foreground">
-                  No data available
+                  No booking data available
                 </div>
               )}
             </CardContent>
@@ -277,36 +271,47 @@ export function AdminReportsTemplate() {
               <CardTitle>Top Accommodations</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={320}>
-                <PieChart>
-                  <Pie
-                    data={topAccommodations}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) =>
-                      `${name} ${(percent * 100).toFixed(0)}%`
-                    }
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {topAccommodations.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "hsl(var(--card))",
-                      border: "1px solid hsl(var(--border))",
-                      borderRadius: "8px",
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
+              {isLoadingTopAccommodations ? (
+                <div className="h-80 flex items-center justify-center">
+                  <Loading />
+                </div>
+              ) : topAccommodationsData && topAccommodationsData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={320}>
+                  <PieChart>
+                    <Pie
+                      data={topAccommodationsData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, percent }) => {
+                        const value = percent ? Math.round(percent * 100) : 0;
+                        return `${name} ${value}%`;
+                      }}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {topAccommodationsData.map((_, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "hsl(var(--card))",
+                        border: "1px solid hsl(var(--border))",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-80 flex items-center justify-center text-muted-foreground">
+                  No top accommodations data available
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

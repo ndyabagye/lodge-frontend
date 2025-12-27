@@ -1,5 +1,9 @@
 import { api } from "@/lib/api-client";
-import type { PaginatedResponse, PaginationParams } from "@/types";
+import type {
+  PaginatedResponse,
+  PaginationParams,
+  TopAccommodation,
+} from "@/types";
 import type { DashboardStats, RevenueData, AdminUser } from "@/types/admin";
 import type { Accommodation } from "@/types";
 import type { Activity } from "@/types/activity";
@@ -17,6 +21,12 @@ export const adminService = {
     to: string;
   }): Promise<RevenueData[]> => {
     const { data } = await api.get("/admin/reports/revenue", { params });
+    return data.data;
+  },
+
+  // admin reports
+  getTopAccommodations: async (): Promise<TopAccommodation[]> => {
+    const { data } = await api.get("/admin/reports/top-accommodations");
     return data.data;
   },
 

@@ -48,3 +48,8 @@ export interface AccommodationFilters {
   search?: string;
   featured?: boolean;
 }
+
+export interface TopAccommodation extends Record<string, string | number> {
+  name: string;
+  value: number;
+}

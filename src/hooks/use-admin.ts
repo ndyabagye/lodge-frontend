@@ -79,6 +79,13 @@ export function useDeleteAccommodation() {
   });
 }
 
+export function useTopAccomodations() {
+  return useQuery({
+    queryKey: ["admin", "dashboard", "accomodations"],
+    queryFn: () => adminService.getTopAccommodations(),
+  });
+}
+
 // Activities hooks
 export function useAdminActivities(params?: PaginationParams) {
   return useQuery({
