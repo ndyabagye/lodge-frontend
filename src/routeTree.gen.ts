@@ -27,6 +27,7 @@ import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminReportsRouteImport } from './routes/admin/reports'
 import { Route as AdminBookingsRouteImport } from './routes/admin/bookings'
 import { Route as AdminActivitiesRouteImport } from './routes/admin/activities'
 import { Route as AdminAccommodationsRouteImport } from './routes/admin/accommodations'
@@ -127,6 +128,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/admin/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/admin/reports',
+  path: '/admin/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminBookingsRoute = AdminBookingsRouteImport.update({
   id: '/admin/bookings',
   path: '/admin/bookings',
@@ -189,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/admin/accommodations': typeof AdminAccommodationsRoute
   '/admin/activities': typeof AdminActivitiesRoute
   '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -218,6 +225,7 @@ export interface FileRoutesByTo {
   '/admin/accommodations': typeof AdminAccommodationsRoute
   '/admin/activities': typeof AdminActivitiesRoute
   '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -248,6 +256,7 @@ export interface FileRoutesById {
   '/admin/accommodations': typeof AdminAccommodationsRoute
   '/admin/activities': typeof AdminActivitiesRoute
   '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -279,6 +288,7 @@ export interface FileRouteTypes {
     | '/admin/accommodations'
     | '/admin/activities'
     | '/admin/bookings'
+    | '/admin/reports'
     | '/admin/users'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/admin/accommodations'
     | '/admin/activities'
     | '/admin/bookings'
+    | '/admin/reports'
     | '/admin/users'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/admin/accommodations'
     | '/admin/activities'
     | '/admin/bookings'
+    | '/admin/reports'
     | '/admin/users'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -367,6 +379,7 @@ export interface RootRouteChildren {
   AdminAccommodationsRoute: typeof AdminAccommodationsRoute
   AdminActivitiesRoute: typeof AdminActivitiesRoute
   AdminBookingsRoute: typeof AdminBookingsRoute
+  AdminReportsRoute: typeof AdminReportsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
@@ -509,6 +522,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/bookings': {
       id: '/admin/bookings'
       path: '/admin/bookings'
@@ -591,6 +611,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAccommodationsRoute: AdminAccommodationsRoute,
   AdminActivitiesRoute: AdminActivitiesRoute,
   AdminBookingsRoute: AdminBookingsRoute,
+  AdminReportsRoute: AdminReportsRoute,
   AdminUsersRoute: AdminUsersRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
