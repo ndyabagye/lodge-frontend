@@ -33,7 +33,7 @@ import {
 import { Link } from "@tanstack/react-router";
 
 export function AdminAccommodationsTemplate() {
-  const [page, setPage] = useState(1);
+  const [page, _] = useState(1);
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useAdminAccommodations({ page, per_page: 10 });
