@@ -13,7 +13,7 @@ export interface Accommodation {
   base_price: number;
   weekend_price: number;
   cleaning_fee: number;
-  status: "available" | "maintenance" | "coming_soon";
+  status: "available" | "maintenance" | "coming_soon" | "archived";
   featured: boolean;
   rating: number;
   images: AccommodationImage[];
@@ -37,6 +37,8 @@ export interface Amenity {
   name: string;
   icon: string;
   category: string;
+  order: number;
+  active: boolean;
 }
 
 export interface AccommodationFilters {
