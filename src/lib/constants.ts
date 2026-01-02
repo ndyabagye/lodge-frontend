@@ -28,6 +28,8 @@ export const QUERY_KEYS = {
   CONTACT: "contact-us",
   USER: "user",
   REVIEWS: "reviews",
+  PAYMENT_GATEWAYS: "payment-gateways",
+  PAYMENT_STATS: "payment-stats",
 } as const;
 
 export const UGANDA_VAT = 0.18;

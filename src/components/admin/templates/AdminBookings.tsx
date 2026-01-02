@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AdminLayout } from "../components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,11 +39,13 @@ export function AdminBookingsTemplate() {
   const { mutate: updateStatus } = useUpdateBookingStatus();
 
   const handleStatusChange = (bookingId: string, newStatus: string) => {
+    console.log("Booking ID:", bookingId);
+    console.log("New Status:", newStatus);
     updateStatus({ id: bookingId, status: newStatus });
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="space-y-6">
         {/* Header */}
         <div>
@@ -201,6 +202,6 @@ export function AdminBookingsTemplate() {
           </CardContent>
         </Card>
       </div>
-    </AdminLayout>
+    </>
   );
 }

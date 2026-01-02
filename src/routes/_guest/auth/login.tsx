@@ -1,0 +1,10 @@
+import { LoginTemplate } from "@/components/auth/templates/Login";
+import { createFileRoute } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/_guest/auth/login")({
+  component: LoginPage,
+});
+
+function LoginPage() {
+  return <LoginTemplate />;
+}

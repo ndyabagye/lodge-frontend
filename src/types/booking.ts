@@ -21,6 +21,8 @@ export interface Booking {
   guest_last_name: string;
   guest_phone: string;
   special_requests: string | null;
+  accommodation?: any; // AccommodationResource
+  user?: any; // UserResource
   created_at: string;
   updated_at: string;
 }
@@ -29,6 +31,7 @@ export interface CreateBookingData {
   accommodation_id: string;
   check_in_date: string;
   check_out_date: string;
+  num_guests: number;
   num_adults: number;
   num_children: number;
   guest_email: string;
@@ -36,4 +39,5 @@ export interface CreateBookingData {
   guest_last_name: string;
   guest_phone: string;
   special_requests?: string;
+  payment_method?: string;
 }

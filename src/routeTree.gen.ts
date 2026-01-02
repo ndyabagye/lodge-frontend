@@ -9,280 +9,302 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as FaqRouteImport } from './routes/faq'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as CartRouteImport } from './routes/cart'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as EventsIndexRouteImport } from './routes/events/index'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as ActivitiesIndexRouteImport } from './routes/activities/index'
-import { Route as AccountIndexRouteImport } from './routes/account/index'
-import { Route as AccommodationsIndexRouteImport } from './routes/accommodations/index'
-import { Route as EventsSlugRouteImport } from './routes/events/$slug'
-import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
-import { Route as AuthRegisterRouteImport } from './routes/auth/register'
-import { Route as AuthLoginRouteImport } from './routes/auth/login'
-import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
-import { Route as AdminUsersRouteImport } from './routes/admin/users'
-import { Route as AdminReportsRouteImport } from './routes/admin/reports'
-import { Route as AdminBookingsRouteImport } from './routes/admin/bookings'
-import { Route as AdminActivitiesRouteImport } from './routes/admin/activities'
-import { Route as AdminAccommodationsRouteImport } from './routes/admin/accommodations'
-import { Route as ActivitiesSlugRouteImport } from './routes/activities/$slug'
-import { Route as AccountProfileRouteImport } from './routes/account/profile'
-import { Route as AccountFavoritesRouteImport } from './routes/account/favorites'
-import { Route as AccountBookingsRouteImport } from './routes/account/bookings'
-import { Route as AccommodationsSlugRouteImport } from './routes/accommodations/$slug'
-import { Route as BookingConfirmationIdRouteImport } from './routes/booking/confirmation/$id'
+import { Route as GuestRouteImport } from './routes/_guest'
+import { Route as AdminRouteImport } from './routes/_admin'
+import { Route as GuestIndexRouteImport } from './routes/_guest/index'
+import { Route as GuestTermsRouteImport } from './routes/_guest/terms'
+import { Route as GuestPrivacyRouteImport } from './routes/_guest/privacy'
+import { Route as GuestFaqRouteImport } from './routes/_guest/faq'
+import { Route as GuestContactRouteImport } from './routes/_guest/contact'
+import { Route as GuestCheckoutRouteImport } from './routes/_guest/checkout'
+import { Route as GuestCartRouteImport } from './routes/_guest/cart'
+import { Route as GuestAboutRouteImport } from './routes/_guest/about'
+import { Route as GuestEventsIndexRouteImport } from './routes/_guest/events/index'
+import { Route as GuestActivitiesIndexRouteImport } from './routes/_guest/activities/index'
+import { Route as GuestAccountIndexRouteImport } from './routes/_guest/account/index'
+import { Route as GuestAccommodationsIndexRouteImport } from './routes/_guest/accommodations/index'
+import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin/index'
+import { Route as GuestEventsSlugRouteImport } from './routes/_guest/events/$slug'
+import { Route as GuestConfirmationIdRouteImport } from './routes/_guest/confirmation/$id'
+import { Route as GuestAuthResetPasswordRouteImport } from './routes/_guest/auth/reset-password'
+import { Route as GuestAuthRegisterRouteImport } from './routes/_guest/auth/register'
+import { Route as GuestAuthLoginRouteImport } from './routes/_guest/auth/login'
+import { Route as GuestAuthForgotPasswordRouteImport } from './routes/_guest/auth/forgot-password'
+import { Route as GuestActivitiesSlugRouteImport } from './routes/_guest/activities/$slug'
+import { Route as GuestAccountProfileRouteImport } from './routes/_guest/account/profile'
+import { Route as GuestAccountFavoritesRouteImport } from './routes/_guest/account/favorites'
+import { Route as GuestAccountBookingsRouteImport } from './routes/_guest/account/bookings'
+import { Route as GuestAccommodationsSlugRouteImport } from './routes/_guest/accommodations/$slug'
+import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin/users'
+import { Route as AdminAdminReportsRouteImport } from './routes/_admin/admin/reports'
+import { Route as AdminAdminDashboardRouteImport } from './routes/_admin/admin/dashboard'
+import { Route as AdminAdminBookingsRouteImport } from './routes/_admin/admin/bookings'
+import { Route as AdminAdminActivitiesRouteImport } from './routes/_admin/admin/activities'
+import { Route as AdminAdminAccommodationsRouteImport } from './routes/_admin/admin/accommodations'
 
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
+const GuestRoute = GuestRouteImport.update({
+  id: '/_guest',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
+const AdminRoute = AdminRouteImport.update({
+  id: '/_admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CartRoute = CartRouteImport.update({
-  id: '/cart',
-  path: '/cart',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+const GuestIndexRoute = GuestIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const EventsIndexRoute = EventsIndexRouteImport.update({
+const GuestTermsRoute = GuestTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestPrivacyRoute = GuestPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestFaqRoute = GuestFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestContactRoute = GuestContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestCheckoutRoute = GuestCheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestCartRoute = GuestCartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestAboutRoute = GuestAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestEventsIndexRoute = GuestEventsIndexRouteImport.update({
   id: '/events/',
   path: '/events/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ActivitiesIndexRoute = ActivitiesIndexRouteImport.update({
+const GuestActivitiesIndexRoute = GuestActivitiesIndexRouteImport.update({
   id: '/activities/',
   path: '/activities/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AccountIndexRoute = AccountIndexRouteImport.update({
+const GuestAccountIndexRoute = GuestAccountIndexRouteImport.update({
   id: '/account/',
   path: '/account/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AccommodationsIndexRoute = AccommodationsIndexRouteImport.update({
-  id: '/accommodations/',
-  path: '/accommodations/',
-  getParentRoute: () => rootRouteImport,
+const GuestAccommodationsIndexRoute =
+  GuestAccommodationsIndexRouteImport.update({
+    id: '/accommodations/',
+    path: '/accommodations/',
+    getParentRoute: () => GuestRoute,
+  } as any)
+const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AdminRoute,
 } as any)
-const EventsSlugRoute = EventsSlugRouteImport.update({
+const GuestEventsSlugRoute = GuestEventsSlugRouteImport.update({
   id: '/events/$slug',
   path: '/events/$slug',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
+const GuestConfirmationIdRoute = GuestConfirmationIdRouteImport.update({
+  id: '/confirmation/$id',
+  path: '/confirmation/$id',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestAuthResetPasswordRoute = GuestAuthResetPasswordRouteImport.update({
   id: '/auth/reset-password',
   path: '/auth/reset-password',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AuthRegisterRoute = AuthRegisterRouteImport.update({
+const GuestAuthRegisterRoute = GuestAuthRegisterRouteImport.update({
   id: '/auth/register',
   path: '/auth/register',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
+const GuestAuthLoginRoute = GuestAuthLoginRouteImport.update({
   id: '/auth/login',
   path: '/auth/login',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
+const GuestAuthForgotPasswordRoute = GuestAuthForgotPasswordRouteImport.update({
   id: '/auth/forgot-password',
   path: '/auth/forgot-password',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminReportsRoute = AdminReportsRouteImport.update({
-  id: '/admin/reports',
-  path: '/admin/reports',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminBookingsRoute = AdminBookingsRouteImport.update({
-  id: '/admin/bookings',
-  path: '/admin/bookings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminActivitiesRoute = AdminActivitiesRouteImport.update({
-  id: '/admin/activities',
-  path: '/admin/activities',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminAccommodationsRoute = AdminAccommodationsRouteImport.update({
-  id: '/admin/accommodations',
-  path: '/admin/accommodations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ActivitiesSlugRoute = ActivitiesSlugRouteImport.update({
+const GuestActivitiesSlugRoute = GuestActivitiesSlugRouteImport.update({
   id: '/activities/$slug',
   path: '/activities/$slug',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AccountProfileRoute = AccountProfileRouteImport.update({
+const GuestAccountProfileRoute = GuestAccountProfileRouteImport.update({
   id: '/account/profile',
   path: '/account/profile',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AccountFavoritesRoute = AccountFavoritesRouteImport.update({
+const GuestAccountFavoritesRoute = GuestAccountFavoritesRouteImport.update({
   id: '/account/favorites',
   path: '/account/favorites',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AccountBookingsRoute = AccountBookingsRouteImport.update({
+const GuestAccountBookingsRoute = GuestAccountBookingsRouteImport.update({
   id: '/account/bookings',
   path: '/account/bookings',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const AccommodationsSlugRoute = AccommodationsSlugRouteImport.update({
+const GuestAccommodationsSlugRoute = GuestAccommodationsSlugRouteImport.update({
   id: '/accommodations/$slug',
   path: '/accommodations/$slug',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => GuestRoute,
 } as any)
-const BookingConfirmationIdRoute = BookingConfirmationIdRouteImport.update({
-  id: '/booking/confirmation/$id',
-  path: '/booking/confirmation/$id',
-  getParentRoute: () => rootRouteImport,
+const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AdminRoute,
 } as any)
+const AdminAdminReportsRoute = AdminAdminReportsRouteImport.update({
+  id: '/admin/reports',
+  path: '/admin/reports',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminDashboardRoute = AdminAdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminBookingsRoute = AdminAdminBookingsRouteImport.update({
+  id: '/admin/bookings',
+  path: '/admin/bookings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminActivitiesRoute = AdminAdminActivitiesRouteImport.update({
+  id: '/admin/activities',
+  path: '/admin/activities',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminAccommodationsRoute =
+  AdminAdminAccommodationsRouteImport.update({
+    id: '/admin/accommodations',
+    path: '/admin/accommodations',
+    getParentRoute: () => AdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms': typeof TermsRoute
-  '/accommodations/$slug': typeof AccommodationsSlugRoute
-  '/account/bookings': typeof AccountBookingsRoute
-  '/account/favorites': typeof AccountFavoritesRoute
-  '/account/profile': typeof AccountProfileRoute
-  '/activities/$slug': typeof ActivitiesSlugRoute
-  '/admin/accommodations': typeof AdminAccommodationsRoute
-  '/admin/activities': typeof AdminActivitiesRoute
-  '/admin/bookings': typeof AdminBookingsRoute
-  '/admin/reports': typeof AdminReportsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/auth/forgot-password': typeof AuthForgotPasswordRoute
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/register': typeof AuthRegisterRoute
-  '/auth/reset-password': typeof AuthResetPasswordRoute
-  '/events/$slug': typeof EventsSlugRoute
-  '/accommodations': typeof AccommodationsIndexRoute
-  '/account': typeof AccountIndexRoute
-  '/activities': typeof ActivitiesIndexRoute
-  '/admin': typeof AdminIndexRoute
-  '/events': typeof EventsIndexRoute
-  '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
+  '/about': typeof GuestAboutRoute
+  '/cart': typeof GuestCartRoute
+  '/checkout': typeof GuestCheckoutRoute
+  '/contact': typeof GuestContactRoute
+  '/faq': typeof GuestFaqRoute
+  '/privacy': typeof GuestPrivacyRoute
+  '/terms': typeof GuestTermsRoute
+  '/': typeof GuestIndexRoute
+  '/admin/accommodations': typeof AdminAdminAccommodationsRoute
+  '/admin/activities': typeof AdminAdminActivitiesRoute
+  '/admin/bookings': typeof AdminAdminBookingsRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/admin/reports': typeof AdminAdminReportsRoute
+  '/admin/users': typeof AdminAdminUsersRoute
+  '/accommodations/$slug': typeof GuestAccommodationsSlugRoute
+  '/account/bookings': typeof GuestAccountBookingsRoute
+  '/account/favorites': typeof GuestAccountFavoritesRoute
+  '/account/profile': typeof GuestAccountProfileRoute
+  '/activities/$slug': typeof GuestActivitiesSlugRoute
+  '/auth/forgot-password': typeof GuestAuthForgotPasswordRoute
+  '/auth/login': typeof GuestAuthLoginRoute
+  '/auth/register': typeof GuestAuthRegisterRoute
+  '/auth/reset-password': typeof GuestAuthResetPasswordRoute
+  '/confirmation/$id': typeof GuestConfirmationIdRoute
+  '/events/$slug': typeof GuestEventsSlugRoute
+  '/admin': typeof AdminAdminIndexRoute
+  '/accommodations': typeof GuestAccommodationsIndexRoute
+  '/account': typeof GuestAccountIndexRoute
+  '/activities': typeof GuestActivitiesIndexRoute
+  '/events': typeof GuestEventsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms': typeof TermsRoute
-  '/accommodations/$slug': typeof AccommodationsSlugRoute
-  '/account/bookings': typeof AccountBookingsRoute
-  '/account/favorites': typeof AccountFavoritesRoute
-  '/account/profile': typeof AccountProfileRoute
-  '/activities/$slug': typeof ActivitiesSlugRoute
-  '/admin/accommodations': typeof AdminAccommodationsRoute
-  '/admin/activities': typeof AdminActivitiesRoute
-  '/admin/bookings': typeof AdminBookingsRoute
-  '/admin/reports': typeof AdminReportsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/auth/forgot-password': typeof AuthForgotPasswordRoute
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/register': typeof AuthRegisterRoute
-  '/auth/reset-password': typeof AuthResetPasswordRoute
-  '/events/$slug': typeof EventsSlugRoute
-  '/accommodations': typeof AccommodationsIndexRoute
-  '/account': typeof AccountIndexRoute
-  '/activities': typeof ActivitiesIndexRoute
-  '/admin': typeof AdminIndexRoute
-  '/events': typeof EventsIndexRoute
-  '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
+  '/about': typeof GuestAboutRoute
+  '/cart': typeof GuestCartRoute
+  '/checkout': typeof GuestCheckoutRoute
+  '/contact': typeof GuestContactRoute
+  '/faq': typeof GuestFaqRoute
+  '/privacy': typeof GuestPrivacyRoute
+  '/terms': typeof GuestTermsRoute
+  '/': typeof GuestIndexRoute
+  '/admin/accommodations': typeof AdminAdminAccommodationsRoute
+  '/admin/activities': typeof AdminAdminActivitiesRoute
+  '/admin/bookings': typeof AdminAdminBookingsRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/admin/reports': typeof AdminAdminReportsRoute
+  '/admin/users': typeof AdminAdminUsersRoute
+  '/accommodations/$slug': typeof GuestAccommodationsSlugRoute
+  '/account/bookings': typeof GuestAccountBookingsRoute
+  '/account/favorites': typeof GuestAccountFavoritesRoute
+  '/account/profile': typeof GuestAccountProfileRoute
+  '/activities/$slug': typeof GuestActivitiesSlugRoute
+  '/auth/forgot-password': typeof GuestAuthForgotPasswordRoute
+  '/auth/login': typeof GuestAuthLoginRoute
+  '/auth/register': typeof GuestAuthRegisterRoute
+  '/auth/reset-password': typeof GuestAuthResetPasswordRoute
+  '/confirmation/$id': typeof GuestConfirmationIdRoute
+  '/events/$slug': typeof GuestEventsSlugRoute
+  '/admin': typeof AdminAdminIndexRoute
+  '/accommodations': typeof GuestAccommodationsIndexRoute
+  '/account': typeof GuestAccountIndexRoute
+  '/activities': typeof GuestActivitiesIndexRoute
+  '/events': typeof GuestEventsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms': typeof TermsRoute
-  '/accommodations/$slug': typeof AccommodationsSlugRoute
-  '/account/bookings': typeof AccountBookingsRoute
-  '/account/favorites': typeof AccountFavoritesRoute
-  '/account/profile': typeof AccountProfileRoute
-  '/activities/$slug': typeof ActivitiesSlugRoute
-  '/admin/accommodations': typeof AdminAccommodationsRoute
-  '/admin/activities': typeof AdminActivitiesRoute
-  '/admin/bookings': typeof AdminBookingsRoute
-  '/admin/reports': typeof AdminReportsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/auth/forgot-password': typeof AuthForgotPasswordRoute
-  '/auth/login': typeof AuthLoginRoute
-  '/auth/register': typeof AuthRegisterRoute
-  '/auth/reset-password': typeof AuthResetPasswordRoute
-  '/events/$slug': typeof EventsSlugRoute
-  '/accommodations/': typeof AccommodationsIndexRoute
-  '/account/': typeof AccountIndexRoute
-  '/activities/': typeof ActivitiesIndexRoute
-  '/admin/': typeof AdminIndexRoute
-  '/events/': typeof EventsIndexRoute
-  '/booking/confirmation/$id': typeof BookingConfirmationIdRoute
+  '/_admin': typeof AdminRouteWithChildren
+  '/_guest': typeof GuestRouteWithChildren
+  '/_guest/about': typeof GuestAboutRoute
+  '/_guest/cart': typeof GuestCartRoute
+  '/_guest/checkout': typeof GuestCheckoutRoute
+  '/_guest/contact': typeof GuestContactRoute
+  '/_guest/faq': typeof GuestFaqRoute
+  '/_guest/privacy': typeof GuestPrivacyRoute
+  '/_guest/terms': typeof GuestTermsRoute
+  '/_guest/': typeof GuestIndexRoute
+  '/_admin/admin/accommodations': typeof AdminAdminAccommodationsRoute
+  '/_admin/admin/activities': typeof AdminAdminActivitiesRoute
+  '/_admin/admin/bookings': typeof AdminAdminBookingsRoute
+  '/_admin/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/_admin/admin/reports': typeof AdminAdminReportsRoute
+  '/_admin/admin/users': typeof AdminAdminUsersRoute
+  '/_guest/accommodations/$slug': typeof GuestAccommodationsSlugRoute
+  '/_guest/account/bookings': typeof GuestAccountBookingsRoute
+  '/_guest/account/favorites': typeof GuestAccountFavoritesRoute
+  '/_guest/account/profile': typeof GuestAccountProfileRoute
+  '/_guest/activities/$slug': typeof GuestActivitiesSlugRoute
+  '/_guest/auth/forgot-password': typeof GuestAuthForgotPasswordRoute
+  '/_guest/auth/login': typeof GuestAuthLoginRoute
+  '/_guest/auth/register': typeof GuestAuthRegisterRoute
+  '/_guest/auth/reset-password': typeof GuestAuthResetPasswordRoute
+  '/_guest/confirmation/$id': typeof GuestConfirmationIdRoute
+  '/_guest/events/$slug': typeof GuestEventsSlugRoute
+  '/_admin/admin/': typeof AdminAdminIndexRoute
+  '/_guest/accommodations/': typeof GuestAccommodationsIndexRoute
+  '/_guest/account/': typeof GuestAccountIndexRoute
+  '/_guest/activities/': typeof GuestActivitiesIndexRoute
+  '/_guest/events/': typeof GuestEventsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/about'
     | '/cart'
     | '/checkout'
@@ -290,30 +312,31 @@ export interface FileRouteTypes {
     | '/faq'
     | '/privacy'
     | '/terms'
+    | '/'
+    | '/admin/accommodations'
+    | '/admin/activities'
+    | '/admin/bookings'
+    | '/admin/dashboard'
+    | '/admin/reports'
+    | '/admin/users'
     | '/accommodations/$slug'
     | '/account/bookings'
     | '/account/favorites'
     | '/account/profile'
     | '/activities/$slug'
-    | '/admin/accommodations'
-    | '/admin/activities'
-    | '/admin/bookings'
-    | '/admin/reports'
-    | '/admin/users'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
+    | '/confirmation/$id'
     | '/events/$slug'
+    | '/admin'
     | '/accommodations'
     | '/account'
     | '/activities'
-    | '/admin'
     | '/events'
-    | '/booking/confirmation/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/about'
     | '/cart'
     | '/checkout'
@@ -321,330 +344,378 @@ export interface FileRouteTypes {
     | '/faq'
     | '/privacy'
     | '/terms'
+    | '/'
+    | '/admin/accommodations'
+    | '/admin/activities'
+    | '/admin/bookings'
+    | '/admin/dashboard'
+    | '/admin/reports'
+    | '/admin/users'
     | '/accommodations/$slug'
     | '/account/bookings'
     | '/account/favorites'
     | '/account/profile'
     | '/activities/$slug'
-    | '/admin/accommodations'
-    | '/admin/activities'
-    | '/admin/bookings'
-    | '/admin/reports'
-    | '/admin/users'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
+    | '/confirmation/$id'
     | '/events/$slug'
+    | '/admin'
     | '/accommodations'
     | '/account'
     | '/activities'
-    | '/admin'
     | '/events'
-    | '/booking/confirmation/$id'
   id:
     | '__root__'
-    | '/'
-    | '/about'
-    | '/cart'
-    | '/checkout'
-    | '/contact'
-    | '/faq'
-    | '/privacy'
-    | '/terms'
-    | '/accommodations/$slug'
-    | '/account/bookings'
-    | '/account/favorites'
-    | '/account/profile'
-    | '/activities/$slug'
-    | '/admin/accommodations'
-    | '/admin/activities'
-    | '/admin/bookings'
-    | '/admin/reports'
-    | '/admin/users'
-    | '/auth/forgot-password'
-    | '/auth/login'
-    | '/auth/register'
-    | '/auth/reset-password'
-    | '/events/$slug'
-    | '/accommodations/'
-    | '/account/'
-    | '/activities/'
-    | '/admin/'
-    | '/events/'
-    | '/booking/confirmation/$id'
+    | '/_admin'
+    | '/_guest'
+    | '/_guest/about'
+    | '/_guest/cart'
+    | '/_guest/checkout'
+    | '/_guest/contact'
+    | '/_guest/faq'
+    | '/_guest/privacy'
+    | '/_guest/terms'
+    | '/_guest/'
+    | '/_admin/admin/accommodations'
+    | '/_admin/admin/activities'
+    | '/_admin/admin/bookings'
+    | '/_admin/admin/dashboard'
+    | '/_admin/admin/reports'
+    | '/_admin/admin/users'
+    | '/_guest/accommodations/$slug'
+    | '/_guest/account/bookings'
+    | '/_guest/account/favorites'
+    | '/_guest/account/profile'
+    | '/_guest/activities/$slug'
+    | '/_guest/auth/forgot-password'
+    | '/_guest/auth/login'
+    | '/_guest/auth/register'
+    | '/_guest/auth/reset-password'
+    | '/_guest/confirmation/$id'
+    | '/_guest/events/$slug'
+    | '/_admin/admin/'
+    | '/_guest/accommodations/'
+    | '/_guest/account/'
+    | '/_guest/activities/'
+    | '/_guest/events/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  CartRoute: typeof CartRoute
-  CheckoutRoute: typeof CheckoutRoute
-  ContactRoute: typeof ContactRoute
-  FaqRoute: typeof FaqRoute
-  PrivacyRoute: typeof PrivacyRoute
-  TermsRoute: typeof TermsRoute
-  AccommodationsSlugRoute: typeof AccommodationsSlugRoute
-  AccountBookingsRoute: typeof AccountBookingsRoute
-  AccountFavoritesRoute: typeof AccountFavoritesRoute
-  AccountProfileRoute: typeof AccountProfileRoute
-  ActivitiesSlugRoute: typeof ActivitiesSlugRoute
-  AdminAccommodationsRoute: typeof AdminAccommodationsRoute
-  AdminActivitiesRoute: typeof AdminActivitiesRoute
-  AdminBookingsRoute: typeof AdminBookingsRoute
-  AdminReportsRoute: typeof AdminReportsRoute
-  AdminUsersRoute: typeof AdminUsersRoute
-  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthRegisterRoute: typeof AuthRegisterRoute
-  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
-  EventsSlugRoute: typeof EventsSlugRoute
-  AccommodationsIndexRoute: typeof AccommodationsIndexRoute
-  AccountIndexRoute: typeof AccountIndexRoute
-  ActivitiesIndexRoute: typeof ActivitiesIndexRoute
-  AdminIndexRoute: typeof AdminIndexRoute
-  EventsIndexRoute: typeof EventsIndexRoute
-  BookingConfirmationIdRoute: typeof BookingConfirmationIdRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  GuestRoute: typeof GuestRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
+    '/_guest': {
+      id: '/_guest'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof GuestRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cart': {
-      id: '/cart'
-      path: '/cart'
-      fullPath: '/cart'
-      preLoaderRoute: typeof CartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_guest/': {
+      id: '/_guest/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestIndexRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/events/': {
-      id: '/events/'
+    '/_guest/terms': {
+      id: '/_guest/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof GuestTermsRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/privacy': {
+      id: '/_guest/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof GuestPrivacyRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/faq': {
+      id: '/_guest/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof GuestFaqRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/contact': {
+      id: '/_guest/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof GuestContactRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/checkout': {
+      id: '/_guest/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof GuestCheckoutRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/cart': {
+      id: '/_guest/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof GuestCartRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/about': {
+      id: '/_guest/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof GuestAboutRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/events/': {
+      id: '/_guest/events/'
       path: '/events'
       fullPath: '/events'
-      preLoaderRoute: typeof EventsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestEventsIndexRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/admin/': {
-      id: '/admin/'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/activities/': {
-      id: '/activities/'
+    '/_guest/activities/': {
+      id: '/_guest/activities/'
       path: '/activities'
       fullPath: '/activities'
-      preLoaderRoute: typeof ActivitiesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestActivitiesIndexRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/account/': {
-      id: '/account/'
+    '/_guest/account/': {
+      id: '/_guest/account/'
       path: '/account'
       fullPath: '/account'
-      preLoaderRoute: typeof AccountIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAccountIndexRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/accommodations/': {
-      id: '/accommodations/'
+    '/_guest/accommodations/': {
+      id: '/_guest/accommodations/'
       path: '/accommodations'
       fullPath: '/accommodations'
-      preLoaderRoute: typeof AccommodationsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAccommodationsIndexRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/events/$slug': {
-      id: '/events/$slug'
+    '/_admin/admin/': {
+      id: '/_admin/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_guest/events/$slug': {
+      id: '/_guest/events/$slug'
       path: '/events/$slug'
       fullPath: '/events/$slug'
-      preLoaderRoute: typeof EventsSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestEventsSlugRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/auth/reset-password': {
-      id: '/auth/reset-password'
+    '/_guest/confirmation/$id': {
+      id: '/_guest/confirmation/$id'
+      path: '/confirmation/$id'
+      fullPath: '/confirmation/$id'
+      preLoaderRoute: typeof GuestConfirmationIdRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/auth/reset-password': {
+      id: '/_guest/auth/reset-password'
       path: '/auth/reset-password'
       fullPath: '/auth/reset-password'
-      preLoaderRoute: typeof AuthResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAuthResetPasswordRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/auth/register': {
-      id: '/auth/register'
+    '/_guest/auth/register': {
+      id: '/_guest/auth/register'
       path: '/auth/register'
       fullPath: '/auth/register'
-      preLoaderRoute: typeof AuthRegisterRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAuthRegisterRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/auth/login': {
-      id: '/auth/login'
+    '/_guest/auth/login': {
+      id: '/_guest/auth/login'
       path: '/auth/login'
       fullPath: '/auth/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAuthLoginRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/auth/forgot-password': {
-      id: '/auth/forgot-password'
+    '/_guest/auth/forgot-password': {
+      id: '/_guest/auth/forgot-password'
       path: '/auth/forgot-password'
       fullPath: '/auth/forgot-password'
-      preLoaderRoute: typeof AuthForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAuthForgotPasswordRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/admin/users': {
-      id: '/admin/users'
-      path: '/admin/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/reports': {
-      id: '/admin/reports'
-      path: '/admin/reports'
-      fullPath: '/admin/reports'
-      preLoaderRoute: typeof AdminReportsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/bookings': {
-      id: '/admin/bookings'
-      path: '/admin/bookings'
-      fullPath: '/admin/bookings'
-      preLoaderRoute: typeof AdminBookingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/activities': {
-      id: '/admin/activities'
-      path: '/admin/activities'
-      fullPath: '/admin/activities'
-      preLoaderRoute: typeof AdminActivitiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/accommodations': {
-      id: '/admin/accommodations'
-      path: '/admin/accommodations'
-      fullPath: '/admin/accommodations'
-      preLoaderRoute: typeof AdminAccommodationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/activities/$slug': {
-      id: '/activities/$slug'
+    '/_guest/activities/$slug': {
+      id: '/_guest/activities/$slug'
       path: '/activities/$slug'
       fullPath: '/activities/$slug'
-      preLoaderRoute: typeof ActivitiesSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestActivitiesSlugRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/account/profile': {
-      id: '/account/profile'
+    '/_guest/account/profile': {
+      id: '/_guest/account/profile'
       path: '/account/profile'
       fullPath: '/account/profile'
-      preLoaderRoute: typeof AccountProfileRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAccountProfileRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/account/favorites': {
-      id: '/account/favorites'
+    '/_guest/account/favorites': {
+      id: '/_guest/account/favorites'
       path: '/account/favorites'
       fullPath: '/account/favorites'
-      preLoaderRoute: typeof AccountFavoritesRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAccountFavoritesRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/account/bookings': {
-      id: '/account/bookings'
+    '/_guest/account/bookings': {
+      id: '/_guest/account/bookings'
       path: '/account/bookings'
       fullPath: '/account/bookings'
-      preLoaderRoute: typeof AccountBookingsRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAccountBookingsRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/accommodations/$slug': {
-      id: '/accommodations/$slug'
+    '/_guest/accommodations/$slug': {
+      id: '/_guest/accommodations/$slug'
       path: '/accommodations/$slug'
       fullPath: '/accommodations/$slug'
-      preLoaderRoute: typeof AccommodationsSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof GuestAccommodationsSlugRouteImport
+      parentRoute: typeof GuestRoute
     }
-    '/booking/confirmation/$id': {
-      id: '/booking/confirmation/$id'
-      path: '/booking/confirmation/$id'
-      fullPath: '/booking/confirmation/$id'
-      preLoaderRoute: typeof BookingConfirmationIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_admin/admin/users': {
+      id: '/_admin/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminAdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/reports': {
+      id: '/_admin/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminAdminReportsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/dashboard': {
+      id: '/_admin/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminAdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/bookings': {
+      id: '/_admin/admin/bookings'
+      path: '/admin/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AdminAdminBookingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/activities': {
+      id: '/_admin/admin/activities'
+      path: '/admin/activities'
+      fullPath: '/admin/activities'
+      preLoaderRoute: typeof AdminAdminActivitiesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/accommodations': {
+      id: '/_admin/admin/accommodations'
+      path: '/admin/accommodations'
+      fullPath: '/admin/accommodations'
+      preLoaderRoute: typeof AdminAdminAccommodationsRouteImport
+      parentRoute: typeof AdminRoute
     }
   }
 }
 
+interface AdminRouteChildren {
+  AdminAdminAccommodationsRoute: typeof AdminAdminAccommodationsRoute
+  AdminAdminActivitiesRoute: typeof AdminAdminActivitiesRoute
+  AdminAdminBookingsRoute: typeof AdminAdminBookingsRoute
+  AdminAdminDashboardRoute: typeof AdminAdminDashboardRoute
+  AdminAdminReportsRoute: typeof AdminAdminReportsRoute
+  AdminAdminUsersRoute: typeof AdminAdminUsersRoute
+  AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminAccommodationsRoute: AdminAdminAccommodationsRoute,
+  AdminAdminActivitiesRoute: AdminAdminActivitiesRoute,
+  AdminAdminBookingsRoute: AdminAdminBookingsRoute,
+  AdminAdminDashboardRoute: AdminAdminDashboardRoute,
+  AdminAdminReportsRoute: AdminAdminReportsRoute,
+  AdminAdminUsersRoute: AdminAdminUsersRoute,
+  AdminAdminIndexRoute: AdminAdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface GuestRouteChildren {
+  GuestAboutRoute: typeof GuestAboutRoute
+  GuestCartRoute: typeof GuestCartRoute
+  GuestCheckoutRoute: typeof GuestCheckoutRoute
+  GuestContactRoute: typeof GuestContactRoute
+  GuestFaqRoute: typeof GuestFaqRoute
+  GuestPrivacyRoute: typeof GuestPrivacyRoute
+  GuestTermsRoute: typeof GuestTermsRoute
+  GuestIndexRoute: typeof GuestIndexRoute
+  GuestAccommodationsSlugRoute: typeof GuestAccommodationsSlugRoute
+  GuestAccountBookingsRoute: typeof GuestAccountBookingsRoute
+  GuestAccountFavoritesRoute: typeof GuestAccountFavoritesRoute
+  GuestAccountProfileRoute: typeof GuestAccountProfileRoute
+  GuestActivitiesSlugRoute: typeof GuestActivitiesSlugRoute
+  GuestAuthForgotPasswordRoute: typeof GuestAuthForgotPasswordRoute
+  GuestAuthLoginRoute: typeof GuestAuthLoginRoute
+  GuestAuthRegisterRoute: typeof GuestAuthRegisterRoute
+  GuestAuthResetPasswordRoute: typeof GuestAuthResetPasswordRoute
+  GuestConfirmationIdRoute: typeof GuestConfirmationIdRoute
+  GuestEventsSlugRoute: typeof GuestEventsSlugRoute
+  GuestAccommodationsIndexRoute: typeof GuestAccommodationsIndexRoute
+  GuestAccountIndexRoute: typeof GuestAccountIndexRoute
+  GuestActivitiesIndexRoute: typeof GuestActivitiesIndexRoute
+  GuestEventsIndexRoute: typeof GuestEventsIndexRoute
+}
+
+const GuestRouteChildren: GuestRouteChildren = {
+  GuestAboutRoute: GuestAboutRoute,
+  GuestCartRoute: GuestCartRoute,
+  GuestCheckoutRoute: GuestCheckoutRoute,
+  GuestContactRoute: GuestContactRoute,
+  GuestFaqRoute: GuestFaqRoute,
+  GuestPrivacyRoute: GuestPrivacyRoute,
+  GuestTermsRoute: GuestTermsRoute,
+  GuestIndexRoute: GuestIndexRoute,
+  GuestAccommodationsSlugRoute: GuestAccommodationsSlugRoute,
+  GuestAccountBookingsRoute: GuestAccountBookingsRoute,
+  GuestAccountFavoritesRoute: GuestAccountFavoritesRoute,
+  GuestAccountProfileRoute: GuestAccountProfileRoute,
+  GuestActivitiesSlugRoute: GuestActivitiesSlugRoute,
+  GuestAuthForgotPasswordRoute: GuestAuthForgotPasswordRoute,
+  GuestAuthLoginRoute: GuestAuthLoginRoute,
+  GuestAuthRegisterRoute: GuestAuthRegisterRoute,
+  GuestAuthResetPasswordRoute: GuestAuthResetPasswordRoute,
+  GuestConfirmationIdRoute: GuestConfirmationIdRoute,
+  GuestEventsSlugRoute: GuestEventsSlugRoute,
+  GuestAccommodationsIndexRoute: GuestAccommodationsIndexRoute,
+  GuestAccountIndexRoute: GuestAccountIndexRoute,
+  GuestActivitiesIndexRoute: GuestActivitiesIndexRoute,
+  GuestEventsIndexRoute: GuestEventsIndexRoute,
+}
+
+const GuestRouteWithChildren = GuestRoute._addFileChildren(GuestRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  CartRoute: CartRoute,
-  CheckoutRoute: CheckoutRoute,
-  ContactRoute: ContactRoute,
-  FaqRoute: FaqRoute,
-  PrivacyRoute: PrivacyRoute,
-  TermsRoute: TermsRoute,
-  AccommodationsSlugRoute: AccommodationsSlugRoute,
-  AccountBookingsRoute: AccountBookingsRoute,
-  AccountFavoritesRoute: AccountFavoritesRoute,
-  AccountProfileRoute: AccountProfileRoute,
-  ActivitiesSlugRoute: ActivitiesSlugRoute,
-  AdminAccommodationsRoute: AdminAccommodationsRoute,
-  AdminActivitiesRoute: AdminActivitiesRoute,
-  AdminBookingsRoute: AdminBookingsRoute,
-  AdminReportsRoute: AdminReportsRoute,
-  AdminUsersRoute: AdminUsersRoute,
-  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthRegisterRoute: AuthRegisterRoute,
-  AuthResetPasswordRoute: AuthResetPasswordRoute,
-  EventsSlugRoute: EventsSlugRoute,
-  AccommodationsIndexRoute: AccommodationsIndexRoute,
-  AccountIndexRoute: AccountIndexRoute,
-  ActivitiesIndexRoute: ActivitiesIndexRoute,
-  AdminIndexRoute: AdminIndexRoute,
-  EventsIndexRoute: EventsIndexRoute,
-  BookingConfirmationIdRoute: BookingConfirmationIdRoute,
+  AdminRoute: AdminRouteWithChildren,
+  GuestRoute: GuestRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

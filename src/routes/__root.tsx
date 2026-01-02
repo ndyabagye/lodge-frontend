@@ -1,6 +1,6 @@
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { NotFound } from "@/components/common/NotFound";
-import { MainLayout } from "@/components/layout/MainLayout";
+// import { MainLayout } from "@/components/layout/MainLayout";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
@@ -13,9 +13,9 @@ function RootComponent() {
   return (
     <>
       <ErrorBoundary>
-        <MainLayout>
-          <Outlet />
-        </MainLayout>
+        {/*<MainLayout>*/}
+        <Outlet />
+        {/*</MainLayout>*/}
       </ErrorBoundary>
       {import.meta.env.DEV && <TanStackRouterDevtools />}
     </>

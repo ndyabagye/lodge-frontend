@@ -86,6 +86,12 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
       return;
     }
 
+    const nights = calculateNights();
+    if (nights < 1) {
+      toast.error("Check-out date must be after check-in date");
+      return;
+    }
+
     addItem({
       id: `${accommodation.id}-${dateRange.from.toISOString()}`,
       type: "accommodation",

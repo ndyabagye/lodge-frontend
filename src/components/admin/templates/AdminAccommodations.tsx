@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AdminLayout } from "../components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,7 +47,7 @@ export function AdminAccommodationsTemplate() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -161,7 +160,7 @@ export function AdminAccommodationsTemplate() {
                             <Link
                               to="/accommodations/$slug"
                               params={{ slug: accommodation.slug }}
-                              target="_blank"
+                              target=""
                             >
                               <Button variant="ghost" size="icon">
                                 <Eye className="h-4 w-4" />
@@ -193,7 +192,7 @@ export function AdminAccommodationsTemplate() {
                                     onClick={() =>
                                       handleDelete(accommodation.id)
                                     }
-                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                    className="bg-destructive hover:bg-destructive/90"
                                   >
                                     Delete
                                   </AlertDialogAction>
@@ -215,6 +214,6 @@ export function AdminAccommodationsTemplate() {
           </CardContent>
         </Card>
       </div>
-    </AdminLayout>
+    </>
   );
 }

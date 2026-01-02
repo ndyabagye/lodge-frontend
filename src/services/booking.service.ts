@@ -9,11 +9,19 @@ import type {
 export const bookingService = {
   // POST /api/v1/bookings
   create: async (data: CreateBookingData): Promise<Booking> => {
-    const response = await api.post("/bookings", data);
+    // Ensure dates are in ISO 8601 format
+    const formattedData = {
+      ...data,
+      check_in_date: new Date(data.check_in_date).toISOString(),
+      check_out_date: new Date(data.check_out_date).toISOString(),
+      num_guests: data.num_adults + data.num_children, // Calculate total guests
+    };
+
+    const response = await api.post("/bookings", formattedData);
     return response.data.data;
   },
 
-  // GET /api/v1/bookings
+  // GET /api/v1/bookings - authenticated users
   getAll: async (
     params?: PaginationParams,
   ): Promise<PaginatedResponse<Booking>> => {
@@ -21,9 +29,20 @@ export const bookingService = {
     return data;
   },
 
-  // GET /api/v1/bookings/:id
+  // GET /api/v1/bookings/:id - authenticated users
   getById: async (id: string): Promise<Booking> => {
     const { data } = await api.get(`/bookings/${id}`);
+    return data.data;
+  },
+
+  // Get guest booking by booking number - guest
+  getGuestBooking: async (
+    bookingNumber: string,
+    email: string,
+  ): Promise<Booking> => {
+    const { data } = await api.get(`/bookings/guest/${bookingNumber}`, {
+      params: { email },
+    });
     return data.data;
   },
 
@@ -54,6 +73,46 @@ export const bookingService = {
   // GET /api/v1/bookings/:id/invoice
   getInvoice: async (id: string): Promise<Blob> => {
     const response = await api.get(`/bookings/${id}/invoice`, {
+      responseType: "blob",
+    });
+    return response.data;
+  },
+
+  // GET /api/v1/bookings/:id/invoice/preview (Authenticated)
+  previewInvoice: async (id: string): Promise<any> => {
+    const response = await api.get(`/bookings/${id}/invoice/preview`);
+    return response.data;
+  },
+
+  // GET /api/v1/bookings/:id/invoice (Authenticated - Download PDF)
+  downloadInvoice: async (id: string): Promise<Blob> => {
+    const response = await api.get(`/bookings/${id}/invoice`, {
+      responseType: "blob",
+    });
+    return response.data;
+  },
+
+  // Guest invoice preview
+  previewGuestInvoice: async (
+    bookingNumber: string,
+    email: string,
+  ): Promise<any> => {
+    const response = await api.get(
+      `/bookings/guest/${bookingNumber}/invoice/preview`,
+      {
+        params: { email },
+      },
+    );
+    return response.data;
+  },
+
+  // Guest invoice download
+  downloadGuestInvoice: async (
+    bookingNumber: string,
+    email: string,
+  ): Promise<Blob> => {
+    const response = await api.get(`/bookings/guest/${bookingNumber}/invoice`, {
+      params: { email },
       responseType: "blob",
     });
     return response.data;

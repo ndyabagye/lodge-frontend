@@ -41,6 +41,6 @@ export const accommodationService = {
   // GET /api/v1/accommodations/:id/reviews
   getReviews: async (id: string) => {
     const { data } = await api.get(`/accommodations/${id}/reviews`);
-    return data;
+    return data.data;
   },
 };

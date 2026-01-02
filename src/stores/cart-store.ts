@@ -67,17 +67,20 @@ export const useCartStore = create<CartState>()(
 
       getSubtotal: () => {
         const { items } = get();
+        console.log("The available items are:", items);
         return items.reduce((total, item) => total + item.total, 0);
       },
 
       getTax: () => {
         const subtotal = get().getSubtotal();
+        console.log("The subtotal is:", subtotal);
         return subtotal * UGANDA_VAT; // 18% tax - adjust as needed
       },
 
       getTotal: () => {
         const subtotal = get().getSubtotal();
         const tax = get().getTax();
+        console.log("The tax is:", tax, "the subtotal is:", subtotal);
         return subtotal + tax;
       },
 

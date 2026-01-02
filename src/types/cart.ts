@@ -9,6 +9,8 @@ export interface CartItem {
   // for accommodations
   check_in_date?: string;
   check_out_date?: string;
+  num_adults?: number;
+  num_children?: number;
   // for activities
   date?: string;
   time?: string;

@@ -1,4 +1,3 @@
-import { AdminLayout } from "../components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDashboardStats, useRevenueData } from "@/hooks/use-admin";
 import { Loading } from "@/components/common/Loading";
@@ -36,15 +35,10 @@ export function AdminDashboardTemplate() {
     today,
   );
 
-  if (loadingStats)
-    return (
-      <AdminLayout>
-        <Loading />
-      </AdminLayout>
-    );
+  if (loadingStats) return <Loading />;
 
   return (
-    <AdminLayout>
+    <>
       <div className="space-y-8">
         {/* Header */}
         <div>
@@ -326,6 +320,6 @@ export function AdminDashboardTemplate() {
           </Card>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }

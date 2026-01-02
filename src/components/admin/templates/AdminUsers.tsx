@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AdminLayout } from "../components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -85,7 +84,7 @@ export function AdminUsersTemplate() {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="space-y-6">
         {/* Header */}
         <div>
@@ -316,6 +315,6 @@ export function AdminUsersTemplate() {
           </CardContent>
         </Card>
       </div>
-    </AdminLayout>
+    </>
   );
 }

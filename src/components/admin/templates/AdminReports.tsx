@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AdminLayout } from "../components/AdminLayout";
+// import { AdminLayout } from "../components/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -52,7 +52,7 @@ export function AdminReportsTemplate() {
     totalBookings > 0 ? totalRevenue / totalBookings : 0;
 
   return (
-    <AdminLayout>
+    <>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -316,6 +316,6 @@ export function AdminReportsTemplate() {
           </Card>
         </div>
       </div>
-    </AdminLayout>
+    </>
   );
 }
