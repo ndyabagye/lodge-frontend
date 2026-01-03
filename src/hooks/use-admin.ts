@@ -2,18 +2,20 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminService } from "@/services/admin.service";
 import { toast } from "sonner";
 import type { PaginationParams } from "@/types";
+import { QUERY_KEYS } from "@/lib/constants";
+import { accommodationService } from "@/services/accommodation.service";
 
 // Dashboard hooks
 export function useDashboardStats() {
   return useQuery({
-    queryKey: ["admin", "dashboard", "stats"],
+    queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.DASHBOARD, QUERY_KEYS.STATS],
     queryFn: () => adminService.getDashboardStats(),
   });
 }
 
 export function useRevenueData(from: string, to: string) {
   return useQuery({
-    queryKey: ["admin", "revenue", from, to],
+    queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.REVENUE, from, to],
     queryFn: () => adminService.getRevenueData({ from, to }),
     enabled: !!from && !!to,
   });
@@ -22,66 +24,70 @@ export function useRevenueData(from: string, to: string) {
 // Accommodations hooks
 export function useAdminAccommodations(params?: PaginationParams) {
   return useQuery({
-    queryKey: ["admin", "accommodations", params],
-    queryFn: () => adminService.getAllAccommodations(params),
+    queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.ACCOMMODATIONS, params],
+    queryFn: () => accommodationService.getAllAccommodations(params),
   });
 }
 
-export function useCreateAccommodation() {
-  const queryClient = useQueryClient();
+// export function useCreateAccommodation() {
+//   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: adminService.createAccommodation,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "accommodations"] });
-      toast.success("Accommodation created successfully");
-    },
-    onError: (error: any) => {
-      toast.error(
-        error.response?.data?.message || "Failed to create accommodation",
-      );
-    },
-  });
-}
+//   return useMutation({
+//     mutationFn: adminService.createAccommodation,
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.ACCOMMODATIONS] });
+//       toast.success("Accommodation created successfully");
+//     },
+//     onError: (error: any) => {
+//       toast.error(
+//         error.response?.data?.message || "Failed to create accommodation",
+//       );
+//     },
+//   });
+// }
 
-export function useUpdateAccommodation() {
-  const queryClient = useQueryClient();
+// export function useUpdateAccommodation() {
+//   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: any }) =>
-      adminService.updateAccommodation(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "accommodations"] });
-      toast.success("Accommodation updated successfully");
-    },
-    onError: (error: any) => {
-      toast.error(
-        error.response?.data?.message || "Failed to update accommodation",
-      );
-    },
-  });
-}
+//   return useMutation({
+//     mutationFn: ({ id, data }: { id: string; data: any }) =>
+//       adminService.updateAccommodation(id, data),
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.ACCOMMODATIONS] });
+//       toast.success("Accommodation updated successfully");
+//     },
+//     onError: (error: any) => {
+//       toast.error(
+//         error.response?.data?.message || "Failed to update accommodation",
+//       );
+//     },
+//   });
+// }
 
-export function useDeleteAccommodation() {
-  const queryClient = useQueryClient();
+// export function useDeleteAccommodation() {
+//   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: adminService.deleteAccommodation,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "accommodations"] });
-      toast.success("Accommodation deleted successfully");
-    },
-    onError: (error: any) => {
-      toast.error(
-        error.response?.data?.message || "Failed to delete accommodation",
-      );
-    },
-  });
-}
+//   return useMutation({
+//     mutationFn: adminService.deleteAccommodation,
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.ACCOMMODATIONS] });
+//       toast.success("Accommodation deleted successfully");
+//     },
+//     onError: (error: any) => {
+//       toast.error(
+//         error.response?.data?.message || "Failed to delete accommodation",
+//       );
+//     },
+//   });
+// }
 
 export function useTopAccomodations() {
   return useQuery({
-    queryKey: ["admin", "dashboard", "accomodations"],
+    queryKey: [
+      QUERY_KEYS.ADMIN,
+      QUERY_KEYS.DASHBOARD,
+      QUERY_KEYS.ACCOMMODATIONS,
+    ],
     queryFn: () => adminService.getTopAccommodations(),
   });
 }
@@ -89,7 +95,7 @@ export function useTopAccomodations() {
 // Activities hooks
 export function useAdminActivities(params?: PaginationParams) {
   return useQuery({
-    queryKey: ["admin", "activities", params],
+    queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.ACTIVITIES, params],
     queryFn: () => adminService.getAllActivities(params),
   });
 }
@@ -100,7 +106,9 @@ export function useCreateActivity() {
   return useMutation({
     mutationFn: adminService.createActivity,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "activities"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.ACTIVITIES],
+      });
       toast.success("Activity created successfully");
     },
     onError: (error: any) => {
@@ -116,7 +124,9 @@ export function useUpdateActivity() {
     mutationFn: ({ id, data }: { id: string; data: any }) =>
       adminService.updateActivity(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "activities"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.ACTIVITIES],
+      });
       toast.success("Activity updated successfully");
     },
     onError: (error: any) => {
@@ -131,7 +141,9 @@ export function useDeleteActivity() {
   return useMutation({
     mutationFn: adminService.deleteActivity,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "activities"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.ACTIVITIES],
+      });
       toast.success("Activity deleted successfully");
     },
     onError: (error: any) => {
@@ -145,7 +157,7 @@ export function useAdminBookings(
   params?: PaginationParams & { status?: string; search?: string },
 ) {
   return useQuery({
-    queryKey: ["admin", "bookings", params],
+    queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.BOOKINGS, params],
     queryFn: () => adminService.getAllBookings(params),
   });
 }
@@ -157,7 +169,9 @@ export function useUpdateBookingStatus() {
     mutationFn: ({ id, status }: { id: string; status: string }) =>
       adminService.updateBookingStatus(id, status),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "bookings"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.BOOKINGS],
+      });
       toast.success("Booking status updated");
     },
     onError: (error: any) => {
@@ -173,7 +187,7 @@ export function useAdminUsers(
   params?: PaginationParams & { role?: string; search?: string },
 ) {
   return useQuery({
-    queryKey: ["admin", "users", params],
+    queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.USERS, params],
     queryFn: () => adminService.getAllUsers(params),
   });
 }
@@ -185,7 +199,9 @@ export function useUpdateUserRole() {
     mutationFn: ({ id, role }: { id: string; role: string }) =>
       adminService.updateUserRole(id, role),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.USERS],
+      });
       toast.success("User role updated");
     },
     onError: (error: any) => {
@@ -202,7 +218,9 @@ export function useSuspendUser() {
   return useMutation({
     mutationFn: adminService.suspendUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.USERS],
+      });
       toast.success("User suspended");
     },
     onError: (error: any) => {
@@ -217,7 +235,9 @@ export function useActivateUser() {
   return useMutation({
     mutationFn: adminService.activateUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.USERS],
+      });
       toast.success("User activated");
     },
     onError: (error: any) => {
@@ -232,7 +252,9 @@ export function useDeleteUser() {
   return useMutation({
     mutationFn: adminService.deleteUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ADMIN, QUERY_KEYS.USERS],
+      });
       toast.success("User deleted");
     },
     onError: (error: any) => {

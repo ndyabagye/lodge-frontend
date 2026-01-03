@@ -40,7 +40,6 @@ export function AccommodationDetailTemplate({
     <div className="min-h-screen">
       {/*image gallery*/}
       <ImageGallery images={accommodation.images} name={accommodation.name} />
-
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}

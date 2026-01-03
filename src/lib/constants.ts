@@ -20,14 +20,19 @@ export const ROUTES = {
 } as const;
 
 export const QUERY_KEYS = {
+  ADMIN: "admin",
   ACCOMMODATIONS: "accommodations",
   ACCOMMODATION: "accommodation",
   ACTIVITIES: "activities",
   ACTIVITY: "activity",
   BOOKINGS: "bookings",
   CONTACT: "contact-us",
+  DASHBOARD: "dashboard",
   USER: "user",
+  USERS: "users",
+  REVENUE: "revenue",
   REVIEWS: "reviews",
+  STATS: "stats",
   PAYMENT_GATEWAYS: "payment-gateways",
   PAYMENT_STATS: "payment-stats",
 } as const;

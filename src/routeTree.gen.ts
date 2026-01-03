@@ -40,7 +40,10 @@ import { Route as AdminAdminReportsRouteImport } from './routes/_admin/admin/rep
 import { Route as AdminAdminDashboardRouteImport } from './routes/_admin/admin/dashboard'
 import { Route as AdminAdminBookingsRouteImport } from './routes/_admin/admin/bookings'
 import { Route as AdminAdminActivitiesRouteImport } from './routes/_admin/admin/activities'
-import { Route as AdminAdminAccommodationsRouteImport } from './routes/_admin/admin/accommodations'
+import { Route as AdminAdminAccommodationsIndexRouteImport } from './routes/_admin/admin/accommodations/index'
+import { Route as AdminAdminAccommodationsCreateRouteImport } from './routes/_admin/admin/accommodations/create'
+import { Route as AdminAdminAccommodationsViewIdRouteImport } from './routes/_admin/admin/accommodations/view/$id'
+import { Route as AdminAdminAccommodationsEditIdRouteImport } from './routes/_admin/admin/accommodations/edit/$id'
 
 const GuestRoute = GuestRouteImport.update({
   id: '/_guest',
@@ -196,10 +199,28 @@ const AdminAdminActivitiesRoute = AdminAdminActivitiesRouteImport.update({
   path: '/admin/activities',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminAdminAccommodationsRoute =
-  AdminAdminAccommodationsRouteImport.update({
-    id: '/admin/accommodations',
-    path: '/admin/accommodations',
+const AdminAdminAccommodationsIndexRoute =
+  AdminAdminAccommodationsIndexRouteImport.update({
+    id: '/admin/accommodations/',
+    path: '/admin/accommodations/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminAdminAccommodationsCreateRoute =
+  AdminAdminAccommodationsCreateRouteImport.update({
+    id: '/admin/accommodations/create',
+    path: '/admin/accommodations/create',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminAdminAccommodationsViewIdRoute =
+  AdminAdminAccommodationsViewIdRouteImport.update({
+    id: '/admin/accommodations/view/$id',
+    path: '/admin/accommodations/view/$id',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminAdminAccommodationsEditIdRoute =
+  AdminAdminAccommodationsEditIdRouteImport.update({
+    id: '/admin/accommodations/edit/$id',
+    path: '/admin/accommodations/edit/$id',
     getParentRoute: () => AdminRoute,
   } as any)
 
@@ -212,7 +233,6 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof GuestPrivacyRoute
   '/terms': typeof GuestTermsRoute
   '/': typeof GuestIndexRoute
-  '/admin/accommodations': typeof AdminAdminAccommodationsRoute
   '/admin/activities': typeof AdminAdminActivitiesRoute
   '/admin/bookings': typeof AdminAdminBookingsRoute
   '/admin/dashboard': typeof AdminAdminDashboardRoute
@@ -234,6 +254,10 @@ export interface FileRoutesByFullPath {
   '/account': typeof GuestAccountIndexRoute
   '/activities': typeof GuestActivitiesIndexRoute
   '/events': typeof GuestEventsIndexRoute
+  '/admin/accommodations/create': typeof AdminAdminAccommodationsCreateRoute
+  '/admin/accommodations': typeof AdminAdminAccommodationsIndexRoute
+  '/admin/accommodations/edit/$id': typeof AdminAdminAccommodationsEditIdRoute
+  '/admin/accommodations/view/$id': typeof AdminAdminAccommodationsViewIdRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof GuestAboutRoute
@@ -244,7 +268,6 @@ export interface FileRoutesByTo {
   '/privacy': typeof GuestPrivacyRoute
   '/terms': typeof GuestTermsRoute
   '/': typeof GuestIndexRoute
-  '/admin/accommodations': typeof AdminAdminAccommodationsRoute
   '/admin/activities': typeof AdminAdminActivitiesRoute
   '/admin/bookings': typeof AdminAdminBookingsRoute
   '/admin/dashboard': typeof AdminAdminDashboardRoute
@@ -266,6 +289,10 @@ export interface FileRoutesByTo {
   '/account': typeof GuestAccountIndexRoute
   '/activities': typeof GuestActivitiesIndexRoute
   '/events': typeof GuestEventsIndexRoute
+  '/admin/accommodations/create': typeof AdminAdminAccommodationsCreateRoute
+  '/admin/accommodations': typeof AdminAdminAccommodationsIndexRoute
+  '/admin/accommodations/edit/$id': typeof AdminAdminAccommodationsEditIdRoute
+  '/admin/accommodations/view/$id': typeof AdminAdminAccommodationsViewIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -279,7 +306,6 @@ export interface FileRoutesById {
   '/_guest/privacy': typeof GuestPrivacyRoute
   '/_guest/terms': typeof GuestTermsRoute
   '/_guest/': typeof GuestIndexRoute
-  '/_admin/admin/accommodations': typeof AdminAdminAccommodationsRoute
   '/_admin/admin/activities': typeof AdminAdminActivitiesRoute
   '/_admin/admin/bookings': typeof AdminAdminBookingsRoute
   '/_admin/admin/dashboard': typeof AdminAdminDashboardRoute
@@ -301,6 +327,10 @@ export interface FileRoutesById {
   '/_guest/account/': typeof GuestAccountIndexRoute
   '/_guest/activities/': typeof GuestActivitiesIndexRoute
   '/_guest/events/': typeof GuestEventsIndexRoute
+  '/_admin/admin/accommodations/create': typeof AdminAdminAccommodationsCreateRoute
+  '/_admin/admin/accommodations/': typeof AdminAdminAccommodationsIndexRoute
+  '/_admin/admin/accommodations/edit/$id': typeof AdminAdminAccommodationsEditIdRoute
+  '/_admin/admin/accommodations/view/$id': typeof AdminAdminAccommodationsViewIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -313,7 +343,6 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/'
-    | '/admin/accommodations'
     | '/admin/activities'
     | '/admin/bookings'
     | '/admin/dashboard'
@@ -335,6 +364,10 @@ export interface FileRouteTypes {
     | '/account'
     | '/activities'
     | '/events'
+    | '/admin/accommodations/create'
+    | '/admin/accommodations'
+    | '/admin/accommodations/edit/$id'
+    | '/admin/accommodations/view/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
@@ -345,7 +378,6 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/'
-    | '/admin/accommodations'
     | '/admin/activities'
     | '/admin/bookings'
     | '/admin/dashboard'
@@ -367,6 +399,10 @@ export interface FileRouteTypes {
     | '/account'
     | '/activities'
     | '/events'
+    | '/admin/accommodations/create'
+    | '/admin/accommodations'
+    | '/admin/accommodations/edit/$id'
+    | '/admin/accommodations/view/$id'
   id:
     | '__root__'
     | '/_admin'
@@ -379,7 +415,6 @@ export interface FileRouteTypes {
     | '/_guest/privacy'
     | '/_guest/terms'
     | '/_guest/'
-    | '/_admin/admin/accommodations'
     | '/_admin/admin/activities'
     | '/_admin/admin/bookings'
     | '/_admin/admin/dashboard'
@@ -401,6 +436,10 @@ export interface FileRouteTypes {
     | '/_guest/account/'
     | '/_guest/activities/'
     | '/_guest/events/'
+    | '/_admin/admin/accommodations/create'
+    | '/_admin/admin/accommodations/'
+    | '/_admin/admin/accommodations/edit/$id'
+    | '/_admin/admin/accommodations/view/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -627,34 +666,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminActivitiesRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_admin/admin/accommodations': {
-      id: '/_admin/admin/accommodations'
+    '/_admin/admin/accommodations/': {
+      id: '/_admin/admin/accommodations/'
       path: '/admin/accommodations'
       fullPath: '/admin/accommodations'
-      preLoaderRoute: typeof AdminAdminAccommodationsRouteImport
+      preLoaderRoute: typeof AdminAdminAccommodationsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/accommodations/create': {
+      id: '/_admin/admin/accommodations/create'
+      path: '/admin/accommodations/create'
+      fullPath: '/admin/accommodations/create'
+      preLoaderRoute: typeof AdminAdminAccommodationsCreateRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/accommodations/view/$id': {
+      id: '/_admin/admin/accommodations/view/$id'
+      path: '/admin/accommodations/view/$id'
+      fullPath: '/admin/accommodations/view/$id'
+      preLoaderRoute: typeof AdminAdminAccommodationsViewIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/accommodations/edit/$id': {
+      id: '/_admin/admin/accommodations/edit/$id'
+      path: '/admin/accommodations/edit/$id'
+      fullPath: '/admin/accommodations/edit/$id'
+      preLoaderRoute: typeof AdminAdminAccommodationsEditIdRouteImport
       parentRoute: typeof AdminRoute
     }
   }
 }
 
 interface AdminRouteChildren {
-  AdminAdminAccommodationsRoute: typeof AdminAdminAccommodationsRoute
   AdminAdminActivitiesRoute: typeof AdminAdminActivitiesRoute
   AdminAdminBookingsRoute: typeof AdminAdminBookingsRoute
   AdminAdminDashboardRoute: typeof AdminAdminDashboardRoute
   AdminAdminReportsRoute: typeof AdminAdminReportsRoute
   AdminAdminUsersRoute: typeof AdminAdminUsersRoute
   AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+  AdminAdminAccommodationsCreateRoute: typeof AdminAdminAccommodationsCreateRoute
+  AdminAdminAccommodationsIndexRoute: typeof AdminAdminAccommodationsIndexRoute
+  AdminAdminAccommodationsEditIdRoute: typeof AdminAdminAccommodationsEditIdRoute
+  AdminAdminAccommodationsViewIdRoute: typeof AdminAdminAccommodationsViewIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
-  AdminAdminAccommodationsRoute: AdminAdminAccommodationsRoute,
   AdminAdminActivitiesRoute: AdminAdminActivitiesRoute,
   AdminAdminBookingsRoute: AdminAdminBookingsRoute,
   AdminAdminDashboardRoute: AdminAdminDashboardRoute,
   AdminAdminReportsRoute: AdminAdminReportsRoute,
   AdminAdminUsersRoute: AdminAdminUsersRoute,
   AdminAdminIndexRoute: AdminAdminIndexRoute,
+  AdminAdminAccommodationsCreateRoute: AdminAdminAccommodationsCreateRoute,
+  AdminAdminAccommodationsIndexRoute: AdminAdminAccommodationsIndexRoute,
+  AdminAdminAccommodationsEditIdRoute: AdminAdminAccommodationsEditIdRoute,
+  AdminAdminAccommodationsViewIdRoute: AdminAdminAccommodationsViewIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

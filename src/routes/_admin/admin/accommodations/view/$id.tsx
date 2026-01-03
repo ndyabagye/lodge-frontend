@@ -1,8 +1,8 @@
+import { AdminViewAccommodationDetail } from "@/components/accommodation/components/AdminViewAccommodationDetail";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { AdminAccommodationsTemplate } from "@/components/admin/templates/AdminAccommodations";
 
-export const Route = createFileRoute("/_admin/admin/accommodations")({
-  component: AdminAccommodationsPage,
+export const Route = createFileRoute("/_admin/admin/accommodations/view/$id")({
+  component: AdminViewAccommodationDetailsPage,
   beforeLoad: () => {
     const token = localStorage.getItem("auth_token");
     const userStr = localStorage.getItem("auth-storage");
@@ -20,6 +20,6 @@ export const Route = createFileRoute("/_admin/admin/accommodations")({
   },
 });
 
-function AdminAccommodationsPage() {
-  return <AdminAccommodationsTemplate />;
+function AdminViewAccommodationDetailsPage() {
+  return <AdminViewAccommodationDetail />;
 }

@@ -3,10 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import {
-  useAdminAccommodations,
-  useDeleteAccommodation,
-} from "@/hooks/use-admin";
+import { useAdminAccommodations } from "@/hooks/use-admin";
+import { useDeleteAccommodation } from "@/hooks/use-accommodations";
 import { Plus, Search, Edit, Trash2, Eye } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { Loading } from "@/components/common/Loading";
@@ -29,9 +27,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 
 export function AdminAccommodationsTemplate() {
+  const navigate = useNavigate();
   const [page, _] = useState(1);
   const [search, setSearch] = useState("");
 
@@ -57,7 +56,9 @@ export function AdminAccommodationsTemplate() {
               Manage your accommodation listings
             </p>
           </div>
-          <Button>
+          <Button
+            onClick={() => navigate({ to: "/admin/accommodations/create" })}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Accommodation
           </Button>
@@ -157,16 +158,30 @@ export function AdminAccommodationsTemplate() {
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <Link
-                              to="/accommodations/$slug"
-                              params={{ slug: accommodation.slug }}
-                              target=""
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              title="View Details"
+                              onClick={() =>
+                                navigate({
+                                  to: "/admin/accommodations/view/$id",
+                                  params: { id: accommodation.id },
+                                })
+                              }
                             >
-                              <Button variant="ghost" size="icon">
-                                <Eye className="h-4 w-4" />
-                              </Button>
-                            </Link>
-                            <Button variant="ghost" size="icon">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              title="Edit"
+                              onClick={() =>
+                                navigate({
+                                  to: "/admin/accommodations/edit/$id",
+                                  params: { id: accommodation.id },
+                                })
+                              }
+                            >
                               <Edit className="h-4 w-4" />
                             </Button>
                             <AlertDialog>

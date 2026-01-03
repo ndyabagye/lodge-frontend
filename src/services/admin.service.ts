@@ -5,7 +5,6 @@ import type {
   TopAccommodation,
 } from "@/types";
 import type { DashboardStats, RevenueData, AdminUser } from "@/types/admin";
-import type { Accommodation } from "@/types";
 import type { Activity } from "@/types/activity";
 import type { Booking } from "@/types/booking";
 
@@ -28,37 +27,6 @@ export const adminService = {
   getTopAccommodations: async (): Promise<TopAccommodation[]> => {
     const { data } = await api.get("/admin/reports/top-accommodations");
     return data.data;
-  },
-
-  // Accommodations Management
-  getAllAccommodations: async (
-    params?: PaginationParams,
-  ): Promise<PaginatedResponse<Accommodation>> => {
-    const { data } = await api.get("/admin/accommodations", { params });
-    return data;
-  },
-
-  createAccommodation: async (
-    accommodationData: Partial<Accommodation>,
-  ): Promise<Accommodation> => {
-    const { data } = await api.post("/admin/accommodations", accommodationData);
-    return data.data;
-  },
-
-  updateAccommodation: async (
-    id: string,
-    accommodationData: Partial<Accommodation>,
-  ): Promise<Accommodation> => {
-    const { data } = await api.put(
-      `/admin/accommodations/${id}`,
-      accommodationData,
-    );
-    return data.data;
-  },
-
-  deleteAccommodation: async (id: string): Promise<{ message: string }> => {
-    const { data } = await api.delete(`/admin/accommodations/${id}`);
-    return data;
   },
 
   // Activities Management
