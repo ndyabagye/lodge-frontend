@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
 import {
@@ -15,19 +15,26 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-import { Calendar as CalendarIcon, Minus, Plus } from "lucide-react";
+import {
+  Calendar as CalendarIcon,
+  Minus,
+  Plus,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useCartStore } from "@/stores/cart-store";
+import { bookingService } from "@/services/booking.service";
 import { toast } from "sonner";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Accommodation } from "@/types";
 import type { DateRange } from "react-day-picker";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface BookingWidgetProps {
   accommodation: Accommodation;
@@ -40,10 +47,18 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [numAdults, setNumAdults] = useState(2);
   const [numChildren, setNumChildren] = useState(0);
+  const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState<string | null>(
+    null,
+  );
+  const [pricingData, setPricingData] = useState<any>(null);
 
   const totalGuests = numAdults + numChildren;
   const canIncrease = totalGuests < accommodation.max_guests;
 
+  /* -------------------------
+   * Guest count logic
+   * ------------------------- */
   const handleIncrease = (type: "adults" | "children") => {
     if (!canIncrease) return;
     if (type === "adults") {
@@ -61,44 +76,149 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
     }
   };
 
-  const calculateNights = () => {
+  /* -------------------------
+   * Night calculation
+   * IMPORTANT:
+   * - Checkout date is NOT charged
+   * - Matches backend diffInDays / daysUntil logic
+   * ------------------------- */
+  const nights = useMemo(() => {
     if (!dateRange?.from || !dateRange?.to) return 0;
-    const diffTime = dateRange.to.getTime() - dateRange.from.getTime();
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  };
 
-  const calculateTotal = () => {
-    const nights = calculateNights();
-    if (nights === 0) return 0;
+    const start = new Date(dateRange.from);
+    const end = new Date(dateRange.to);
 
-    const basePrice = accommodation.base_price * nights;
-    const cleaningFee = accommodation.cleaning_fee || 0;
-    return basePrice + cleaningFee;
-  };
+    // Normalize to midnight to avoid timezone drift
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
 
-  const nights = calculateNights();
-  const subtotal = accommodation.base_price * nights;
-  const total = calculateTotal();
+    const diff = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
 
-  const handleAddToCart = () => {
+    return Math.max(0, Math.floor(diff));
+  }, [dateRange]);
+
+  // const calculateNights = () => {
+  //   if (!dateRange?.from || !dateRange?.to) return 0;
+  //   const diffTime = dateRange.to.getTime() - dateRange.from.getTime();
+  //   return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  // };
+
+  /* -------------------------
+   * Availability + pricing check when dates are selected
+   * ------------------------- */
+  useEffect(() => {
+    const checkAvailability = async () => {
+      if (!dateRange?.from || !dateRange?.to) {
+        setAvailabilityError(null);
+        setPricingData(null);
+        return;
+      }
+
+      setIsCheckingAvailability(true);
+      setAvailabilityError(null);
+
+      try {
+        const result = await bookingService.checkAvailability({
+          accommodation_id: accommodation.id,
+          check_in_date: format(dateRange.from, "yyyy-MM-dd"),
+          check_out_date: format(dateRange.to, "yyyy-MM-dd"),
+        });
+
+        if (!result.available) {
+          setAvailabilityError(
+            result.message || "These dates are not available",
+          );
+          setPricingData(null);
+        } else {
+          // Store pricing data from backend
+          setPricingData(result.pricing);
+        }
+      } catch (error: any) {
+        const errorMessage =
+          error.response?.data?.message || "Failed to check availability";
+        setAvailabilityError(errorMessage);
+        setPricingData(null);
+      } finally {
+        setIsCheckingAvailability(false);
+      }
+    };
+
+    // Debounce the availability check
+    const timeoutId = setTimeout(checkAvailability, 400);
+    return () => clearTimeout(timeoutId);
+  }, [dateRange, accommodation.id]);
+
+  /* -------------------------
+   * Pricing resolution
+   * Backend first, frontend fallback
+   * ------------------------- */
+  const subtotal = pricingData?.subtotal ?? accommodation.base_price * nights;
+
+  const serviceFee = pricingData?.service_fee ?? 0;
+  const taxAmount = pricingData?.tax_amount ?? 0;
+  const cleaningFee =
+    pricingData?.cleaning_fee ?? accommodation.cleaning_fee ?? 0;
+
+  const total =
+    pricingData?.total_amount ??
+    subtotal + serviceFee + taxAmount + cleaningFee;
+
+  // Validate stay duration
+  const validateStayDuration = () => {
     if (!dateRange?.from || !dateRange?.to) {
-      toast.error("Please select check-in and check-out dates");
-      return;
+      return {
+        valid: false,
+        message: "Please select check-in and check-out dates",
+      };
     }
 
-    const nights = calculateNights();
     if (nights < 1) {
-      toast.error("Check-out date must be after check-in date");
+      return {
+        valid: false,
+        message: "Check-out date must be after check-in date",
+      };
+    }
+
+    if (accommodation.minimum_stay && nights < accommodation.minimum_stay) {
+      return {
+        valid: false,
+        message: `Minimum stay is ${accommodation.minimum_stay} night${accommodation.minimum_stay !== 1 ? "s" : ""}`,
+      };
+    }
+
+    if (accommodation.maximum_stay && nights > accommodation.maximum_stay) {
+      return {
+        valid: false,
+        message: `Maximum stay is ${accommodation.maximum_stay} night${accommodation.maximum_stay !== 1 ? "s" : ""}`,
+      };
+    }
+
+    // Check availability
+    if (availabilityError) {
+      return { valid: false, message: availabilityError };
+    }
+
+    return { valid: true, message: "" };
+  };
+
+  const stayValidation = validateStayDuration();
+  const showWarning = dateRange?.from && dateRange?.to && !stayValidation.valid;
+
+  const handleAddToCart = () => {
+    if (!stayValidation.valid) {
+      toast.error(stayValidation.message);
       return;
     }
 
     addItem({
-      id: `${accommodation.id}-${dateRange.from.toISOString()}`,
+      id: `${accommodation.id}-${dateRange!.from!.toISOString()}`,
       type: "accommodation",
       item_id: accommodation.id,
       item: accommodation,
-      check_in_date: format(dateRange.from, "yyyy-MM-dd"),
-      check_out_date: format(dateRange.to, "yyyy-MM-dd"),
+      check_in_date: format(dateRange!.from!, "yyyy-MM-dd"),
+      check_out_date: format(dateRange!.to!, "yyyy-MM-dd"),
+      num_adults: numAdults,
+      num_children: numChildren,
       quantity: 1,
       price: total,
       total: total,
@@ -108,52 +228,67 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
   };
 
   const handleBookNow = () => {
+    const validation = validateStayDuration();
+    if (!validation.valid) {
+      toast.error(validation.message);
+      return;
+    }
+
     handleAddToCart();
     navigate({ to: "/checkout" });
   };
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 shadow-xl">
+      <CardHeader className="border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-baseline justify-between">
           <div>
-            <span className="text-3xl font-bold">
+            <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">
               {formatPrice(accommodation.base_price)}
             </span>
-            <span className="text-muted-foreground ml-2">/ night</span>
+            <span className="text-gray-600 dark:text-gray-400 ml-2">
+              / night
+            </span>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-6">
         {/* Date Selection */}
         <div className="space-y-2">
-          <Label>Check-in & Check-out</Label>
+          <Label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            Check-in & Check-out
+          </Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 className={cn(
-                  "w-full justify-start text-left font-normal",
-                  !dateRange && "text-muted-foreground",
+                  "w-full justify-start text-left font-normal border-gray-300 dark:border-gray-600 bg-white dark:bg-black/60 hover:border-premium-accent dark:hover:border-premium-accent",
+                  !dateRange && "text-gray-500 dark:text-gray-400",
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {dateRange?.from ? (
                   dateRange.to ? (
-                    <>
+                    <span className="text-gray-900 dark:text-gray-100">
                       {format(dateRange.from, "LLL dd")} -{" "}
                       {format(dateRange.to, "LLL dd, yyyy")}
-                    </>
+                    </span>
                   ) : (
-                    format(dateRange.from, "LLL dd, yyyy")
+                    <span className="text-gray-900 dark:text-gray-100">
+                      {format(dateRange.from, "LLL dd, yyyy")}
+                    </span>
                   )
                 ) : (
                   <span>Pick dates</span>
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent
+              className="w-auto p-0 bg-white dark:bg-black shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700"
+              align="start"
+            >
               <Calendar
                 autoFocus
                 mode="range"
@@ -162,20 +297,57 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
                 onSelect={setDateRange}
                 numberOfMonths={2}
                 disabled={(date) => date < new Date()}
+                className="text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800"
               />
             </PopoverContent>
           </Popover>
+
+          {/* Stay Requirements Info */}
+          <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+            <p>
+              • Minimum stay: {accommodation.minimum_stay} night
+              {accommodation.minimum_stay !== 1 ? "s" : ""}
+            </p>
+            {accommodation.maximum_stay && (
+              <p>
+                • Maximum stay: {accommodation.maximum_stay} night
+                {accommodation.maximum_stay !== 1 ? "s" : ""}
+              </p>
+            )}
+          </div>
+
+          {/* Checking Availability */}
+          {isCheckingAvailability && dateRange?.from && dateRange?.to && (
+            <Alert>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <AlertDescription>Checking availability...</AlertDescription>
+            </Alert>
+          )}
+
+          {/* Warning Alert */}
+          {showWarning && !isCheckingAvailability && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{stayValidation.message}</AlertDescription>
+            </Alert>
+          )}
         </div>
 
         {/* Guests Selection */}
         <div className="space-y-3">
-          <Label>Guests</Label>
+          <Label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            Guests
+          </Label>
 
           {/* Adults */}
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">Adults</p>
-              <p className="text-sm text-muted-foreground">Ages 13+</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">
+                Adults
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Ages 13+
+              </p>
             </div>
             <div className="flex items-center gap-3">
               <Button
@@ -183,15 +355,19 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
                 size="icon"
                 onClick={() => handleDecrease("adults")}
                 disabled={numAdults <= 1}
+                className="border-gray-300 dark:border-gray-600 hover:border-premium-accent dark:hover:border-premium-accent bg-white dark:bg-gray-800"
               >
                 <Minus className="h-4 w-4" />
               </Button>
-              <span className="w-8 text-center font-medium">{numAdults}</span>
+              <span className="w-8 text-center font-medium text-gray-900 dark:text-gray-100">
+                {numAdults}
+              </span>
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => handleIncrease("adults")}
                 disabled={!canIncrease}
+                className="border-gray-300 dark:border-gray-600 hover:border-premium-accent dark:hover:border-premium-accent bg-white dark:bg-gray-800"
               >
                 <Plus className="h-4 w-4" />
               </Button>
@@ -201,8 +377,12 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
           {/* Children */}
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">Children</p>
-              <p className="text-sm text-muted-foreground">Ages 2-12</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">
+                Children
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Ages 2-12
+              </p>
             </div>
             <div className="flex items-center gap-3">
               <Button
@@ -210,22 +390,26 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
                 size="icon"
                 onClick={() => handleDecrease("children")}
                 disabled={numChildren <= 0}
+                className="border-gray-300 dark:border-gray-600 hover:border-premium-accent dark:hover:border-premium-accent bg-white dark:bg-gray-800"
               >
                 <Minus className="h-4 w-4" />
               </Button>
-              <span className="w-8 text-center font-medium">{numChildren}</span>
+              <span className="w-8 text-center font-medium text-gray-900 dark:text-gray-100">
+                {numChildren}
+              </span>
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => handleIncrease("children")}
                 disabled={!canIncrease}
+                className="border-gray-300 dark:border-gray-600 hover:border-premium-accent dark:hover:border-premium-accent bg-white dark:bg-gray-800"
               >
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             Maximum {accommodation.max_guests} guests
           </p>
         </div>
@@ -233,20 +417,73 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
         {/* Price Breakdown */}
         {nights > 0 && (
           <div className="space-y-2 pt-4 border-t">
+            {/* Nightly price breakdown (weekday / weekend) */}
+            {pricingData?.nightly_breakdown?.length > 0 && (
+              <Accordion type="single" collapsible>
+                <AccordionItem value="nightly-breakdown">
+                  <AccordionTrigger className="text-sm text-muted-foreground">
+                    View nightly price breakdown
+                  </AccordionTrigger>
+
+                  <AccordionContent>
+                    <div className="space-y-2 pt-2">
+                      {pricingData.nightly_breakdown.map((night: any) => (
+                        <div
+                          key={night.date}
+                          className="flex justify-between text-xs"
+                        >
+                          <span>
+                            {format(new Date(night.date), "EEE, MMM dd")}
+                            <span className="ml-1 text-muted-foreground">
+                              (
+                              {night.type === "weekend" ? "Weekend" : "Weekday"}
+                              )
+                            </span>
+                          </span>
+
+                          <span className="font-medium">
+                            {formatPrice(night.rate)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            )}
+            {/*subtotal*/}
             <div className="flex justify-between text-sm">
               <span>
-                {formatPrice(accommodation.base_price)} x {nights} night
+                {formatPrice(accommodation.base_price)} × {nights} night
                 {nights !== 1 ? "s" : ""}
               </span>
               <span>{formatPrice(subtotal)}</span>
             </div>
-            {accommodation.cleaning_fee > 0 && (
+
+            {/*service fee*/}
+            {serviceFee > 0 && (
               <div className="flex justify-between text-sm">
-                <span>Cleaning fee</span>
-                <span>{formatPrice(accommodation.cleaning_fee)}</span>
+                <span>Service fee</span>
+                <span>{formatPrice(serviceFee)}</span>
               </div>
             )}
-            <div className="flex justify-between font-bold pt-2 border-t">
+            {/*cleaning fee*/}
+            {cleaningFee > 0 && (
+              <div className="flex justify-between text-sm">
+                <span>Cleaning fee</span>
+                <span>{formatPrice(cleaningFee)}</span>
+              </div>
+            )}
+            {/*tax*/}
+            {taxAmount > 0 && (
+              <div className="flex justify-between text-sm">
+                <span>
+                  Tax {pricingData?.tax_rate ? `(${pricingData.tax_rate})` : ""}
+                </span>
+                <span>{formatPrice(taxAmount)}</span>
+              </div>
+            )}
+            <div className="flex justify-between font-bold pt-3 border-t">
               <span>Total</span>
               <span>{formatPrice(total)}</span>
             </div>
@@ -255,10 +492,27 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
       </CardContent>
 
       <CardFooter className="flex flex-col gap-2">
-        <Button className="w-full" size="lg" onClick={handleBookNow}>
-          Book Now
+        <Button
+          className="w-full"
+          size="lg"
+          onClick={handleBookNow}
+          disabled={!stayValidation.valid || isCheckingAvailability}
+        >
+          {isCheckingAvailability ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              Checking...
+            </>
+          ) : (
+            "Book Now"
+          )}
         </Button>
-        <Button variant="outline" className="w-full" onClick={handleAddToCart}>
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={handleAddToCart}
+          disabled={!stayValidation.valid || isCheckingAvailability}
+        >
           Add to Cart
         </Button>
       </CardFooter>

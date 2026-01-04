@@ -9,13 +9,27 @@ import type {
 export const bookingService = {
   // POST /api/v1/bookings
   create: async (data: CreateBookingData): Promise<Booking> => {
-    // Ensure dates are in ISO 8601 format
+    // Format dates properly - API expects YYYY-MM-DD HH:MM:SS format
+    const formatDateForAPI = (dateString: string): string => {
+      // If it's already in YYYY-MM-DD format, append time
+      if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        return `${dateString} 00:00:00`;
+      }
+      // If it's ISO format, convert to YYYY-MM-DD HH:MM:SS
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day} 00:00:00`;
+    };
+
     const formattedData = {
       ...data,
-      check_in_date: new Date(data.check_in_date).toISOString(),
-      check_out_date: new Date(data.check_out_date).toISOString(),
-      num_guests: data.num_adults + data.num_children, // Calculate total guests
+      check_in_date: formatDateForAPI(data.check_in_date),
+      check_out_date: formatDateForAPI(data.check_out_date),
     };
+
+    // console.log("Sending booking data:", formattedData); // Debug log
 
     const response = await api.post("/bookings", formattedData);
     return response.data.data;
@@ -65,9 +79,36 @@ export const bookingService = {
     accommodation_id: string;
     check_in_date: string;
     check_out_date: string;
-  }): Promise<{ available: boolean; message?: string }> => {
-    const response = await api.post("/bookings/check-availability", data);
-    return response.data.data;
+  }): Promise<{
+    available: boolean;
+    message?: string;
+    pricing?: any;
+    availability?: any;
+  }> => {
+    try {
+      // Backend expects start_date and end_date, not check_in_date/check_out_date
+      const requestData = {
+        accommodation_id: data.accommodation_id,
+        start_date: data.check_in_date,
+        end_date: data.check_out_date,
+      };
+
+      const response = await api.post(
+        "/bookings/check-availability",
+        requestData,
+      );
+      return response.data.data;
+    } catch (error: any) {
+      // If 422 error with availability message, return it
+      if (error.response?.status === 422 && error.response?.data) {
+        return {
+          available: false,
+          message: error.response.data.message || "Not available",
+          ...error.response.data.data,
+        };
+      }
+      throw error;
+    }
   },
 
   // GET /api/v1/bookings/:id/invoice

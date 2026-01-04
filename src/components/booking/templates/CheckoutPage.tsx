@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useCartStore } from "@/stores/cart-store";
 import { useAuthStore } from "@/stores/auth-store";
@@ -29,10 +29,11 @@ export function CheckoutPageTemplate() {
   });
 
   // Redirect if cart is empty
-  if (items.length === 0) {
-    navigate({ to: "/cart" });
-    return null;
-  }
+  useEffect(() => {
+    if (items.length === 0 && currentStep === "payment") {
+      navigate({ to: "/cart" });
+    }
+  }, [items, navigate, currentStep]);
 
   const handleGuestInfoSubmit = (data: any) => {
     setGuestInfo(data);
@@ -43,10 +44,39 @@ export function CheckoutPageTemplate() {
     setCurrentStep("payment");
   };
 
-  const handlePaymentSuccess = (bookingId: string) => {
-    clearCart();
+  // const handlePaymentSuccess = (bookingId: string) => {
+  //   clearCart();
+  //   toast.success("Booking confirmed!");
+  //   navigate({ to: "/booking/confirmation/$id", params: { id: bookingId } });
+  // };
+
+  const handlePaymentSuccess = async (booking: {
+    id: string;
+    booking_number: string;
+    guest_email: string;
+  }) => {
     toast.success("Booking confirmed!");
-    navigate({ to: "/booking/confirmation/$id", params: { id: bookingId } });
+
+    console.log(
+      "The payment stuff",
+      booking.id,
+      booking.booking_number,
+      booking.guest_email,
+    );
+    console.log("The store stuff", isAuthenticated, user);
+    if (isAuthenticated) {
+      await navigate({
+        to: "/booking/confirmation/$id",
+        params: { id: booking.id },
+      });
+    } else {
+      await navigate({
+        to: "/booking/confirmation/$bookingNumber",
+        params: { bookingNumber: booking.booking_number },
+        search: { email: booking.guest_email },
+      });
+    }
+    clearCart();
   };
 
   const handleBack = () => {

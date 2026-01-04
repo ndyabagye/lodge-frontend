@@ -10,7 +10,13 @@ import {
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
-import { CalendarIcon, Search, Users } from "lucide-react";
+import {
+  CalendarIcon,
+  Search,
+  Users,
+  ChevronDown,
+  Sparkles,
+} from "lucide-react";
 import { useState } from "react";
 import type { DateRange } from "react-day-picker";
 
@@ -30,138 +36,200 @@ export function HeroSection() {
     }
     if (guests) {
       searchParams.guests = guests;
-
-      navigate({
-        to: "/accommodations",
-        search: searchParams,
-      });
     }
+
+    navigate({
+      to: "/accommodations",
+      search: searchParams,
+    });
   };
 
   return (
-    <section className="relative h-150 lg:h-175 flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden premium-bg-background">
+      {/* Background Image with linear Overlay */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80"
-          alt="Luxury Lodge"
+          src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1920&q=80&auto=format&fit=crop"
+          alt="Luxury lodge in serene wilderness setting"
           className="w-full h-full object-cover"
+          loading="eager"
         />
-        <div className="absolute inset-0 bg-black/50 dark:bg-black/70" />
+        {/* Darker overlay for better text contrast */}
+        {/*<div className="absolute inset-0 bg-linear-to-b from-premium-primary/60 via-premium-primary/40 to-premium-primary/70 dark:from-premium-primary/80 dark:via-premium-primary/60 dark:to-premium-primary/90" />*/}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80 dark:from-black/85 dark:via-black/70 dark:to-black/90" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-in fade-in slide-in-from-bottom-4 duration-600 text-white/95">
-          Your Perfect Getaway Awaits
-        </h1>
-        <p className="text-xl md:text-2xl mb-8 text-white/95 max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-600 delay-150">
-          Experience luxury and comfort in the heart of nature
-        </p>
-
-        {/* Search Bar */}
-        {/*<div className="max-w-4xl mx-auto bg-white dark:bg-secondary text-foreground rounded-lg shadow-2xl p-4 animate-in fade-in slide-in-from-bottom-4 duration-600 delay-300">*/}
-        <div className="max-w-4xl mx-auto bg-card border border-border rounded-lg shadow-2xl p-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
-          <div className="grid md:grid-cols-[1fr_1fr_auto_auto] gap-4 items-end">
-            {/* Date Picker */}
-            <div className="space-y-2">
-              <Label className="text-sm text-foreground font-medium block text-left">
-                Check-in & Check-out
-              </Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal h-10",
-                      !dateRange && "text-muted-foreground",
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dateRange?.from ? (
-                      dateRange.to ? (
-                        <>
-                          {format(dateRange.from, "LLL dd")} -{" "}
-                          {format(dateRange.to, "LLL dd")}
-                        </>
-                      ) : (
-                        format(dateRange.from, "LLL dd, yyyy")
-                      )
-                    ) : (
-                      <span>Select dates</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    autoFocus
-                    mode="range"
-                    defaultMonth={dateRange?.from}
-                    selected={dateRange}
-                    onSelect={setDateRange}
-                    numberOfMonths={2}
-                    disabled={(date) => date < new Date()}
-                  />
-                </PopoverContent>
-              </Popover>
+      {/* Content Container */}
+      <div className="relative z-10 premium-container">
+        <div className="max-w-3xl">
+          {/* Premium Tagline */}
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-3">
+              <Sparkles className="h-4 w-4 text-premium-accent" />
+              <span className="premium-tagline text-premium-accent">
+                Wilderness Luxury Redefined
+              </span>
+              <Sparkles className="h-4 w-4 text-premium-accent" />
             </div>
+          </div>
 
-            {/* Guests */}
-            <div className="space-y-2">
-              <Label className="text-sm text-foreground font-medium block text-left">
-                Guests
-              </Label>
-              <div className="relative">
-                <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="number"
-                  min="1"
-                  value={guests}
-                  onChange={(e) => setGuests(e.target.value)}
-                  className="pl-10 h-10 ring ring-accent text-foreground"
-                  placeholder="Number of guests"
-                />
+          {/* Main Heading with Premium Typography */}
+          <h1 className="premium-heading text-5xl md:text-6xl lg:text-7xl mb-6 text-premium-primary-foreground leading-tight">
+            Discover Your
+            <br />
+            <span className="premium-heading-serif text-premium-accent">
+              Sanctuary
+            </span>
+          </h1>
+
+          {/* Subtitle - Fixed for contrast */}
+          <p className="dark:premium-subtitle font-medium mb-12 max-w-2xl text-white/90">
+            Immerse yourself in unparalleled luxury where pristine nature meets
+            sophisticated comfort. Your exclusive retreat awaits.
+          </p>
+
+          {/* Search Bar  */}
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl p-6 md:p-8 mb-8">
+            <div className="space-y-6">
+              {/* Date Selection */}
+              <div className="space-y-3">
+                <Label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  Your Stay
+                </Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal h-14 px-4 group border-gray-300 dark:border-gray-600 hover:border-premium-accent dark:hover:border-premium-accent bg-white dark:bg-gray-800",
+                        !dateRange && "text-gray-500 dark:text-gray-400",
+                      )}
+                    >
+                      <CalendarIcon className="mr-3 h-5 w-5 text-gray-500 dark:text-gray-400 group-hover:premium-text-accent transition-colors" />
+                      {dateRange?.from ? (
+                        dateRange.to ? (
+                          <span className="text-gray-900 dark:text-gray-100">
+                            {format(dateRange.from, "MMMM d")} -{" "}
+                            {format(dateRange.to, "d, yyyy")}
+                          </span>
+                        ) : (
+                          <span className="text-gray-900 dark:text-gray-100">
+                            {format(dateRange.from, "MMMM d, yyyy")}
+                          </span>
+                        )
+                      ) : (
+                        <span className="text-gray-500 dark:text-gray-400">
+                          Select check-in & check-out dates
+                        </span>
+                      )}
+                      <ChevronDown className="ml-auto h-4 w-4 text-gray-500 dark:text-gray-400 group-hover:premium-text-accent transition-colors" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto p-0 bg-white dark:bg-gray-800 shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700"
+                    align="start"
+                  >
+                    <Calendar
+                      autoFocus
+                      mode="range"
+                      defaultMonth={dateRange?.from}
+                      selected={dateRange}
+                      onSelect={setDateRange}
+                      numberOfMonths={2}
+                      disabled={(date) => date < new Date()}
+                      className="text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800"
+                      classNames={{
+                        day_selected:
+                          "bg-premium-accent text-white hover:bg-premium-accent hover:text-white",
+                        day_today:
+                          "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600",
+                        day_disabled:
+                          "text-gray-400 dark:text-gray-500 opacity-50",
+                        day_range_start: "bg-premium-accent text-white",
+                        day_range_end: "bg-premium-accent text-white",
+                        day_outside:
+                          "text-gray-400 dark:text-gray-500 opacity-50",
+                        day_hidden: "invisible",
+                        caption: "text-gray-900 dark:text-gray-100",
+                        caption_label:
+                          "text-gray-900 dark:text-gray-100 font-medium",
+                        nav_button:
+                          "text-gray-500 dark:text-gray-400 hover:text-premium-accent",
+                        head_cell:
+                          "text-gray-500 dark:text-gray-400 font-normal text-sm",
+                        cell: "text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700",
+                        day: "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100",
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              {/* Guests and Search Row */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                    Guests
+                  </Label>
+                  <div className="relative group">
+                    <Users className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 dark:text-gray-400 group-hover:premium-text-accent transition-colors pointer-events-none" />
+                    <Input
+                      type="number"
+                      min="1"
+                      max="20"
+                      value={guests}
+                      onChange={(e) => setGuests(e.target.value)}
+                      className="pl-12 h-14 text-base border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
+                      placeholder="Number of guests"
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  onClick={handleSearch}
+                  className="h-14 text-base font-semibold bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all duration-300 group self-end"
+                >
+                  <Search className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                  Explore Retreats
+                </Button>
               </div>
             </div>
+          </div>
 
-            {/* Search Button */}
+          {/* Quick Navigation */}
+          <div className="flex flex-wrap gap-3">
             <Button
-              size="default"
-              className="h-10 md:col-span-2"
-              onClick={handleSearch}
+              variant="outline"
+              size="lg"
+              onClick={() => navigate({ to: "/accommodations", search: {} })}
+              className="border-2 border-white bg-white/20 backdrop-blur-sm text-white font-semibold hover:bg-white hover:text-gray-900 dark:border-white dark:bg-white/10 dark:hover:bg-white dark:hover:text-gray-900 transition-all duration-300"
             >
-              <Search className="h-4 w-4 mr-1" />
-              Search
+              View All Accommodations
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => navigate({ to: "/activities", search: {} })}
+              className="border-2 border-white bg-white/20 backdrop-blur-sm text-white font-semibold hover:bg-white hover:text-gray-900 dark:border-white dark:bg-white/10 dark:hover:bg-white dark:hover:text-gray-900 transition-all duration-300"
+            >
+              Discover Activities
             </Button>
           </div>
-        </div>
-
-        {/* Quick Links */}
-        <div className="mt-8 flex flex-wrap justify-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-600 delay-500">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => navigate({ to: "/accommodations", search: {} })}
-          >
-            Browse Accommodations
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-white/10 border-white text-white hover:bg-white/20"
-            onClick={() => navigate({ to: "/activities", search: {} })}
-          >
-            Explore Activities
-          </Button>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center p-2">
-          <div className="w-1 h-3 bg-white rounded-full" />
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
+        <div className="flex flex-col items-center">
+          <span className="text-xs premium-tagline text-premium-accent mb-3">
+            EXPLORE
+          </span>
+          <div className="w-px h-16 bg-linear-to-b from-premium-primary-foreground/40 via-premium-primary-foreground/20 to-transparent" />
         </div>
       </div>
+
+      {/* Bottom linear Fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-premium-background via-premium-background/50 to-transparent dark:from-premium-background dark:via-premium-background/80 dark:to-transparent" />
     </section>
   );
 }

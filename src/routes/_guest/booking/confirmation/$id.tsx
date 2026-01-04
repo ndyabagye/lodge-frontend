@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BookingConfirmationTemplate } from "@/components/booking/templates/BookingConfirmation";
 
-export const Route = createFileRoute("/_guest/confirmation/$id")({
+export const Route = createFileRoute("/_guest/booking/confirmation/$id")({
   component: BookingConfirmationPage,
 });
 
 function BookingConfirmationPage() {
-  const { id } = Route.useParams();
-  return <BookingConfirmationTemplate bookingId={id} />;
+  return <BookingConfirmationTemplate />;
 }

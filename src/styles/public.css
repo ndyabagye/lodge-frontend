@@ -1,0 +1,244 @@
+@import "./index.css"; /* Import base styles */
+
+/* Premium Color Scheme in OKLCH format */
+:root {
+  /* Primary Colors - Charcoal Black (sophistication) */
+  --premium-primary: oklch(0.15 0 0); /* Dark Charcoal */
+  --premium-primary-foreground: oklch(0.98 0 0); /* Pure White */
+
+  /* Secondary Colors - Warm Cream (comfort) */
+  --premium-secondary: oklch(0.96 0.02 85); /* Warm Cream */
+  --premium-secondary-foreground: oklch(0.15 0 0);
+
+  /* Accent Colors - Warm Sand/Taupe (earthy luxury) */
+  --premium-accent: oklch(0.65 0.08 70); /* Warm Sand */
+  --premium-accent-foreground: oklch(0.98 0 0);
+
+  /* Muted Colors - Subtle grays */
+  --premium-muted: oklch(0.96 0 0);
+  --premium-muted-foreground: oklch(0.55 0 0);
+
+  /* Borders - Light grays */
+  --premium-border: oklch(0.92 0 0);
+  --premium-border-light: oklch(0.96 0 0);
+
+  /* Backgrounds */
+  --premium-background: oklch(1 0 0); /* Pure White */
+  --premium-card: oklch(1 0 0); /* White Cards */
+}
+
+/* Dark Mode - Premium Colors */
+.dark {
+  --premium-primary: oklch(0.98 0 0); /* Cream White */
+  --premium-primary-foreground: oklch(0.15 0 0);
+
+  --premium-secondary: oklch(0.2 0 0); /* Dark Gray */
+  --premium-secondary-foreground: oklch(0.98 0 0);
+
+  --premium-accent: oklch(0.65 0.08 70); /* Same Warm Sand (unchanged) */
+  --premium-accent-foreground: oklch(0.98 0 0);
+
+  --premium-muted: oklch(0.25 0 0);
+  --premium-muted-foreground: oklch(0.7 0 0);
+
+  --premium-border: oklch(0.25 0 0);
+  --premium-border-light: oklch(0.2 0 0);
+
+  --premium-background: oklch(0.15 0 0); /* Rich Black */
+  --premium-card: oklch(0.2 0 0); /* Dark Gray Cards */
+}
+
+/* Extend Tailwind Theme with Premium Colors */
+@theme inline {
+  /* Premium Color Palette */
+  --color-premium-primary: var(--premium-primary);
+  --color-premium-primary-foreground: var(--premium-primary-foreground);
+  --color-premium-secondary: var(--premium-secondary);
+  --color-premium-secondary-foreground: var(--premium-secondary-foreground);
+  --color-premium-accent: var(--premium-accent);
+  --color-premium-accent-foreground: var(--premium-accent-foreground);
+  --color-premium-muted: var(--premium-muted);
+  --color-premium-muted-foreground: var(--premium-muted-foreground);
+  --color-premium-border: var(--premium-border);
+  --color-premium-border-light: var(--premium-border-light);
+  --color-premium-background: var(--premium-background);
+  --color-premium-card: var(--premium-card);
+}
+
+/* Premium Utility Classes - Only affect elements with premium-* classes */
+@layer utilities {
+  /* Premium Backgrounds */
+  .premium-bg-primary {
+    background-color: rgb(var(--premium-primary));
+    color: rgb(var(--premium-primary-foreground));
+  }
+
+  .premium-bg-secondary {
+    background-color: rgb(var(--premium-secondary));
+    color: rgb(var(--premium-secondary-foreground));
+  }
+
+  .premium-bg-accent {
+    background-color: rgb(var(--premium-accent));
+    color: rgb(var(--premium-accent-foreground));
+  }
+
+  .premium-bg-muted {
+    background-color: rgb(var(--premium-muted));
+  }
+
+  .premium-bg-background {
+    background-color: rgb(var(--premium-background));
+  }
+
+  .premium-bg-card {
+    background-color: rgb(var(--premium-card));
+  }
+
+  /* Premium Text Colors */
+  .premium-text-primary {
+    color: rgb(var(--premium-primary));
+  }
+
+  .premium-text-primary-foreground {
+    color: rgb(var(--premium-primary-foreground));
+  }
+
+  .premium-text-accent {
+    color: rgb(var(--premium-accent));
+  }
+
+  .premium-text-accent-foreground {
+    color: rgb(var(--premium-accent-foreground));
+  }
+
+  .premium-text-muted {
+    color: rgb(var(--premium-muted-foreground));
+  }
+
+  /* Premium Borders */
+  .premium-border {
+    border-color: rgb(var(--premium-border));
+  }
+
+  .premium-border-light {
+    border-color: rgb(var(--premium-border-light));
+  }
+
+  .premium-border-accent {
+    border-color: rgb(var(--premium-accent));
+  }
+
+  /* Premium Typography */
+  .premium-heading {
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  .premium-heading-serif {
+    font-family: var(--font-serif, serif);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .premium-subtitle {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgb(var(--premium-muted));
+  }
+
+  .premium-tagline {
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: rgb(var(--premium-accent));
+  }
+
+  /* Premium Components */
+  .premium-card {
+    background-color: rgb(var(--premium-card));
+    border: 1px solid rgb(var(--premium-border));
+    border-radius: var(--radius-lg);
+  }
+
+  .premium-surface {
+    background-color: rgb(var(--premium-card));
+    border: 1px solid rgb(var(--premium-border-light));
+  }
+
+  .premium-button {
+    background-color: rgb(var(--premium-accent));
+    color: rgb(var(--premium-accent-foreground));
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    font-weight: 500;
+    transition: all 200ms;
+  }
+
+  .premium-button:hover {
+    background-color: color-mix(
+      in oklch,
+      rgb(var(--premium-accent)),
+      black 10%
+    );
+    transform: translateY(-1px);
+  }
+
+  .premium-button-outline {
+    background-color: transparent;
+    color: rgb(var(--premium-primary));
+    border: 1px solid rgb(var(--premium-border));
+    border-radius: var(--radius);
+    font-weight: 500;
+    transition: all 200ms;
+  }
+
+  .premium-button-outline:hover {
+    border-color: rgb(var(--premium-accent));
+    color: rgb(var(--premium-accent));
+  }
+
+  .premium-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .premium-section-sm {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .premium-container {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .premium-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .premium-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .premium-section {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+
+    .premium-section-sm {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+}

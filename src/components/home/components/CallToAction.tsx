@@ -4,9 +4,9 @@ import { ArrowRight } from "lucide-react";
 
 export function CallToAction() {
   return (
-    <section className="py-16 lg:py-24 bg-primary text-primary-foreground relative overflow-hidden">
+    <section className="premium-section bg-gray-900 dark:bg-black text-white relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10 dark:opacity-5">
+      <div className="absolute inset-0 opacity-10">
         <div
           className="absolute inset-0"
           style={{
@@ -15,27 +15,32 @@ export function CallToAction() {
         />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="premium-container relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            Ready for Your Next Adventure?
+          <h2 className="premium-heading text-3xl lg:text-4xl mb-4 text-white">
+            Ready for Your Next{" "}
+            <span className="premium-heading-serif text-premium-accent">
+              Adventure?
+            </span>
           </h2>
-          <p className="text-xl mb-8 text-primary-foreground/90 dark:text-primary/90">
+          <p className="text-xl mb-8 text-white/90 leading-relaxed">
             Book your perfect accommodation today and create unforgettable
             memories
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/accommodations" search={{}}>
-              <Button size="lg" variant="secondary" className="min-w-50">
+              <Button
+                size="lg"
+                className="min-w-[200px] bg-white text-gray-900 hover:bg-gray-100 font-semibold group shadow-lg hover:shadow-xl transition-all duration-300"
+              >
                 Browse Accommodations
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link to="/contact">
               <Button
                 size="lg"
-                variant="outline"
-                className="min-w-50 border-primary-foreground text-primary hover:bg-primary-foreground/10"
+                className="min-w-[200px] border-2 border-white bg-transparent text-white hover:bg-white hover:text-gray-900 font-semibold transition-all duration-300"
               >
                 Contact Us
               </Button>

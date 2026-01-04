@@ -1,4 +1,3 @@
-import { MainLayout } from "@/components/layout/MainLayout";
 import { CallToAction } from "../components/CallToAction";
 import { FeaturedAccommodations } from "../components/FeaturedAccommodations";
 import { FeaturedActivities } from "../components/FeaturedActivities";
@@ -8,7 +7,6 @@ import { WhyChooseUs } from "../components/WhyChooseUs";
 
 export function HomePageTemplate() {
   return (
-    // <MainLayout>
     <div className="min-h-screen">
       <HeroSection />
       <FeaturedAccommodations />
@@ -17,6 +15,5 @@ export function HomePageTemplate() {
       <Testimonials />
       <CallToAction />
     </div>
-    // </MainLayout>
   );
 }

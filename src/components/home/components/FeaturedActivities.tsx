@@ -41,52 +41,69 @@ const activities = [
 
 export function FeaturedActivities() {
   return (
-    <section className="py-16 lg:py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="premium-section premium-bg-background">
+      <div className="premium-container">
+        {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            Popular Activities
+          <div className="inline-flex items-center gap-2 mb-4">
+            <div className="h-px w-12 bg-premium-accent"></div>
+            <span className="premium-tagline premium-text-accent">
+              EXPERIENCES
+            </span>
+            <div className="h-px w-12 bg-premium-accent"></div>
+          </div>
+          <h2 className="premium-heading text-3xl lg:text-4xl mb-4 premium-text-primary">
+            Popular{" "}
+            <span className="premium-heading-serif premium-text-accent">
+              Activities
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="premium-subtitle premium-text-muted max-w-2xl mx-auto">
             Enhance your stay with exciting activities and experiences
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {/* Activities Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {activities.map((activity) => (
             <Card
               key={activity.id}
-              className="overflow-hidden hover:shadow-lg transition-shadow"
+              className="premium-card bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-300 group"
             >
-              <div className="aspect-16/10 overflow-hidden bg-muted relative">
+              <div className="aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-700 relative">
                 <img
                   src={activity.image}
                   alt={activity.name}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <Badge className="absolute top-4 left-4">
+                <Badge className="absolute top-4 left-4 bg-white text-gray-900 shadow-md">
                   {activity.category}
                 </Badge>
               </div>
-              <CardContent className="">
-                <h3 className="font-semibold text-lg">{activity.name}</h3>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+              <CardContent className="space-y-4 p-6">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-premium-accent transition-colors">
+                  {activity.name}
+                </h3>
+                <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
                     <span>{activity.duration} mins</span>
                   </div>
                 </div>
-                <div className="text-2xl font-bold">
+                <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {formatPrice(activity.price)}
                 </div>
               </CardContent>
-              <CardFooter className="p-4 pt-0">
+              <CardFooter className="p-6 pt-0">
                 <Link
                   to="/activities/$slug"
                   params={{ slug: activity.slug }}
                   className="w-full"
                 >
-                  <Button className="w-full" variant="outline">
+                  <Button
+                    className="w-full border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent bg-white dark:bg-gray-800 font-semibold"
+                    variant="outline"
+                  >
                     Learn More
                   </Button>
                 </Link>
@@ -95,11 +112,15 @@ export function FeaturedActivities() {
           ))}
         </div>
 
+        {/* View All Button */}
         <div className="text-center">
           <Link to="/activities" search={{}}>
-            <Button size="lg">
+            <Button
+              size="lg"
+              className="bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold group"
+            >
               View All Activities
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
         </div>

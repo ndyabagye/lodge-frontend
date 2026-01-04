@@ -25,7 +25,6 @@ import { Route as GuestAccountIndexRouteImport } from './routes/_guest/account/i
 import { Route as GuestAccommodationsIndexRouteImport } from './routes/_guest/accommodations/index'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin/index'
 import { Route as GuestEventsSlugRouteImport } from './routes/_guest/events/$slug'
-import { Route as GuestConfirmationIdRouteImport } from './routes/_guest/confirmation/$id'
 import { Route as GuestAuthResetPasswordRouteImport } from './routes/_guest/auth/reset-password'
 import { Route as GuestAuthRegisterRouteImport } from './routes/_guest/auth/register'
 import { Route as GuestAuthLoginRouteImport } from './routes/_guest/auth/login'
@@ -41,6 +40,8 @@ import { Route as AdminAdminDashboardRouteImport } from './routes/_admin/admin/d
 import { Route as AdminAdminBookingsRouteImport } from './routes/_admin/admin/bookings'
 import { Route as AdminAdminActivitiesRouteImport } from './routes/_admin/admin/activities'
 import { Route as AdminAdminAccommodationsIndexRouteImport } from './routes/_admin/admin/accommodations/index'
+import { Route as GuestBookingConfirmationIdRouteImport } from './routes/_guest/booking/confirmation/$id'
+import { Route as GuestBookingConfirmationBookingNumberRouteImport } from './routes/_guest/booking/confirmation/$bookingNumber'
 import { Route as AdminAdminAccommodationsCreateRouteImport } from './routes/_admin/admin/accommodations/create'
 import { Route as AdminAdminAccommodationsViewIdRouteImport } from './routes/_admin/admin/accommodations/view/$id'
 import { Route as AdminAdminAccommodationsEditIdRouteImport } from './routes/_admin/admin/accommodations/edit/$id'
@@ -124,11 +125,6 @@ const GuestEventsSlugRoute = GuestEventsSlugRouteImport.update({
   path: '/events/$slug',
   getParentRoute: () => GuestRoute,
 } as any)
-const GuestConfirmationIdRoute = GuestConfirmationIdRouteImport.update({
-  id: '/confirmation/$id',
-  path: '/confirmation/$id',
-  getParentRoute: () => GuestRoute,
-} as any)
 const GuestAuthResetPasswordRoute = GuestAuthResetPasswordRouteImport.update({
   id: '/auth/reset-password',
   path: '/auth/reset-password',
@@ -205,6 +201,18 @@ const AdminAdminAccommodationsIndexRoute =
     path: '/admin/accommodations/',
     getParentRoute: () => AdminRoute,
   } as any)
+const GuestBookingConfirmationIdRoute =
+  GuestBookingConfirmationIdRouteImport.update({
+    id: '/booking/confirmation/$id',
+    path: '/booking/confirmation/$id',
+    getParentRoute: () => GuestRoute,
+  } as any)
+const GuestBookingConfirmationBookingNumberRoute =
+  GuestBookingConfirmationBookingNumberRouteImport.update({
+    id: '/booking/confirmation/$bookingNumber',
+    path: '/booking/confirmation/$bookingNumber',
+    getParentRoute: () => GuestRoute,
+  } as any)
 const AdminAdminAccommodationsCreateRoute =
   AdminAdminAccommodationsCreateRouteImport.update({
     id: '/admin/accommodations/create',
@@ -247,7 +255,6 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof GuestAuthLoginRoute
   '/auth/register': typeof GuestAuthRegisterRoute
   '/auth/reset-password': typeof GuestAuthResetPasswordRoute
-  '/confirmation/$id': typeof GuestConfirmationIdRoute
   '/events/$slug': typeof GuestEventsSlugRoute
   '/admin': typeof AdminAdminIndexRoute
   '/accommodations': typeof GuestAccommodationsIndexRoute
@@ -255,6 +262,8 @@ export interface FileRoutesByFullPath {
   '/activities': typeof GuestActivitiesIndexRoute
   '/events': typeof GuestEventsIndexRoute
   '/admin/accommodations/create': typeof AdminAdminAccommodationsCreateRoute
+  '/booking/confirmation/$bookingNumber': typeof GuestBookingConfirmationBookingNumberRoute
+  '/booking/confirmation/$id': typeof GuestBookingConfirmationIdRoute
   '/admin/accommodations': typeof AdminAdminAccommodationsIndexRoute
   '/admin/accommodations/edit/$id': typeof AdminAdminAccommodationsEditIdRoute
   '/admin/accommodations/view/$id': typeof AdminAdminAccommodationsViewIdRoute
@@ -282,7 +291,6 @@ export interface FileRoutesByTo {
   '/auth/login': typeof GuestAuthLoginRoute
   '/auth/register': typeof GuestAuthRegisterRoute
   '/auth/reset-password': typeof GuestAuthResetPasswordRoute
-  '/confirmation/$id': typeof GuestConfirmationIdRoute
   '/events/$slug': typeof GuestEventsSlugRoute
   '/admin': typeof AdminAdminIndexRoute
   '/accommodations': typeof GuestAccommodationsIndexRoute
@@ -290,6 +298,8 @@ export interface FileRoutesByTo {
   '/activities': typeof GuestActivitiesIndexRoute
   '/events': typeof GuestEventsIndexRoute
   '/admin/accommodations/create': typeof AdminAdminAccommodationsCreateRoute
+  '/booking/confirmation/$bookingNumber': typeof GuestBookingConfirmationBookingNumberRoute
+  '/booking/confirmation/$id': typeof GuestBookingConfirmationIdRoute
   '/admin/accommodations': typeof AdminAdminAccommodationsIndexRoute
   '/admin/accommodations/edit/$id': typeof AdminAdminAccommodationsEditIdRoute
   '/admin/accommodations/view/$id': typeof AdminAdminAccommodationsViewIdRoute
@@ -320,7 +330,6 @@ export interface FileRoutesById {
   '/_guest/auth/login': typeof GuestAuthLoginRoute
   '/_guest/auth/register': typeof GuestAuthRegisterRoute
   '/_guest/auth/reset-password': typeof GuestAuthResetPasswordRoute
-  '/_guest/confirmation/$id': typeof GuestConfirmationIdRoute
   '/_guest/events/$slug': typeof GuestEventsSlugRoute
   '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_guest/accommodations/': typeof GuestAccommodationsIndexRoute
@@ -328,6 +337,8 @@ export interface FileRoutesById {
   '/_guest/activities/': typeof GuestActivitiesIndexRoute
   '/_guest/events/': typeof GuestEventsIndexRoute
   '/_admin/admin/accommodations/create': typeof AdminAdminAccommodationsCreateRoute
+  '/_guest/booking/confirmation/$bookingNumber': typeof GuestBookingConfirmationBookingNumberRoute
+  '/_guest/booking/confirmation/$id': typeof GuestBookingConfirmationIdRoute
   '/_admin/admin/accommodations/': typeof AdminAdminAccommodationsIndexRoute
   '/_admin/admin/accommodations/edit/$id': typeof AdminAdminAccommodationsEditIdRoute
   '/_admin/admin/accommodations/view/$id': typeof AdminAdminAccommodationsViewIdRoute
@@ -357,7 +368,6 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
-    | '/confirmation/$id'
     | '/events/$slug'
     | '/admin'
     | '/accommodations'
@@ -365,6 +375,8 @@ export interface FileRouteTypes {
     | '/activities'
     | '/events'
     | '/admin/accommodations/create'
+    | '/booking/confirmation/$bookingNumber'
+    | '/booking/confirmation/$id'
     | '/admin/accommodations'
     | '/admin/accommodations/edit/$id'
     | '/admin/accommodations/view/$id'
@@ -392,7 +404,6 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
-    | '/confirmation/$id'
     | '/events/$slug'
     | '/admin'
     | '/accommodations'
@@ -400,6 +411,8 @@ export interface FileRouteTypes {
     | '/activities'
     | '/events'
     | '/admin/accommodations/create'
+    | '/booking/confirmation/$bookingNumber'
+    | '/booking/confirmation/$id'
     | '/admin/accommodations'
     | '/admin/accommodations/edit/$id'
     | '/admin/accommodations/view/$id'
@@ -429,7 +442,6 @@ export interface FileRouteTypes {
     | '/_guest/auth/login'
     | '/_guest/auth/register'
     | '/_guest/auth/reset-password'
-    | '/_guest/confirmation/$id'
     | '/_guest/events/$slug'
     | '/_admin/admin/'
     | '/_guest/accommodations/'
@@ -437,6 +449,8 @@ export interface FileRouteTypes {
     | '/_guest/activities/'
     | '/_guest/events/'
     | '/_admin/admin/accommodations/create'
+    | '/_guest/booking/confirmation/$bookingNumber'
+    | '/_guest/booking/confirmation/$id'
     | '/_admin/admin/accommodations/'
     | '/_admin/admin/accommodations/edit/$id'
     | '/_admin/admin/accommodations/view/$id'
@@ -561,13 +575,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestEventsSlugRouteImport
       parentRoute: typeof GuestRoute
     }
-    '/_guest/confirmation/$id': {
-      id: '/_guest/confirmation/$id'
-      path: '/confirmation/$id'
-      fullPath: '/confirmation/$id'
-      preLoaderRoute: typeof GuestConfirmationIdRouteImport
-      parentRoute: typeof GuestRoute
-    }
     '/_guest/auth/reset-password': {
       id: '/_guest/auth/reset-password'
       path: '/auth/reset-password'
@@ -673,6 +680,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminAccommodationsIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_guest/booking/confirmation/$id': {
+      id: '/_guest/booking/confirmation/$id'
+      path: '/booking/confirmation/$id'
+      fullPath: '/booking/confirmation/$id'
+      preLoaderRoute: typeof GuestBookingConfirmationIdRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/booking/confirmation/$bookingNumber': {
+      id: '/_guest/booking/confirmation/$bookingNumber'
+      path: '/booking/confirmation/$bookingNumber'
+      fullPath: '/booking/confirmation/$bookingNumber'
+      preLoaderRoute: typeof GuestBookingConfirmationBookingNumberRouteImport
+      parentRoute: typeof GuestRoute
+    }
     '/_admin/admin/accommodations/create': {
       id: '/_admin/admin/accommodations/create'
       path: '/admin/accommodations/create'
@@ -743,12 +764,13 @@ interface GuestRouteChildren {
   GuestAuthLoginRoute: typeof GuestAuthLoginRoute
   GuestAuthRegisterRoute: typeof GuestAuthRegisterRoute
   GuestAuthResetPasswordRoute: typeof GuestAuthResetPasswordRoute
-  GuestConfirmationIdRoute: typeof GuestConfirmationIdRoute
   GuestEventsSlugRoute: typeof GuestEventsSlugRoute
   GuestAccommodationsIndexRoute: typeof GuestAccommodationsIndexRoute
   GuestAccountIndexRoute: typeof GuestAccountIndexRoute
   GuestActivitiesIndexRoute: typeof GuestActivitiesIndexRoute
   GuestEventsIndexRoute: typeof GuestEventsIndexRoute
+  GuestBookingConfirmationBookingNumberRoute: typeof GuestBookingConfirmationBookingNumberRoute
+  GuestBookingConfirmationIdRoute: typeof GuestBookingConfirmationIdRoute
 }
 
 const GuestRouteChildren: GuestRouteChildren = {
@@ -769,12 +791,14 @@ const GuestRouteChildren: GuestRouteChildren = {
   GuestAuthLoginRoute: GuestAuthLoginRoute,
   GuestAuthRegisterRoute: GuestAuthRegisterRoute,
   GuestAuthResetPasswordRoute: GuestAuthResetPasswordRoute,
-  GuestConfirmationIdRoute: GuestConfirmationIdRoute,
   GuestEventsSlugRoute: GuestEventsSlugRoute,
   GuestAccommodationsIndexRoute: GuestAccommodationsIndexRoute,
   GuestAccountIndexRoute: GuestAccountIndexRoute,
   GuestActivitiesIndexRoute: GuestActivitiesIndexRoute,
   GuestEventsIndexRoute: GuestEventsIndexRoute,
+  GuestBookingConfirmationBookingNumberRoute:
+    GuestBookingConfirmationBookingNumberRoute,
+  GuestBookingConfirmationIdRoute: GuestBookingConfirmationIdRoute,
 }
 
 const GuestRouteWithChildren = GuestRoute._addFileChildren(GuestRouteChildren)

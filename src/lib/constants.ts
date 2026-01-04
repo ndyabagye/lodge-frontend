@@ -26,6 +26,7 @@ export const QUERY_KEYS = {
   ACTIVITIES: "activities",
   ACTIVITY: "activity",
   BOOKINGS: "bookings",
+  GUEST_BOOKINGS: "guest-bookings",
   CONTACT: "contact-us",
   DASHBOARD: "dashboard",
   USER: "user",

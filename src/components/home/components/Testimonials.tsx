@@ -34,38 +34,51 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-16 lg:py-24 bg-muted/30">
-      <div className="container mx-auto px-4">
+    <section className="premium-section bg-gray-50 dark:bg-gray-900/50">
+      <div className="premium-container">
+        {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            What Our Guests Say
+          <div className="inline-flex items-center gap-2 mb-4">
+            <div className="h-px w-12 bg-premium-accent"></div>
+            <span className="premium-tagline premium-text-accent">
+              TESTIMONIALS
+            </span>
+            <div className="h-px w-12 bg-premium-accent"></div>
+          </div>
+          <h2 className="premium-heading text-3xl lg:text-4xl mb-4 premium-text-primary">
+            What Our{" "}
+            <span className="premium-heading-serif premium-text-accent">
+              Guests Say
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="premium-subtitle premium-text-muted max-w-2xl mx-auto">
             Real experiences from real guests
           </p>
         </div>
 
+        {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial) => (
             <Card
               key={testimonial.id}
-              className="hover:shadow-lg transition-shadow"
+              className="premium-card bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:border-premium-accent"
             >
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4 mb-4">
                   <Avatar className="h-12 w-12">
-                    <AvatarFallback className="bg-primary text-primary-foreground">
+                    <AvatarFallback className="bg-premium-accent text-white font-semibold">
                       {testimonial.initials}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="font-semibold text-gray-900 dark:text-gray-100">
+                      {testimonial.name}
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       {testimonial.location}
                     </p>
                   </div>
                 </div>
-
                 <div className="flex gap-1 mb-3">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
                     <Star
@@ -74,8 +87,7 @@ export function Testimonials() {
                     />
                   ))}
                 </div>
-
-                <p className="text-muted-foreground italic">
+                <p className="text-gray-600 dark:text-gray-400 italic leading-relaxed">
                   "{testimonial.comment}"
                 </p>
               </CardContent>

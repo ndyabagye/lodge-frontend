@@ -31,18 +31,19 @@ export function AccommodationCard({ accommodation }: AccommodationCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    // <Card className="premium-card overflow-hidden group hover:premium-card-hover transition-shadow">
+    <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-300 group">
       <Link to="/accommodations/$slug" params={{ slug: accommodation.slug }}>
-        <div className="aspect-4/3 overflow-hidden bg-muted">
+        <div className="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-700 relative">
           {featuredImage ? (
             <img
               src={featuredImage.url}
               alt={featuredImage.alt_text || accommodation.name}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <span className="text-muted-foreground">No image</span>
+              <span className="text-gray-500 dark:text-gray-400">No image</span>
             </div>
           )}
           {/* Favorite Button */}
@@ -50,9 +51,9 @@ export function AccommodationCard({ accommodation }: AccommodationCardProps) {
             onClick={handleToggleFavorite}
             className={cn(
               "absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center transition-all",
-              "bg-white/90 dark:bg-black/50 backdrop-blur-sm",
-              "hover:bg-white dark:hover:bg-black/70 hover:scale-110",
-              "border border-border",
+              "bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm",
+              "hover:bg-white dark:hover:bg-gray-800 hover:scale-110",
+              "border border-gray-200 dark:border-gray-700 shadow-lg",
             )}
           >
             <Heart
@@ -60,36 +61,36 @@ export function AccommodationCard({ accommodation }: AccommodationCardProps) {
                 "h-5 w-5 transition-colors",
                 isFavorite
                   ? "fill-red-500 text-red-500"
-                  : "text-muted-foreground",
+                  : "text-gray-600 dark:text-gray-400",
               )}
             />
           </button>
         </div>
       </Link>
 
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between mb-2">
+      <CardContent className="p-6 space-y-4">
+        <div className="flex items-start justify-between gap-2">
           <Link
             to="/accommodations/$slug"
             params={{ slug: accommodation.slug }}
-            className="hover:underline"
+            className="hover:underline flex-1"
           >
-            <h3 className="font-semibold text-lg line-clamp-1">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 line-clamp-1 group-hover:text-premium-accent transition-colors">
               {accommodation.name}
             </h3>
           </Link>
           {accommodation.featured && (
-            <Badge variant="secondary" className="ml-2">
+            <Badge className="bg-premium-accent text-white border-0 shrink-0">
               Featured
             </Badge>
           )}
         </div>
 
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed">
           {accommodation.short_description}
         </p>
 
-        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+        <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-center gap-1">
             <Users className="h-4 w-4" />
             <span>{accommodation.max_guests} guests</span>
@@ -107,20 +108,24 @@ export function AccommodationCard({ accommodation }: AccommodationCardProps) {
         </div>
 
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold">
+          <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {formatPrice(accommodation.base_price)}
           </span>
-          <span className="text-sm text-muted-foreground">/ night</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">
+            / night
+          </span>
         </div>
       </CardContent>
 
-      <CardFooter className="p-4 pt-0">
+      <CardFooter className="p-6 pt-0">
         <Link
           to="/accommodations/$slug"
           params={{ slug: accommodation.slug }}
           className="w-full"
         >
-          <Button className="w-full">View Details</Button>
+          <Button className="w-full text-base font-semibold bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all duration-300">
+            View Details
+          </Button>
         </Link>
       </CardFooter>
     </Card>

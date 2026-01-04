@@ -19,6 +19,14 @@ export function useBooking(id: string) {
   });
 }
 
+export function useGuestBooking(bookingNumber?: string, email?: string) {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GUEST_BOOKINGS, bookingNumber, email],
+    queryFn: () => bookingService.getGuestBooking(bookingNumber!, email!),
+    enabled: !!bookingNumber && !!email,
+  });
+}
+
 export function useCreateBooking() {
   const queryClient = useQueryClient();
 

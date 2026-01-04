@@ -1,223 +1,15 @@
-// import { useState } from "react";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { Button } from "@/components/ui/button";
-// import { Label } from "@/components/ui/label";
-// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-// import { CreditCard, Smartphone, Loader2 } from "lucide-react";
-// import { useCartStore } from "@/stores/cart-store";
-// import { useCreateBooking } from "@/hooks/use-bookings";
-// import { toast } from "sonner";
-// import { formatPrice } from "@/lib/utils";
-
-// type PaymentMethod = "card" | "mobile_money";
-
-// interface PaymentFormProps {
-//   guestInfo: {
-//     first_name: string;
-//     last_name: string;
-//     email: string;
-//     phone: string;
-//     special_requests?: string;
-//   };
-//   onSuccess: (bookingId: string) => void;
-//   onBack: () => void;
-// }
-
-// export function PaymentForm({
-//   guestInfo,
-//   onSuccess,
-//   onBack,
-// }: PaymentFormProps) {
-//   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
-//   const [isProcessing, setIsProcessing] = useState(false);
-//   const { items, getTotal } = useCartStore();
-//   const { mutateAsync: createBooking } = useCreateBooking();
-
-//   const handlePayment = async () => {
-//     setIsProcessing(true);
-
-//     try {
-//       // For now, we'll create the booking directly
-//       // In production, you'd integrate with actual payment gateways
-
-//       const accommodationItem = items.find(
-//         (item) => item.type === "accommodation",
-//       );
-
-//       if (!accommodationItem) {
-//         toast.error("No accommodation found in cart");
-//         return;
-//       }
-
-//       const bookingData = {
-//         accommodation_id: accommodationItem.item_id,
-//         check_in_date: accommodationItem.check_in_date!,
-//         check_out_date: accommodationItem.check_out_date!,
-//         num_adults: 2, // You can get this from the booking widget state
-//         num_children: 0,
-//         guest_first_name: guestInfo.first_name,
-//         guest_last_name: guestInfo.last_name,
-//         guest_email: guestInfo.email,
-//         guest_phone: guestInfo.phone,
-//         special_requests: guestInfo.special_requests,
-//       };
-
-//       const booking = await createBooking(bookingData);
-
-//       // Simulate payment processing
-//       await new Promise((resolve) => setTimeout(resolve, 2000));
-
-//       // In production, you'd:
-//       // 1. Call payment gateway API (Stripe/Flutterwave)
-//       // 2. Handle payment confirmation
-//       // 3. Update booking payment status
-//       // 4. Send confirmation email
-
-//       onSuccess(booking.id);
-//     } catch (error: any) {
-//       console.error("Payment error:", error);
-//       toast.error(error.message || "Payment failed. Please try again.");
-//     } finally {
-//       setIsProcessing(false);
-//     }
-//   };
-
-//   return (
-//     <div className="space-y-6">
-//       {/* Payment Method Selection */}
-//       <Card>
-//         <CardHeader>
-//           <CardTitle>Payment Method</CardTitle>
-//         </CardHeader>
-//         <CardContent>
-//           <RadioGroup
-//             value={paymentMethod}
-//             onValueChange={(value) => setPaymentMethod(value as PaymentMethod)}
-//             className="space-y-3"
-//           >
-//             <div className="flex items-center space-x-3 border rounded-lg p-4 cursor-pointer hover:bg-accent">
-//               <RadioGroupItem value="card" id="card" />
-//               <Label
-//                 htmlFor="card"
-//                 className="flex items-center gap-3 cursor-pointer flex-1"
-//               >
-//                 <CreditCard className="h-5 w-5" />
-//                 <div>
-//                   <p className="font-medium">Credit / Debit Card</p>
-//                   <p className="text-sm text-muted-foreground">
-//                     Visa, Mastercard
-//                   </p>
-//                 </div>
-//               </Label>
-//             </div>
-
-//             <div className="flex items-center space-x-3 border rounded-lg p-4 cursor-pointer hover:bg-accent">
-//               <RadioGroupItem value="mobile_money" id="mobile_money" />
-//               <Label
-//                 htmlFor="mobile_money"
-//                 className="flex items-center gap-3 cursor-pointer flex-1"
-//               >
-//                 <Smartphone className="h-5 w-5" />
-//                 <div>
-//                   <p className="font-medium">Mobile Money</p>
-//                   <p className="text-sm text-muted-foreground">MTN, Airtel</p>
-//                 </div>
-//               </Label>
-//             </div>
-//           </RadioGroup>
-//         </CardContent>
-//       </Card>
-
-//       {/* Payment Details - Card */}
-//       {paymentMethod === "card" && (
-//         <Card>
-//           <CardHeader>
-//             <CardTitle>Card Details</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             <div className="bg-muted/50 border border-dashed rounded-lg p-8 text-center">
-//               <CreditCard className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-//               <p className="text-sm text-muted-foreground mb-2">
-//                 Stripe integration will be added here
-//               </p>
-//               <p className="text-xs text-muted-foreground">
-//                 For demo purposes, clicking "Pay Now" will simulate a successful
-//                 payment
-//               </p>
-//             </div>
-//           </CardContent>
-//         </Card>
-//       )}
-
-//       {/* Payment Details - Mobile Money */}
-//       {paymentMethod === "mobile_money" && (
-//         <Card>
-//           <CardHeader>
-//             <CardTitle>Mobile Money Details</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             <div className="bg-muted/50 border border-dashed rounded-lg p-8 text-center">
-//               <Smartphone className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-//               <p className="text-sm text-muted-foreground mb-2">
-//                 Flutterwave/Paystack integration will be added here
-//               </p>
-//               <p className="text-xs text-muted-foreground">
-//                 For demo purposes, clicking "Pay Now" will simulate a successful
-//                 payment
-//               </p>
-//             </div>
-//           </CardContent>
-//         </Card>
-//       )}
-
-//       {/* Total Amount */}
-//       <Card>
-//         <CardContent className="pt-6">
-//           <div className="flex items-center justify-between text-2xl font-bold">
-//             <span>Total to Pay</span>
-//             <span>{formatPrice(getTotal())}</span>
-//           </div>
-//         </CardContent>
-//       </Card>
-
-//       {/* Action Buttons */}
-//       <div className="flex gap-4">
-//         <Button
-//           variant="outline"
-//           onClick={onBack}
-//           disabled={isProcessing}
-//           className="flex-1"
-//         >
-//           Back
-//         </Button>
-//         <Button
-//           onClick={handlePayment}
-//           disabled={isProcessing}
-//           size="lg"
-//           className="flex-1"
-//         >
-//           {isProcessing ? (
-//             <>
-//               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-//               Processing...
-//             </>
-//           ) : (
-//             "Pay Now"
-//           )}
-//         </Button>
-//       </div>
-//     </div>
-//   );
-// }
-
-// FILE: src/components/checkout/PaymentForm.tsx
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { CreditCard, Smartphone, Loader2, AlertCircle } from "lucide-react";
+import {
+  CreditCard,
+  Smartphone,
+  Loader2,
+  AlertCircle,
+  Check,
+} from "lucide-react";
 import { useCartStore } from "@/stores/cart-store";
 import { useCreateBooking } from "@/hooks/use-bookings";
 import {
@@ -237,7 +29,11 @@ interface PaymentFormProps {
     phone: string;
     special_requests?: string;
   };
-  onSuccess: (bookingNumber: string) => void;
+  onSuccess: (booking: {
+    id: string;
+    booking_number: string;
+    guest_email: string;
+  }) => void;
   onBack: () => void;
 }
 
@@ -266,6 +62,21 @@ export function PaymentForm({
     }
   }, [gateways, selectedGateway]);
 
+  // Simulated payment processing
+  const simulatePayment = async (bookingId: string): Promise<boolean> => {
+    // Simulate 2-3 second payment processing
+    await new Promise((resolve) => setTimeout(resolve, 2500));
+
+    // 95% success rate for simulation
+    const success = Math.random() > 0.05;
+
+    if (!success) {
+      throw new Error("Payment declined. Please try again.");
+    }
+
+    return true;
+  };
+
   const handlePayment = async () => {
     if (!selectedGateway) {
       toast.error("Please select a payment method");
@@ -285,7 +96,7 @@ export function PaymentForm({
         return;
       }
 
-      // Step 2: Create booking
+      // Step 2: Create booking with formatted data
       const numAdults = accommodationItem.num_adults ?? 1;
       const numChildren = accommodationItem.num_children ?? 0;
 
@@ -303,30 +114,47 @@ export function PaymentForm({
         special_requests: guestInfo.special_requests,
       };
 
+      // console.log("Creating booking with data:", bookingData);
+
       const booking = await createBooking(bookingData);
       setCreatedBooking(booking);
 
-      // Step 3: Initialize payment
-      // Check if user is authenticated or guest
+      // Step 3: Simulate payment (replace with real payment later)
       if (user) {
-        // Authenticated user - use booking ID
-        // You'll need to add useInitializePayment hook
-        toast.info("Redirecting to payment gateway...");
-        // For now, redirect to success (implement later)
-        setTimeout(() => {
-          onSuccess(booking.booking_number);
-        }, 2000);
+        await simulatePayment(booking.id);
       } else {
-        // Guest - use booking number + email
-        const paymentResult = await initializeGuestPayment({
-          bookingNumber: booking.booking_number,
-          email: guestInfo.email,
-          gateway: selectedGateway as any,
-        });
-
-        // The hook will automatically redirect to authorization_url
-        // When user returns, they'll be redirected to payment callback page
+        await simulatePayment(booking.id);
       }
+
+      // Step 4: Success!
+      toast.success("Payment successful!");
+      onSuccess({
+        id: booking.id,
+        booking_number: booking.booking_number,
+        guest_email: booking.guest_email,
+      });
+
+      // // Step 3: Initialize payment
+      // // Check if user is authenticated or guest
+      // if (user) {
+      //   // Authenticated user - use booking ID
+      //   // You'll need to add useInitializePayment hook
+      //   toast.info("Redirecting to payment gateway...");
+      //   // For now, redirect to success (implement later)
+      //   setTimeout(() => {
+      //     onSuccess(booking.booking_number);
+      //   }, 2000);
+      // } else {
+      //   // Guest - use booking number + email
+      //   const paymentResult = await initializeGuestPayment({
+      //     bookingNumber: booking.booking_number,
+      //     email: guestInfo.email,
+      //     gateway: selectedGateway as any,
+      //   });
+
+      //   // The hook will automatically redirect to authorization_url
+      //   // When user returns, they'll be redirected to payment callback page
+      // }
     } catch (error: any) {
       console.error("Payment error:", error);
       toast.error(error.message || "Payment failed. Please try again.");
@@ -339,13 +167,13 @@ export function PaymentForm({
   const getGatewayIcon = (gatewayName: string) => {
     switch (gatewayName) {
       case "stripe":
-        return <CreditCard className="h-5 w-5" />;
+        return <CreditCard className="h-4 w-4" />;
       case "flutterwave":
       case "pesapal":
       case "iotec":
-        return <Smartphone className="h-5 w-5" />;
+        return <Smartphone className="h-4 w-4" />;
       default:
-        return <CreditCard className="h-5 w-5" />;
+        return <CreditCard className="h-4 w-4" />;
     }
   };
 
@@ -355,7 +183,7 @@ export function PaymentForm({
       case "stripe":
         return "Credit/Debit Card";
       case "flutterwave":
-        return "Card, Mobile Money, Bank Transfer";
+        return "Card, Mobile Money, Bank";
       case "pesapal":
         return "Mobile Money, Visa, Mastercard";
       case "iotec":
@@ -395,27 +223,34 @@ export function PaymentForm({
           <RadioGroup
             value={selectedGateway}
             onValueChange={setSelectedGateway}
-            className="space-y-3"
+            className="space-y-2"
           >
             {gateways
               .filter((gateway) => gateway.enabled)
               .map((gateway) => (
                 <div
                   key={gateway.name}
-                  className="flex items-center space-x-3 border rounded-lg p-4 cursor-pointer hover:bg-accent transition-colors"
+                  className={`flex items-center space-x-3 border rounded-md p-3 cursor-pointer transition-colors ${
+                    selectedGateway === gateway.name
+                      ? "bg-accent border-primary"
+                      : "hover:bg-accent/50"
+                  }`}
                 >
                   <RadioGroupItem value={gateway.name} id={gateway.name} />
                   <Label
                     htmlFor={gateway.name}
-                    className="flex items-center gap-3 cursor-pointer flex-1"
+                    className="flex items-center gap-2 cursor-pointer flex-1 text-sm"
                   >
                     {getGatewayIcon(gateway.name)}
                     <div className="flex-1">
                       <p className="font-medium capitalize">{gateway.label}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs text-muted-foreground">
                         {getGatewayDescription(gateway.name)}
                       </p>
                     </div>
+                    {selectedGateway === gateway.name && (
+                      <Check className="h-4 w-4 text-primary" />
+                    )}
                     <div className="text-xs text-muted-foreground">
                       {gateway.currencies.join(", ")}
                     </div>
@@ -423,20 +258,25 @@ export function PaymentForm({
                 </div>
               ))}
           </RadioGroup>
+
+          {/* Simulation Notice */}
+          <Alert className="mt-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="text-xs">
+              <strong>Demo Mode:</strong> Payments are simulated. No actual
+              charges will be made.
+            </AlertDescription>
+          </Alert>
         </CardContent>
       </Card>
 
       {/* Payment Info */}
       <Card>
         <CardContent className="pt-6">
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-muted-foreground mt-0.5" />
+          <div className="space-y-3">
+            <div className="flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
               <div className="text-sm text-muted-foreground space-y-2">
-                <p>
-                  You will be redirected to the payment gateway to complete your
-                  payment securely.
-                </p>
                 <p>
                   After successful payment, you'll receive a booking
                   confirmation via email at{" "}
@@ -444,15 +284,19 @@ export function PaymentForm({
                     {guestInfo.email}
                   </span>
                 </p>
-                {!user && createdBooking && (
-                  <p className="text-primary font-medium">
-                    Your booking number:{" "}
-                    <span className="font-bold">
-                      {createdBooking.booking_number}
-                    </span>
-                    <br />
-                    Save this number to track your booking
-                  </p>
+
+                {createdBooking && (
+                  <div className="bg-primary/10 border border-primary/20 rounded-md p-3">
+                    <p className="text-primary font-medium text-sm">
+                      Booking Number:{" "}
+                      <span className="font-bold text-base">
+                        {createdBooking.booking_number}
+                      </span>
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Save this number to track your booking
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
