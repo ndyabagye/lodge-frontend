@@ -28,16 +28,18 @@ export function AccommodationDetailTemplate({
 
   if (error || !accommodation) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center text-destructive">
-          Accommodation not found
+      <div className="premium-container py-12">
+        <div className="text-center">
+          <p className="text-xl font-semibold text-red-600 dark:text-red-400">
+            Accommodation not found
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen premium-bg-background">
       {/*image gallery*/}
       <ImageGallery images={accommodation.images} name={accommodation.name} />
       <div className="container mx-auto px-4 py-8">
@@ -47,19 +49,34 @@ export function AccommodationDetailTemplate({
             {/* Basic Info */}
             <AccommodationInfo accommodation={accommodation} />
 
-            <Separator />
+            <Separator className="bg-gray-200 dark:bg-gray-700" />
 
             {/* Tabs for Description, Amenities, Reviews */}
             <Tabs defaultValue="description" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="description">Description</TabsTrigger>
-                <TabsTrigger value="amenities">Amenities</TabsTrigger>
-                <TabsTrigger value="reviews">Reviews</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <TabsTrigger
+                  value="description"
+                  className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100 text-gray-600 dark:text-gray-400 font-semibold"
+                >
+                  Description
+                </TabsTrigger>
+                <TabsTrigger
+                  value="amenities"
+                  className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100 text-gray-600 dark:text-gray-400 font-semibold"
+                >
+                  Amenities
+                </TabsTrigger>
+                <TabsTrigger
+                  value="reviews"
+                  className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100 text-gray-600 dark:text-gray-400 font-semibold"
+                >
+                  Reviews
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="description" className="mt-6">
                 <div className="prose max-w-none">
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
                     {accommodation.description}
                   </p>
                 </div>

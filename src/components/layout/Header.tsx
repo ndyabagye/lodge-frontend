@@ -217,9 +217,9 @@ export function Header() {
             <div className="relative">
               <div className="absolute -inset-2 bg-premium-accent/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <span className="text-2xl font-light tracking-tight relative premium-text-primary">
-                Lodge
+                Villa
                 <span className="premium-text-accent font-serif italic ml-1">
-                  Retreats
+                  Mbanandi Lodge
                 </span>
               </span>
             </div>
@@ -276,7 +276,7 @@ export function Header() {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="rounded-full px-3 hover:bg-premium-accent/10 hover:text-premium-accent"
+                    className="rounded-full px-3 hover:bg-muted-foreground hover:text-premium-accent"
                   >
                     <div className="w-8 h-8 rounded-full bg-premium-accent/10 flex items-center justify-center mr-2">
                       <User className="h-4 w-4 text-premium-accent" />
@@ -287,7 +287,7 @@ export function Header() {
                     <ChevronDown className="ml-2 h-3 w-3 premium-text-muted" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 premium-card">
+                <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none premium-text-primary">

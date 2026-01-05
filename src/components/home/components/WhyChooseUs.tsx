@@ -92,7 +92,7 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="premium-section premium-bg-muted">
+    <section className="premium-section-sm premium-bg-muted">
       <div className="premium-container">
         {/* Section Header */}
         <div className="text-center mb-16">

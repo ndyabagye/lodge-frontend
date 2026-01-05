@@ -57,13 +57,6 @@ export function CheckoutPageTemplate() {
   }) => {
     toast.success("Booking confirmed!");
 
-    console.log(
-      "The payment stuff",
-      booking.id,
-      booking.booking_number,
-      booking.guest_email,
-    );
-    console.log("The store stuff", isAuthenticated, user);
     if (isAuthenticated) {
       await navigate({
         to: "/booking/confirmation/$id",

@@ -20,8 +20,22 @@ export function RelatedAccommodations({
   if (!related || related.length === 0) return null;
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-6">Similar Accommodations</h2>
+    <div className="space-y-8">
+      <div className="text-center">
+        <div className="inline-flex items-center gap-2 mb-4">
+          <div className="h-px w-12 bg-premium-accent"></div>
+          <span className="premium-tagline premium-text-accent">
+            DISCOVER MORE
+          </span>
+          <div className="h-px w-12 bg-premium-accent"></div>
+        </div>
+        <h2 className="premium-heading text-3xl mb-4 premium-text-primary">
+          Similar{" "}
+          <span className="premium-heading-serif premium-text-accent">
+            Accommodations
+          </span>
+        </h2>
+      </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {related.map((accommodation) => (
           <AccommodationCard

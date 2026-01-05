@@ -1,47 +1,18 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Clock } from "lucide-react";
-import { formatPrice } from "@/lib/utils";
-
-// Mock data - will be replaced with actual API call
-const activities = [
-  {
-    id: "1",
-    name: "Guided Nature Walk",
-    slug: "guided-nature-walk",
-    image:
-      "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80",
-    duration: 120,
-    price: 50000,
-    category: "Adventure",
-  },
-  {
-    id: "2",
-    name: "Boat Safari",
-    slug: "boat-safari",
-    image:
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80",
-    duration: 180,
-    price: 80000,
-    category: "Adventure",
-  },
-  {
-    id: "3",
-    name: "Spa & Wellness",
-    slug: "spa-wellness",
-    image:
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80",
-    duration: 90,
-    price: 120000,
-    category: "Relaxation",
-  },
-];
+import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useActivities } from "@/hooks/use-activities";
+import { ActivityCard } from "@/components/activities/components/ActivityCard";
 
 export function FeaturedActivities() {
+  const { data, isLoading } = useActivities({
+    featured: true,
+    per_page: 6,
+  });
+  console.log("The data:", data);
   return (
-    <section className="premium-section premium-bg-background">
+    <section className="premium-section-sm premium-bg-background">
       <div className="premium-container">
         {/* Header */}
         <div className="text-center mb-12">
@@ -63,54 +34,57 @@ export function FeaturedActivities() {
           </p>
         </div>
 
-        {/* Activities Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {activities.map((activity) => (
-            <Card
-              key={activity.id}
-              className="premium-card bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-300 group"
-            >
-              <div className="aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-700 relative">
-                <img
-                  src={activity.image}
-                  alt={activity.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <Badge className="absolute top-4 left-4 bg-white text-gray-900 shadow-md">
-                  {activity.category}
-                </Badge>
+        {isLoading ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="space-y-4">
+                <Skeleton className="aspect-square bg-premium-muted/50 rounded-2xl" />
+                <div className="space-y-2">
+                  <Skeleton className="h-6 w-3/4 bg-premium-muted/50 rounded" />
+                  <Skeleton className="h-4 w-1/2 bg-premium-muted/50 rounded" />
+                  <Skeleton className="h-4 w-full bg-premium-muted/50 rounded" />
+                  <Skeleton className="h-4 w-2/3 bg-premium-muted/50 rounded" />
+                </div>
               </div>
-              <CardContent className="space-y-4 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-premium-accent transition-colors">
-                  {activity.name}
-                </h3>
-                <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{activity.duration} mins</span>
-                  </div>
+            ))}
+          </div>
+        ) : data?.data && data.data.length > 0 ? (
+          <>
+            {/* Activities Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {data.data.slice(0, 6).map((activity) => (
+                <ActivityCard key={activity.id} activity={activity} />
+              ))}
+            </div>
+            {/* Premium Verification Badge */}
+            <div className="pt-8 border-t premium-border-light">
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-premium-accent/10 flex items-center justify-center">
+                  <Sparkles className="h-4 w-4 text-premium-accent" />
                 </div>
-                <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  {formatPrice(activity.price)}
-                </div>
-              </CardContent>
-              <CardFooter className="p-6 pt-0">
-                <Link
-                  to="/activities/$slug"
-                  params={{ slug: activity.slug }}
-                  className="w-full"
-                >
-                  <Button
-                    className="w-full border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent bg-white dark:bg-gray-800 font-semibold"
-                    variant="outline"
-                  >
-                    Learn More
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+                <span className="text-sm font-medium premium-text-muted">
+                  All activities are guided by certified professionals
+                </span>
+              </div>
+            </div>
+          </>
+        ) : (
+          /* Empty State */
+          <div className="text-center py-24">
+            <div className="w-16 h-16 rounded-full bg-premium-muted/50 flex items-center justify-center mx-auto mb-4">
+              <Sparkles className="h-8 w-8 premium-text-muted" />
+            </div>
+            <p className="premium-text-muted mb-4">
+              No featured activities available
+            </p>
+            <Link to="/activities" search={{}}>
+              <Button variant="outline" className="premium-button-outline">
+                Browse All Activities
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        )}
 
         {/* View All Button */}
         <div className="text-center">

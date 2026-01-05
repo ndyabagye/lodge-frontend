@@ -34,7 +34,7 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="premium-section bg-gray-50 dark:bg-gray-900/50">
+    <section className="premium-section-sm bg-gray-50 dark:bg-gray-900/50">
       <div className="premium-container">
         {/* Header */}
         <div className="text-center mb-12">

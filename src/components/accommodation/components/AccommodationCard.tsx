@@ -12,8 +12,8 @@ interface AccommodationCardProps {
 }
 
 export function AccommodationCard({ accommodation }: AccommodationCardProps) {
-  const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
-  const isFavorite = favorites.includes(accommodation.id);
+  const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
+  const isFav = isFavorite(accommodation.id, "accommodation");
 
   const featuredImage =
     accommodation.images?.find((img) => img.is_featured) ||
@@ -23,16 +23,16 @@ export function AccommodationCard({ accommodation }: AccommodationCardProps) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (isFavorite) {
-      removeFavorite(accommodation.id);
+    if (isFav) {
+      removeFavorite(accommodation.id, "accommodation");
     } else {
-      addFavorite(accommodation.id);
+      addFavorite(accommodation.id, "accommodation");
     }
   };
 
   return (
     // <Card className="premium-card overflow-hidden group hover:premium-card-hover transition-shadow">
-    <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-300 group">
+    <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-300 group py-0">
       <Link to="/accommodations/$slug" params={{ slug: accommodation.slug }}>
         <div className="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-700 relative">
           {featuredImage ? (
@@ -59,7 +59,7 @@ export function AccommodationCard({ accommodation }: AccommodationCardProps) {
             <Heart
               className={cn(
                 "h-5 w-5 transition-colors",
-                isFavorite
+                isFav
                   ? "fill-red-500 text-red-500"
                   : "text-gray-600 dark:text-gray-400",
               )}

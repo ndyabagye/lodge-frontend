@@ -1,4 +1,4 @@
-export const APP_NAME = "Lodge Booking System";
+export const APP_NAME = "Villa Mbanandi Lodge";
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 export const API_VERSION = "v1";
 
@@ -39,3 +39,11 @@ export const QUERY_KEYS = {
 } as const;
 
 export const UGANDA_VAT = 0.18;
+export const ZIM_VAT = 0.155;
+
+export const COMPANY_INFO = {
+  name: "Villa Mbanandi Lodge",
+  address: "123 Main Street, Zambia",
+  phone: "+256 772 345 678",
+  email: "info@villa-mbanandi.com",
+};

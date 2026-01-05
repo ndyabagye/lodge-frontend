@@ -43,7 +43,7 @@ function BookingsPage() {
 //                 </div>
 //                 <div className="text-right">
 //                   <p className="font-bold text-lg">
-//                     UGX {booking.total_amount.toLocaleString()}
+//                     ZMW {booking.total_amount.toLocaleString()}
 //                   </p>
 //                   <p className="text-sm text-muted-foreground">
 //                     {booking.payment_status}

@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 export function CallToAction() {
   return (
-    <section className="premium-section bg-gray-900 dark:bg-black text-white relative overflow-hidden">
+    <section className="premium-section-sm bg-gray-900 dark:bg-black text-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div

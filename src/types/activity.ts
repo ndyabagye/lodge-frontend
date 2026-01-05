@@ -35,6 +35,7 @@ export interface ActivityImage {
   alt_text: string;
   caption?: string;
   order: number;
+  is_featured: boolean;
 }
 
 export interface ActivityAvailability {

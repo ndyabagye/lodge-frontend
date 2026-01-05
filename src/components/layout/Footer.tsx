@@ -142,6 +142,7 @@
 // }
 
 // components/layout/Footer.tsx (Premium Version)
+import { COMPANY_INFO } from "@/lib/constants";
 import { Link } from "@tanstack/react-router";
 import {
   Facebook,
@@ -170,9 +171,9 @@ export function Footer() {
                 </div>
                 <div>
                   <h3 className="text-xl font-light tracking-tight premium-text-primary">
-                    Lodge
+                    Villa{" "}
                     <span className="font-serif italic premium-text-accent">
-                      Retreats
+                      Mbanandi Lodge
                     </span>
                   </h3>
                   <p className="text-xs premium-tagline mt-1">
@@ -267,7 +268,7 @@ export function Footer() {
                       Our Location
                     </p>
                     <p className="text-sm premium-text-muted">
-                      Plot 331 Musiniro Rd. Busika, Uganda
+                      {COMPANY_INFO.address}
                     </p>
                   </div>
                 </div>
@@ -281,7 +282,7 @@ export function Footer() {
                       Call Us
                     </p>
                     <p className="text-sm premium-text-muted">
-                      +256 755 933 006
+                      {COMPANY_INFO.phone}
                     </p>
                   </div>
                 </div>
@@ -294,7 +295,9 @@ export function Footer() {
                     <p className="text-sm font-medium premium-text-primary mb-1">
                       Email Us
                     </p>
-                    <p className="text-sm premium-text-muted">info@lodge.com</p>
+                    <p className="text-sm premium-text-muted">
+                      {COMPANY_INFO.email}
+                    </p>
                   </div>
                 </div>
               </div>

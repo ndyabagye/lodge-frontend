@@ -47,7 +47,7 @@ export function AccommodationFilters({
         {/* Price Range */}
         <div className="space-y-2">
           <Label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-            Price Range (UGX)
+            Price Range (ZMW)
           </Label>
           <div className="grid grid-cols-2 gap-2">
             <Input

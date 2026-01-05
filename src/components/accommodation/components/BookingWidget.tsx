@@ -416,12 +416,12 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
 
         {/* Price Breakdown */}
         {nights > 0 && (
-          <div className="space-y-2 pt-4 border-t">
+          <div className="space-y-2 pt-4 border-t border-gray-200 dark:border-gray-700">
             {/* Nightly price breakdown (weekday / weekend) */}
             {pricingData?.nightly_breakdown?.length > 0 && (
               <Accordion type="single" collapsible>
                 <AccordionItem value="nightly-breakdown">
-                  <AccordionTrigger className="text-sm text-muted-foreground">
+                  <AccordionTrigger className="text-sm text-gray-600 dark:text-gray-400">
                     View nightly price breakdown
                   </AccordionTrigger>
 
@@ -452,7 +452,7 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
               </Accordion>
             )}
             {/*subtotal*/}
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between text-sm text-gray-900 dark:text-gray-100">
               <span>
                 {formatPrice(accommodation.base_price)} × {nights} night
                 {nights !== 1 ? "s" : ""}
@@ -462,28 +462,28 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
 
             {/*service fee*/}
             {serviceFee > 0 && (
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-sm text-gray-900 dark:text-gray-100">
                 <span>Service fee</span>
                 <span>{formatPrice(serviceFee)}</span>
               </div>
             )}
             {/*cleaning fee*/}
             {cleaningFee > 0 && (
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-sm text-gray-900 dark:text-gray-100">
                 <span>Cleaning fee</span>
                 <span>{formatPrice(cleaningFee)}</span>
               </div>
             )}
             {/*tax*/}
             {taxAmount > 0 && (
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-sm text-gray-900 dark:text-gray-100">
                 <span>
                   Tax {pricingData?.tax_rate ? `(${pricingData.tax_rate})` : ""}
                 </span>
                 <span>{formatPrice(taxAmount)}</span>
               </div>
             )}
-            <div className="flex justify-between font-bold pt-3 border-t">
+            <div className="flex justify-between font-bold pt-3 border-t border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
               <span>Total</span>
               <span>{formatPrice(total)}</span>
             </div>
@@ -493,7 +493,7 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
 
       <CardFooter className="flex flex-col gap-2">
         <Button
-          className="w-full"
+          className="w-full bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
           size="lg"
           onClick={handleBookNow}
           disabled={!stayValidation.valid || isCheckingAvailability}
@@ -508,8 +508,7 @@ export function BookingWidget({ accommodation }: BookingWidgetProps) {
           )}
         </Button>
         <Button
-          variant="outline"
-          className="w-full"
+          className="w-full border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent bg-white dark:bg-gray-800 font-semibold"
           onClick={handleAddToCart}
           disabled={!stayValidation.valid || isCheckingAvailability}
         >

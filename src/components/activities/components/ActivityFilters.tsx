@@ -36,14 +36,21 @@ export function ActivityFilters({
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">Filters</CardTitle>
+    <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-black/90">
+      <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+        <CardTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+          Filters
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Search */}
         <div className="space-y-2">
-          <Label htmlFor="search">Search</Label>
+          <Label
+            htmlFor="search"
+            className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+          >
+            Search
+          </Label>
           <Input
             id="search"
             placeholder="Search activities..."
@@ -51,12 +58,15 @@ export function ActivityFilters({
             onChange={(e) =>
               onFilterChange({ ...filters, search: e.target.value })
             }
+            className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
           />
         </div>
 
         {/* Categories */}
         <div className="space-y-2">
-          <Label>Categories</Label>
+          <Label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            Categories
+          </Label>
           <div className="space-y-2">
             {categories.map((category) => (
               <div key={category} className="flex items-center space-x-2">
@@ -78,7 +88,9 @@ export function ActivityFilters({
 
         {/* Price Range */}
         <div className="space-y-2">
-          <Label>Price Range (UGX)</Label>
+          <Label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            Price Range (ZMW)
+          </Label>
           <div className="grid grid-cols-2 gap-2">
             <Input
               type="number"
@@ -92,6 +104,7 @@ export function ActivityFilters({
                     : undefined,
                 })
               }
+              className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
             />
             <Input
               type="number"
@@ -105,13 +118,16 @@ export function ActivityFilters({
                     : undefined,
                 })
               }
+              className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
             />
           </div>
         </div>
 
         {/* Duration */}
         <div className="space-y-2">
-          <Label>Duration (minutes)</Label>
+          <Label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            Duration (minutes)
+          </Label>
           <div className="grid grid-cols-2 gap-2">
             <Input
               type="number"
@@ -125,6 +141,7 @@ export function ActivityFilters({
                     : undefined,
                 })
               }
+              className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
             />
             <Input
               type="number"
@@ -138,12 +155,17 @@ export function ActivityFilters({
                     : undefined,
                 })
               }
+              className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
             />
           </div>
         </div>
 
         {/* Reset Button */}
-        <Button variant="outline" className="w-full" onClick={handleReset}>
+        <Button
+          variant="outline"
+          className="w-full border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent bg-white dark:bg-gray-800 font-semibold"
+          onClick={handleReset}
+        >
           Reset Filters
         </Button>
       </CardContent>

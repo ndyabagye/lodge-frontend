@@ -50,7 +50,7 @@ export function PaymentForm({
   const { user } = useAuth(); // Get current user
   const { mutateAsync: createBooking } = useCreateBooking();
   const { data: gateways, isLoading: gatewaysLoading } = usePaymentGateways();
-  const { mutateAsync: initializeGuestPayment } = useInitializeGuestPayment();
+  // const { mutateAsync: initializeGuestPayment } = useInitializeGuestPayment();
 
   // Auto-select first available gateway
   useEffect(() => {
@@ -90,6 +90,8 @@ export function PaymentForm({
       const accommodationItem = items.find(
         (item) => item.type === "accommodation",
       );
+
+      console.log("The items in the cart", items);
 
       if (!accommodationItem) {
         toast.error("No accommodation found in cart");

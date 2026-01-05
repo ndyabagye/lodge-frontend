@@ -79,7 +79,7 @@ export function TermsPageTemplate() {
               </h2>
               <p className="text-muted-foreground">
                 All bookings are subject to availability and confirmation.
-                Prices are displayed in UGX (Ugandan Shillings) and include all
+                Prices are displayed in ZMW (Zambian Kwacha) and include all
                 applicable taxes unless stated otherwise. We use secure payment
                 gateways for all transactions.
               </p>

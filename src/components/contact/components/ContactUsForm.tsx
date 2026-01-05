@@ -1,5 +1,3 @@
-"use client";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -51,14 +49,16 @@ export function ContactUsForm() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto border shadow-lg">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Get in Touch</CardTitle>
-        <CardDescription>
+    <Card className="premium-card w-full max-w-2xl mx-auto bg-white dark:bg-black/90 border border-gray-200 dark:border-gray-700 shadow-2xl">
+      <CardHeader className="text-center border-b border-gray-200 dark:border-gray-700">
+        <CardTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          Get in Touch
+        </CardTitle>
+        <CardDescription className="text-gray-600 dark:text-gray-400">
           Have questions or feedback? We'd love to hear from you.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="">
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldSet className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -67,13 +67,19 @@ export function ContactUsForm() {
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>Full Name</FieldLabel>
+                    <FieldLabel
+                      htmlFor={field.name}
+                      className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+                    >
+                      Full Name
+                    </FieldLabel>
                     <Input
                       {...field}
                       id={field.name}
                       placeholder="John Doe"
                       autoComplete="name"
                       aria-invalid={fieldState.invalid}
+                      className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -87,7 +93,12 @@ export function ContactUsForm() {
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor={field.name}>Email Address</FieldLabel>
+                    <FieldLabel
+                      htmlFor={field.name}
+                      className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+                    >
+                      Email Address
+                    </FieldLabel>
                     <Input
                       {...field}
                       id={field.name}
@@ -95,6 +106,7 @@ export function ContactUsForm() {
                       placeholder="name@example.com"
                       autoComplete="email"
                       aria-invalid={fieldState.invalid}
+                      className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -109,12 +121,18 @@ export function ContactUsForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Subject</FieldLabel>
+                  <FieldLabel
+                    htmlFor={field.name}
+                    className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+                  >
+                    Subject
+                  </FieldLabel>
                   <Input
                     {...field}
                     id={field.name}
                     placeholder="How can we help you?"
                     aria-invalid={fieldState.invalid}
+                    className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -128,12 +146,17 @@ export function ContactUsForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Your Message</FieldLabel>
+                  <FieldLabel
+                    htmlFor={field.name}
+                    className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+                  >
+                    Your Message
+                  </FieldLabel>
                   <Textarea
                     {...field}
                     id={field.name}
                     placeholder="Please describe your inquiry in detail..."
-                    className="min-h-[150px]"
+                    className="min-h-24 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
                     aria-invalid={fieldState.invalid}
                   />
                   <FieldDescription>
@@ -148,7 +171,7 @@ export function ContactUsForm() {
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-fulltext-base font-semibold bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all duration-300"
               disabled={isPending}
               size="lg"
             >
