@@ -49,7 +49,7 @@ export function ContactUsForm() {
   };
 
   return (
-    <Card className="premium-card w-full max-w-2xl mx-auto bg-white dark:bg-black/90 border border-gray-200 dark:border-gray-700 shadow-2xl">
+    <Card className="premium-card w-full max-w-2xl mx-auto bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 shadow-2xl">
       <CardHeader className="text-center border-b border-gray-200 dark:border-gray-700">
         <CardTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           Get in Touch
@@ -58,7 +58,7 @@ export function ContactUsForm() {
           Have questions or feedback? We'd love to hear from you.
         </CardDescription>
       </CardHeader>
-      <CardContent className="">
+      <CardContent className="p-6">
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldSet className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -79,7 +79,7 @@ export function ContactUsForm() {
                       placeholder="John Doe"
                       autoComplete="name"
                       aria-invalid={fieldState.invalid}
-                      className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
+                      className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -106,7 +106,7 @@ export function ContactUsForm() {
                       placeholder="name@example.com"
                       autoComplete="email"
                       aria-invalid={fieldState.invalid}
-                      className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
+                      className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -132,7 +132,7 @@ export function ContactUsForm() {
                     id={field.name}
                     placeholder="How can we help you?"
                     aria-invalid={fieldState.invalid}
-                    className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
+                    className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -156,7 +156,7 @@ export function ContactUsForm() {
                     {...field}
                     id={field.name}
                     placeholder="Please describe your inquiry in detail..."
-                    className="min-h-24 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-gray-800"
+                    className="min-h-24 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
                     aria-invalid={fieldState.invalid}
                   />
                   <FieldDescription>

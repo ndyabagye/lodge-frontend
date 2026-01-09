@@ -74,7 +74,7 @@ export function HeroSection() {
           </div>
 
           {/* Main Heading with Premium Typography */}
-          <h1 className="premium-heading text-5xl md:text-6xl lg:text-7xl mb-6 text-premium-primary-foreground leading-tight">
+          <h1 className="premium-heading text-5xl md:text-6xl lg:text-7xl mb-6 text-premium-primary-foreground leading-tight dark:text-white">
             Discover Your
             <br />
             <span className="premium-heading-serif text-premium-accent">
@@ -89,7 +89,7 @@ export function HeroSection() {
           </p>
 
           {/* Search Bar  */}
-          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl p-6 md:p-8 mb-8">
+          <div className="bg-white dark:bg-black/90 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl p-6 md:p-8 mb-8">
             <div className="space-y-6">
               {/* Date Selection */}
               <div className="space-y-3">

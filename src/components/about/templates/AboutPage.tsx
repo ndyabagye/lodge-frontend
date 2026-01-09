@@ -172,7 +172,7 @@ export function AboutPageTemplate() {
       </section>
 
       {/* Stats Section */}
-      <section className="premium-section-sm bg-gray-50 dark:bg-gray-900/50">
+      <section className="premium-section-sm bg-gray-50 dark:bg-black/60">
         <div className="premium-container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
@@ -269,7 +269,7 @@ export function AboutPageTemplate() {
             </div>
 
             <div className="space-y-6">
-              <Card className="premium-card bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 shadow-xl">
+              <Card className="premium-card bg-white dark:bg-black/60 border-2 border-gray-200 dark:border-gray-700 shadow-xl">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
                     <Building className="h-5 w-5 text-premium-accent" />
@@ -308,7 +308,7 @@ export function AboutPageTemplate() {
       </section>
 
       {/* Values Section with Images */}
-      <section className="premium-section bg-gray-50 dark:bg-gray-900/50">
+      <section className="premium-section bg-gray-50 dark:bg-black/60">
         <div className="premium-container">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <div className="inline-flex items-center gap-2 mb-4">
@@ -331,7 +331,7 @@ export function AboutPageTemplate() {
             {values.map((value, index) => (
               <Card
                 key={index}
-                className="premium-card group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:border-premium-accent"
+                className="premium-card group bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:border-premium-accent"
               >
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
@@ -400,7 +400,7 @@ export function AboutPageTemplate() {
             {teamMembers.map((member, index) => (
               <Card
                 key={index}
-                className="premium-card text-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300"
+                className="premium-card text-center bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300"
               >
                 <CardContent className="pt-6">
                   <Avatar className="h-24 w-24 mx-auto mb-4 border-4 border-gray-100 dark:border-gray-700">
@@ -426,7 +426,7 @@ export function AboutPageTemplate() {
       </section>
 
       {/* Milestones Timeline */}
-      <section className="premium-section bg-gray-50 dark:bg-gray-900/50">
+      <section className="premium-section bg-gray-50 dark:bg-black/60">
         <div className="premium-container">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <div className="inline-flex items-center gap-2 mb-4">
@@ -456,7 +456,7 @@ export function AboutPageTemplate() {
                 >
                   <div className="md:w-1/2 md:px-8 mb-12 md:mb-16">
                     <Card
-                      className={`premium-card bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow ${index % 2 === 0 ? "md:text-right" : ""}`}
+                      className={`premium-card bg-white dark:bg-black/60 border-2 border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow ${index % 2 === 0 ? "md:text-right" : ""}`}
                     >
                       <CardContent className="pt-6">
                         <div className="text-2xl font-bold text-premium-accent mb-2">
@@ -492,7 +492,7 @@ export function AboutPageTemplate() {
       {/* CTA Section */}
       <section className="premium-section">
         <div className="premium-container">
-          <Card className="premium-card bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-200 dark:border-gray-700 text-center shadow-2xl">
+          <Card className="premium-card bg-gradient-to-br from-gray-50 to-gray-100 dark:from-black dark:to-black/90 border-2 border-gray-200 dark:border-gray-700 text-center shadow-2xl">
             <CardContent className="pt-12 pb-12">
               <h2 className="premium-heading text-3xl mb-4 premium-text-primary">
                 Ready to Experience{" "}
@@ -517,7 +517,7 @@ export function AboutPageTemplate() {
                 </Button>
                 <Button
                   size="lg"
-                  className="gap-2 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent hover:bg-premium-accent/10 bg-white dark:bg-gray-800 font-semibold"
+                  className="gap-2 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent hover:bg-premium-accent/10 bg-white dark:bg-black/60 font-semibold"
                   asChild
                 >
                   <Link to="/contact">

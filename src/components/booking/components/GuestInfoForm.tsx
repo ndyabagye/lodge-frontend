@@ -44,28 +44,36 @@ export function GuestInfoForm({
   });
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Guest Information</CardTitle>
-        <CardDescription>
+    <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 shadow-xl">
+      <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+        <CardTitle className="text-xl text-gray-900 dark:text-gray-100">
+          Guest Information
+        </CardTitle>
+        <CardDescription className="text-gray-600 dark:text-gray-400">
           {isAuthenticated
             ? "Verify your contact information"
             : "Please provide your contact information"}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid sm:grid-cols-2 gap-4">
             {/* First Name */}
             <div className="space-y-2">
-              <Label htmlFor="first_name">First Name *</Label>
+              <Label
+                htmlFor="first_name"
+                className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+              >
+                First Name *
+              </Label>
               <Input
                 id="first_name"
                 {...register("first_name")}
                 placeholder="John"
+                className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
               />
               {errors.first_name && (
-                <p className="text-sm text-destructive">
+                <p className="text-sm text-red-600 dark:text-red-400">
                   {errors.first_name.message}
                 </p>
               )}
@@ -73,14 +81,20 @@ export function GuestInfoForm({
 
             {/* Last Name */}
             <div className="space-y-2">
-              <Label htmlFor="last_name">Last Name *</Label>
+              <Label
+                htmlFor="last_name"
+                className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+              >
+                Last Name *
+              </Label>
               <Input
                 id="last_name"
                 {...register("last_name")}
                 placeholder="Doe"
+                className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
               />
               {errors.last_name && (
-                <p className="text-sm text-destructive">
+                <p className="text-sm text-red-600 dark:text-red-400">
                   {errors.last_name.message}
                 </p>
               )}
@@ -89,35 +103,54 @@ export function GuestInfoForm({
 
           {/* Email */}
           <div className="space-y-2">
-            <Label htmlFor="email">Email Address *</Label>
+            <Label
+              htmlFor="email"
+              className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+            >
+              Email Address *
+            </Label>
             <Input
               id="email"
               type="email"
               {...register("email")}
               placeholder="john.doe@example.com"
+              className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
             />
             {errors.email && (
-              <p className="text-sm text-destructive">{errors.email.message}</p>
+              <p className="text-sm text-red-600 dark:text-red-400">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
           {/* Phone */}
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number *</Label>
+            <Label
+              htmlFor="phone"
+              className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+            >
+              Phone Number *
+            </Label>
             <Input
               id="phone"
               type="tel"
               {...register("phone")}
               placeholder="+256 700 000 000"
+              className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
             />
             {errors.phone && (
-              <p className="text-sm text-destructive">{errors.phone.message}</p>
+              <p className="text-sm text-red-600 dark:text-red-400">
+                {errors.phone.message}
+              </p>
             )}
           </div>
 
           {/* Special Requests */}
           <div className="space-y-2">
-            <Label htmlFor="special_requests">
+            <Label
+              htmlFor="special_requests"
+              className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+            >
               Special Requests (Optional)
             </Label>
             <Textarea
@@ -125,9 +158,10 @@ export function GuestInfoForm({
               {...register("special_requests")}
               placeholder="Any special requirements or requests..."
               rows={4}
+              className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-premium-accent dark:focus:border-premium-accent focus:ring-2 focus:ring-premium-accent/20 bg-white dark:bg-black/60"
             />
             {errors.special_requests && (
-              <p className="text-sm text-destructive">
+              <p className="text-sm text-red-600 dark:text-red-400">
                 {errors.special_requests.message}
               </p>
             )}
@@ -136,7 +170,7 @@ export function GuestInfoForm({
           <Button
             type="submit"
             size="lg"
-            className="w-full"
+            className="w-full bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all font-semibold"
             disabled={isSubmitting}
           >
             Continue to Review

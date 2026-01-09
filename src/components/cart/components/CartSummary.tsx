@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCartStore } from "@/stores/cart-store";
 import { formatPrice } from "@/lib/utils";
+import { ZIM_VAT } from "@/lib/constants";
 
 export function CartSummary() {
   const navigate = useNavigate();
@@ -24,33 +25,39 @@ export function CartSummary() {
   };
 
   return (
-    <Card className="sticky top-20">
-      <CardHeader>
-        <CardTitle>Order Summary</CardTitle>
+    <Card className="premium-card bg-white dark:bg-black/60 sticky top-20 border border-gray-200 dark:border-gray-700 shadow-xl">
+      <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+        <CardTitle className="text-xl text-gray-900 dark:text-gray-100">
+          Order Summary
+        </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-6">
         <div className="space-y-2">
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-sm text-gray-700 dark:text-gray-300">
             <span>
               Subtotal ({items.length} item{items.length !== 1 ? "s" : ""})
             </span>
             <span>{formatPrice(subtotal)}</span>
           </div>
-          <div className="flex justify-between text-sm">
-            <span>Tax (18%)</span>
+          <div className="flex justify-between text-sm text-gray-700 dark:text-gray-300">
+            <span>Tax ({ZIM_VAT * 100}%)</span>
             <span>{formatPrice(tax)}</span>
           </div>
         </div>
 
-        <Separator />
+        <Separator className="bg-gray-200 dark:bg-gray-700" />
 
-        <div className="flex justify-between font-bold text-lg">
+        <div className="flex justify-between font-bold text-lg text-gray-900 dark:text-gray-100">
           <span>Total</span>
           <span>{formatPrice(total)}</span>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button className="w-full" size="lg" onClick={handleCheckout}>
+      <CardFooter className="p-6 pt-0">
+        <Button
+          className="w-full bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all font-semibold"
+          size="lg"
+          onClick={handleCheckout}
+        >
           Proceed to Checkout
         </Button>
       </CardFooter>

@@ -46,6 +46,8 @@
 
   --premium-background: oklch(0.15 0 0); /* Rich Black */
   --premium-card: oklch(0.2 0 0); /* Dark Gray Cards */
+  /*--premium-card: oklch(0 0 0 / 0.6); /* Dark Gray Cards */*/
+
 }
 
 /* Extend Tailwind Theme with Premium Colors */
@@ -158,18 +160,18 @@
 
   /* Premium Components */
   .premium-card {
-    background-color: rgb(var(--premium-card));
-    border: 1px solid rgb(var(--premium-border));
+    background-color: var(--premium-card);
+    border: 1px solid var(--premium-border);
     border-radius: var(--radius-lg);
   }
 
   .premium-surface {
-    background-color: rgb(var(--premium-card));
-    border: 1px solid rgb(var(--premium-border-light));
+    background-color: var(--premium-card);
+    border: 1px solid var(--premium-border-light);
   }
 
   .premium-button {
-    background-color: rgb(var(--premium-accent));
+    background-color: var(--premium-accent);
     color: rgb(var(--premium-accent-foreground));
     border: 1px solid transparent;
     border-radius: var(--radius);
@@ -211,11 +213,13 @@
   }
 
   .premium-container {
+    /*width: 100%;*/
     max-width: 80rem;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    box-sizing: border-box;
   }
 
   @media (min-width: 640px) {

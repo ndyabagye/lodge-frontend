@@ -110,11 +110,11 @@ export function BookingConfirmationTemplate() {
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Success Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-green-600 mb-4">
-            <CheckCircle2 className="h-10 w-10" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-4">
+            <CheckCircle2 className="h-12 w-12" />
           </div>
-          <h1 className="text-4xl font-bold mb-2">Booking Confirmed!</h1>
-          <p className="text-lg text-muted-foreground">
+          <h1 className="text-3xl font-bold mb-2">Booking Confirmed!</h1>
+          <p className="text-normal text-muted-foreground">
             Thank you for your reservation. A confirmation email has been sent
             to{" "}
             <span className="font-medium text-foreground">
@@ -124,8 +124,8 @@ export function BookingConfirmationTemplate() {
         </div>
 
         {/* Booking Number */}
-        <Card className="mb-6 bg-primary/5 border-primary/20">
-          <CardContent className="pt-6">
+        <Card className="mb-6 premium-bg-background border-primary/20">
+          <CardContent className="pt-0">
             <div className="text-center">
               <p className="text-sm text-muted-foreground mb-2">
                 Booking Number
@@ -141,7 +141,7 @@ export function BookingConfirmationTemplate() {
         </Card>
 
         {/* Booking Status */}
-        <Card className="mb-6">
+        <Card className="mb-6 premium-bg-background border-primary/20">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <span>Booking Status</span>
@@ -190,7 +190,7 @@ export function BookingConfirmationTemplate() {
         </Card>
 
         {/* Accommodation Details */}
-        <Card className="mb-6">
+        <Card className="mb-6 premium-bg-background border-primary/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Home className="h-5 w-5" />
@@ -273,7 +273,7 @@ export function BookingConfirmationTemplate() {
         </Card>
 
         {/* Guest Information */}
-        <Card className="mb-6">
+        <Card className="mb-6 premium-bg-background border-primary/20">
           <CardHeader>
             <CardTitle>Guest Information</CardTitle>
           </CardHeader>
@@ -318,7 +318,7 @@ export function BookingConfirmationTemplate() {
         </Card>
 
         {/* Payment Summary */}
-        <Card className="mb-6">
+        <Card className="mb-6 premium-bg-background border-primary/20">
           <CardHeader>
             <CardTitle>Payment Summary</CardTitle>
           </CardHeader>
@@ -363,19 +363,22 @@ export function BookingConfirmationTemplate() {
         <div className="flex flex-col sm:flex-row gap-4">
           <Button
             variant="outline"
-            className="flex-1"
+            className="flex-1 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent font-semibold"
             onClick={() => navigate({ to: "/" })}
           >
             Return to Home
           </Button>
           <Button
             variant="outline"
-            className="flex-1"
+            className="flex-1 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent font-semibold"
             onClick={() => navigate({ to: "/account/bookings" })}
           >
             View My Bookings
           </Button>
-          <Button className="flex-1 gap-2" onClick={handleDownloadInvoice}>
+          <Button
+            className="flex-1 gap-2 bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all font-semibold"
+            onClick={handleDownloadInvoice}
+          >
             <Download className="h-4 w-4" />
             Download Invoice
           </Button>

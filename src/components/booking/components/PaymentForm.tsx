@@ -91,7 +91,7 @@ export function PaymentForm({
         (item) => item.type === "accommodation",
       );
 
-      console.log("The items in the cart", items);
+      // console.log("The items in the cart", items);
 
       if (!accommodationItem) {
         toast.error("No accommodation found in cart");
@@ -198,7 +198,7 @@ export function PaymentForm({
   if (gatewaysLoading) {
     return (
       <div className="flex items-center justify-center p-12">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <Loader2 className="h-8 w-8 animate-spin text-premium-accent" />
       </div>
     );
   }
@@ -217,9 +217,11 @@ export function PaymentForm({
   return (
     <div className="space-y-6">
       {/* Payment Gateway Selection */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Select Payment Method</CardTitle>
+      <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700 shadow-xl">
+        <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+          <CardTitle className="text-xl text-gray-900 dark:text-gray-100">
+            Select Payment Method
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <RadioGroup
@@ -232,13 +234,17 @@ export function PaymentForm({
               .map((gateway) => (
                 <div
                   key={gateway.name}
-                  className={`flex items-center space-x-3 border rounded-md p-3 cursor-pointer transition-colors ${
+                  className={`flex items-center space-x-3 border rounded-lg p-4 cursor-pointer transition-all duration-200 ${
                     selectedGateway === gateway.name
-                      ? "bg-accent border-primary"
-                      : "hover:bg-accent/50"
+                      ? "bg-premium-accent/10 border-premium-accent shadow-sm"
+                      : "border-gray-200 dark:border-gray-700 hover:border-premium-accent/50 hover:bg-gray-50 dark:hover:bg-gray-700/50"
                   }`}
                 >
-                  <RadioGroupItem value={gateway.name} id={gateway.name} />
+                  <RadioGroupItem
+                    value={gateway.name}
+                    id={gateway.name}
+                    className="text-premium-accent"
+                  />
                   <Label
                     htmlFor={gateway.name}
                     className="flex items-center gap-2 cursor-pointer flex-1 text-sm"
@@ -262,9 +268,9 @@ export function PaymentForm({
           </RadioGroup>
 
           {/* Simulation Notice */}
-          <Alert className="mt-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription className="text-xs">
+          <Alert className="mt-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+            <AlertCircle className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <AlertDescription className="text-xs text-blue-800 dark:text-blue-200">
               <strong>Demo Mode:</strong> Payments are simulated. No actual
               charges will be made.
             </AlertDescription>
@@ -274,7 +280,7 @@ export function PaymentForm({
 
       {/* Payment Info */}
       <Card>
-        <CardContent className="pt-6">
+        <CardContent className="pt-0">
           <div className="space-y-3">
             <div className="flex items-start gap-2">
               <AlertCircle className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
@@ -308,8 +314,8 @@ export function PaymentForm({
 
       {/* Total Amount */}
       <Card>
-        <CardContent className="pt-6">
-          <div className="flex items-center justify-between text-2xl font-bold">
+        <CardContent className="pt-0">
+          <div className="flex items-center justify-between text-xl font-bold">
             <span>Total to Pay</span>
             {/*<span className="text-xs font-light">{JSON.stringify(items)}</span>*/}
             <span>{formatPrice(getTotal())}</span>
@@ -323,7 +329,7 @@ export function PaymentForm({
           variant="outline"
           onClick={onBack}
           disabled={isProcessing}
-          className="flex-1"
+          className="flex-1 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent font-semibold"
         >
           Back
         </Button>
@@ -331,7 +337,7 @@ export function PaymentForm({
           onClick={handlePayment}
           disabled={isProcessing || !selectedGateway}
           size="lg"
-          className="flex-1"
+          className="flex-1 w-full bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all font-semibold"
         >
           {isProcessing ? (
             <>

@@ -81,19 +81,21 @@ export function CheckoutPageTemplate() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 py-8">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen premium-bg-background py-8">
+      <div className="premium-container">
         {/* Header */}
         <div className="mb-8">
           <Button
             variant="ghost"
             onClick={() => navigate({ to: "/cart" })}
-            className="mb-4"
+            className="mb-4 hover:bg-gray-100 dark:hover:bg-gray-800"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Back to Cart
           </Button>
-          <h1 className="text-3xl font-bold">Checkout</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            Checkout
+          </h1>
         </div>
 
         {/* Steps Indicator */}

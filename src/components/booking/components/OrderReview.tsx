@@ -28,44 +28,55 @@ export function OrderReview({
   return (
     <div className="space-y-6">
       {/* Guest Information */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Guest Information</CardTitle>
+      <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700">
+        <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+          <CardTitle className="text-xl text-gray-900 dark:text-gray-100">
+            Guest Information
+          </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-3 p-6">
           <div>
-            <p className="font-semibold">
+            <p className="font-semibold text-gray-900 dark:text-gray-100">
               {guestInfo.first_name} {guestInfo.last_name}
             </p>
           </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <Mail className="h-4 w-4" />
             <span>{guestInfo.email}</span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <Phone className="h-4 w-4" />
             <span>{guestInfo.phone}</span>
           </div>
           {guestInfo.special_requests && (
-            <div className="pt-2 border-t">
-              <p className="text-sm font-medium mb-1">Special Requests:</p>
-              <p className="text-sm text-muted-foreground">
+            <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
+              <p className="text-sm font-medium mb-1 text-gray-900 dark:text-gray-100">
+                Special Requests:
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {guestInfo.special_requests}
               </p>
             </div>
           )}
-          <Button variant="outline" size="sm" onClick={onBack} className="mt-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onBack}
+            className="mt-2 border-gray-300 dark:border-gray-600 hover:border-premium-accent hover:text-premium-accent"
+          >
             Edit Information
           </Button>
         </CardContent>
       </Card>
 
       {/* Booking Details */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Booking Details</CardTitle>
+      <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700">
+        <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+          <CardTitle className="text-xl text-gray-900 dark:text-gray-100">
+            Booking Details
+          </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 p-6">
           {items.map((item) => (
             <div
               key={item.id}
@@ -124,11 +135,13 @@ export function OrderReview({
       </Card>
 
       {/* Price Summary */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Payment Summary</CardTitle>
+      <Card className="premium-card bg-white dark:bg-black/60 border border-gray-200 dark:border-gray-700">
+        <CardHeader className="border-b border-gray-200 dark:border-gray-700">
+          <CardTitle className="text-xl text-gray-900 dark:text-gray-100">
+            Payment Summary
+          </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-3 p-6">
           <div className="flex justify-between">
             <span>Subtotal</span>
             <span>{formatPrice(getSubtotal())}</span>
@@ -147,10 +160,18 @@ export function OrderReview({
 
       {/* Action Buttons */}
       <div className="flex gap-4">
-        <Button variant="outline" onClick={onBack} className="flex-1">
+        <Button
+          variant="outline"
+          onClick={onBack}
+          className="flex-1 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-premium-accent hover:text-premium-accent font-semibold"
+        >
           Back
         </Button>
-        <Button onClick={onConfirm} size="lg" className="flex-1">
+        <Button
+          onClick={onConfirm}
+          size="lg"
+          className="flex-1 bg-premium-accent text-white hover:bg-premium-accent/90 shadow-lg hover:shadow-xl transition-all font-semibold"
+        >
           Proceed to Payment
         </Button>
       </div>

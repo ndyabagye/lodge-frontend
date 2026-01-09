@@ -159,7 +159,7 @@ export function Footer() {
 
   return (
     <footer className="border-t premium-surface premium-bg-background">
-      <div className="premium-container">
+      <div className=" bg-white dark:bg-black mx-auto px-12 lg:px-24">
         <div className="premium-section-sm">
           {/* Main Footer Content */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">

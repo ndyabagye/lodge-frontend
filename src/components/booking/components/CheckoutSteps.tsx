@@ -27,12 +27,12 @@ export function CheckoutSteps({ currentStep }: CheckoutStepsProps) {
               <div className="flex flex-col items-center">
                 <div
                   className={cn(
-                    "w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors",
-                    isCompleted && "bg-primary text-primary-foreground",
-                    isCurrent && "bg-primary text-primary-foreground",
+                    "w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors shadow-sm",
+                    isCompleted && "bg-premium-accent text-white",
+                    isCurrent && "bg-premium-accent text-white",
                     !isCompleted &&
                       !isCurrent &&
-                      "bg-muted text-muted-foreground",
+                      "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400",
                   )}
                 >
                   {isCompleted ? (
@@ -44,7 +44,9 @@ export function CheckoutSteps({ currentStep }: CheckoutStepsProps) {
                 <span
                   className={cn(
                     "text-sm mt-2 font-medium hidden sm:block",
-                    isCurrent ? "text-foreground" : "text-muted-foreground",
+                    isCurrent
+                      ? "text-gray-900 dark:text-gray-100"
+                      : "text-gray-600 dark:text-gray-400",
                   )}
                 >
                   {step.label}
@@ -56,7 +58,9 @@ export function CheckoutSteps({ currentStep }: CheckoutStepsProps) {
                 <div
                   className={cn(
                     "flex-1 h-1 mx-4",
-                    index < currentStepIndex ? "bg-primary" : "bg-muted",
+                    index < currentStepIndex
+                      ? "bg-premium-accent"
+                      : "bg-gray-200 dark:bg-gray-700",
                   )}
                 />
               )}
